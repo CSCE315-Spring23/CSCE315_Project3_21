@@ -1,0 +1,27 @@
+{
+  "name": "postgres-node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.22",
+    "pg": "^8.7.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nemo0/node-postgres-crud-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nemo0/node-postgres-crud-api/issues"
+  },
+  "homepage": "https://github.com/nemo0/node-postgres-crud-api#readme",
+  "description": ""
+}
