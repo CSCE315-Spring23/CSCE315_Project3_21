@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config()
+var cors = require('cors');
 const app = express();
 const port = 3000;
 
@@ -12,6 +13,10 @@ app.use(
     extended: true,
   })
 );
+const options = {
+  origin: 'https://localhost:3000',
+}
+app.use(cors(options));
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' });
