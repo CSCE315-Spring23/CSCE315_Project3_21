@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 
 const db = require('./queries');
+const getWhatSalesTogether = require('./whatSalesTogether');
 
 app.use(bodyParser.json());
 app.use(
@@ -30,6 +31,10 @@ app.put('/users/:id', db.updateUser);
 app.delete('/users/:id', db.deleteUser);
 */
 app.get('/inventory_items', db.getInventoryItems);
+
+
+app.post('/whatSalesTogether', getWhatSalesTogether);
+
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
