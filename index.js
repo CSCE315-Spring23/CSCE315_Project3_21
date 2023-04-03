@@ -37,7 +37,7 @@ const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);
 
 
-app.post('/whatSalesTogether', getWhatSalesTogether);
+app.get('/whatSalesTogether', getWhatSalesTogether);
 
 
 app.listen(port, () => {
