@@ -7,6 +7,8 @@ const port = 3000;
 
 const db = require('./queries');
 const getWhatSalesTogether = require('./whatSalesTogether');
+const getsalesReport = require('./salesReport');
+const getCustomerMenu = require('./menuCustomerView');
 
 app.use(bodyParser.json());
 app.use(
@@ -34,6 +36,10 @@ app.get('/inventory_items', db.getInventoryItems);
 
 
 app.post('/whatSalesTogether', getWhatSalesTogether);
+
+app.get('/salesReport', getsalesReport);
+
+app.get('/menuCustomerView',getCustomerMenu);
 
 
 app.listen(port, () => {
