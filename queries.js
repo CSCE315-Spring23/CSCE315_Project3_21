@@ -71,6 +71,8 @@ const getInventoryItems = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
+
+
 module.exports = {
   getEmployees,
   getEmployeeByPin,
@@ -80,4 +82,6 @@ module.exports = {
   deleteUser,
   */
   getInventoryItems,
+  
 };
+

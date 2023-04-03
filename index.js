@@ -33,7 +33,11 @@ app.delete('/users/:id', db.deleteUser);
 app.get('/inventory_items', db.getInventoryItems);
 
 
-app.post('/whatSalesTogether', getWhatSalesTogether);
+const dbExcessReport = require('./excessReport');
+app.get('/excessReport',dbExcessReport.getExcessReport);
+
+
+app.get('/whatSalesTogether', getWhatSalesTogether);
 
 
 app.listen(port, () => {
