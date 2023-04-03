@@ -39,6 +39,9 @@ app.get('/excessReport',dbExcessReport.getExcessReport);
 
 app.get('/whatSalesTogether', getWhatSalesTogether);
 
+const changeMenu = require('./changeMenu');
+app.get('/changeMenu', changeMenu.readMenuItem);
+
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
