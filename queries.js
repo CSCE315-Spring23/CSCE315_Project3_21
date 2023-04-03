@@ -82,5 +82,7 @@ module.exports = {
   */
   getInventoryItems,
   getInventoryLevelsEndDayRecommended,
+  getInventoryLevelsEndDayRecordArrival,
+
 };
 
