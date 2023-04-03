@@ -1,3 +1,4 @@
+const pool = require("./DB");
 const getExcessReport = (request,response) => {
     const start = request.query.start;
     if(!start){
@@ -67,8 +68,8 @@ const getExcessReport = (request,response) => {
                 valueUsed: inventoryItemMap.get(key)
             });
             }
-            response.status(200).json(finalPairs);
         }
+        response.status(200).json(finalPairs);
         });
         
     });
