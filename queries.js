@@ -81,8 +81,5 @@ module.exports = {
   deleteUser,
   */
   getInventoryItems,
-  getInventoryLevelsEndDayRecommended,
-  getInventoryLevelsEndDayRecordArrival,
-
 };
 
