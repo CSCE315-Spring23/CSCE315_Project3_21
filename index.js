@@ -31,6 +31,8 @@ app.put('/users/:id', db.updateUser);
 app.delete('/users/:id', db.deleteUser);
 */
 app.get('/inventory_items', db.getInventoryItems);
+app.get('/excessReport',db.getExcessReport);
+
 
 
 app.post('/whatSalesTogether', getWhatSalesTogether);
