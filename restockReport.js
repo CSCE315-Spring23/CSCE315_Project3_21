@@ -9,11 +9,12 @@ const getRestockReport = (request, response) => {
         let res = [];
         //console.log(rows);
         for (let i = 0; i < rows.length; i++) {
+            if (rows[i].currentquantity < rows[i].maxquantity * 0.25)
             res.push({
                 itemname: rows[i].itemname,
                 currentquantity: rows[i].currentquantity,
                 minquantity: rows[i].maxquantity * 0.25
-            })
+            });
         }
         response.status(200).json(res);
     });
