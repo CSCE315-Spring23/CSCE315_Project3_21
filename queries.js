@@ -71,6 +71,39 @@ const getInventoryItems = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
+
+
+/* this could be easily migrated to a different file 
+(part of why this is a new branch so we have those options on merge)*/
+const getInventoryLevelsEndDayRecommended = (request, response) => {
+  pool.query('SELECT * FROM inventory_item;', (error, results) => {
+    if (error) {
+      throw error;
+    }
+    let rows1 = results.rows;
+    
+    //console.log(rows1[0].maxquantity - rows1[0].currentquantity);
+    /*for(let i = 0; rows1.length; i++){
+      let curr = rows1[i];
+      let recommended = curr.maxquantity - curr.currentquantity / curr.shipmentunit; 
+      if(recommended == 0){
+        recommended = curr.maxquantity/curr.shipmentunit;
+      }
+      let query = "UPDATE inventory_item set recommendedReorderQuantity =" +recommended +"WHERE itemName = '" +rows1[i].itemname+"';";
+        pool.query(error, (error, results) => {
+          if (error) {
+            throw error;
+          }
+        });
+    }
+    */
+    response.status(200).json(rows1);
+  });
+};
+
+
+
+
 module.exports = {
   getEmployees,
   getEmployeeByPin,
@@ -80,4 +113,5 @@ module.exports = {
   deleteUser,
   */
   getInventoryItems,
+  getInventoryLevelsEndDayRecommended,
 };
