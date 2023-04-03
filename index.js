@@ -36,8 +36,10 @@ const dbInventoryLevels = require('./inventoryLevelsEndDay');
 app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayRecommended);
 app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
 
+const dbExcess = require('./excessreport');
+app.get('/excessreport', dbExcess.getExcessReport);
 
-app.post('/whatSalesTogether', getWhatSalesTogether);
+app.get('/whatSalesTogether', getWhatSalesTogether);
 
 
 app.listen(port, () => {

@@ -6,21 +6,22 @@ const getInventoryLevelsEndDayRecommended = (request, response) => {
     }
     let rows1 = results.rows;
     
-      //console.log(rows1[0].maxquantity - rows1[0].currentquantity);
-    /*for(let i = 0; rows1.length; i++){
+    console.log(rows1[0].maxquantity - rows1[0].currentquantity);
+    for(let i = 0; i < rows1.length; i++){
         let curr = rows1[i];
+        console.log(curr);
         let recommended = curr.maxquantity - curr.currentquantity / curr.shipmentunit; 
         if(recommended == 0){
         recommended = curr.maxquantity/curr.shipmentunit;
+        }else{
+            /*let query = "UPDATE inventory_item set recommendedreorder =" +recommended +"WHERE itemName = '" +rows1[i].itemname+"';";
+            pool.query(error, (error, results) => {
+                if (error) {
+                    throw error;
+                }
+            });*/
         }
-        let query = "UPDATE inventory_item set recommendedReorderQuantity =" +recommended +"WHERE itemName = '" +rows1[i].itemname+"';";
-        pool.query(error, (error, results) => {
-            if (error) {
-                throw error;
-            }
-        });
-    }
-      */
+    }    
     response.status(200).json(rows1);
     });
 };
