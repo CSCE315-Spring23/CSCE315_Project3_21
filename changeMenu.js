@@ -10,31 +10,60 @@ const pool = require("./DB");
 /*
     Submit name of menu item you would like to view in the table; get all columns for that row.
     EXAMPLE QUERY IN POSTMAN:
-        http://localhost:3000/changeMenu/readMenuItem?menuItemName=Chicken Tortilla Soup
+        http://localhost:3000/changeMenu/readMenuItem/Chicken Tortilla Soup
+        http://localhost:3000/changeMenu/readMenuItem/Waffle Potato Chips
+        http://localhost:3000/changeMenu/readMenuItem/Not a Menu Item
         (no request body)
 */
-const readMenuItem = (request, response) => {
-    // get parameters
-        const menuItemName = request.query.menuItemName;
-        console.log(menuItemName);
-        
-        if (!request.query.menuItemName) {
-            response.status(400).json({ error: "menu item name is required" });
-            return;
-        }
-    // build query
-        let query = "SELECT * FROM menu_item WHERE itemname = '"+ menuItemName+"';";
-    // get query results
-        pool.query(query, (error, results) => {
-            if (error) {
-            throw error;
+async function readMenuItem(request, response){
+    try {
+        // get parameters
+            const {itemname} = request.params;
+        // queries
+            let query1 = "SELECT * FROM menu_item WHERE itemname = '"+ itemname+"';";
+            let result1 = await pool.query(query1);
+            if (result1.rowCount == '0'){
+                response.status(200).json({message : ""+itemname+" is not a menu item."});
+                return;
             }
-            response.status(200).json(results.rows);
-        });
+            let price = result1.rows[0].price.toString();
+            price = "$" + price.substring(0, price.length-2) + "." + price.substring(price.length-2);
+        
+            let query2 = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '"+ itemname+"';";
+            let result2 = await pool.query(query2);
+            let menutoinventory = "";
+            for (let i = 0; i < result2.rowCount-1; i++){
+                menutoinventory += result2.rows[i].inventoryitemkey + " : " + result2.rows[i].unitquantity + " , ";
+            }
+            if (result2.rowCount > 0){
+                menutoinventory += result2.rows[result2.rowCount-1].inventoryitemkey + " : " + result2.rows[result2.rowCount-1].unitquantity;
+            }
+
+            let query3 = "SELECT dietaryrestrictionkey FROM relationship_menutodietaryrestriction WHERE menuitemkey = '"+ itemname+"';";
+            let result3 = await pool.query(query3);
+            let menutodietaryrestriction = "";
+            for (let i = 0; i < result3.rowCount - 1; i++){
+                menutodietaryrestriction += result3.rows[i].dietaryrestrictionkey + " , ";
+            }
+            if (result3.rowCount > 0){
+                menutodietaryrestriction += result3.rows[result3.rowCount-1].dietaryrestrictionkey;
+            }
+
+            response.status(200).json({
+                itemname : result1.rows[0].itemname,
+                price : price,
+                category : result1.rows[0].category,
+                imagelink : result1.rows[0].imagelink,
+                menutoinventory: menutoinventory,
+                menutodietaryrestriction: menutodietaryrestriction
+            });
+    } catch (err) {
+        console.error(err.message);
+    }
 };
 /* Get the itemnames column of the menu_item table.
     EXAMPLE QUERY IN POSTMAN:
-    http://localhost:3000/changeMenu/readMenuItemNames
+    http://localhost:3000/changeMenu/readitemnames
     (no request body)  
 */
 const readMenuItemNames =(request, response) => {
@@ -97,12 +126,20 @@ async function createOrUpdateMenuItem(request, response){
     try{
         const {itemname} = request.params;
         const {price, category, imagelink, menutoinventory, menutodietaryrestriction} = request.body;
-
-        const searchMenuItem = await pool.query("SELECT COUNT(itemname) FROM menu_item WHERE itemname = '$1';", [itemname]);
-        console.log(searchMenuItem);
-        response.status(200).json(results.rows);
-
-        
+        // build first query
+            let query = "SELECT COUNT(itemname) FROM menu_item WHERE itemname = '"+ itemname +"';";
+        // execute first query, store results.
+            let result = await pool.query(query);
+        if( result.rows[0].count == '0'){
+            // console.log("This item does not exist. It will be created.");
+        }
+        else if (result.rows[0].count == '1'){
+            // console.log("This item exists. It will be updated.");
+        }
+        else{
+            // throw Error('COUNT sql command returned unexpected result');
+            console.log('COUNT sql command returned unexpected result');
+        }
     }
     catch (err){
         console.error(err.message);

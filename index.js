@@ -40,7 +40,7 @@ app.get('/excessReport',dbExcessReport.getExcessReport);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 
 const changeMenu = require('./changeMenu');
-app.get('/changeMenu/readMenuItem', changeMenu.readMenuItem);
+app.get('/changeMenu/readMenuItem/:itemname', changeMenu.readMenuItem);
 app.get('/changeMenu/readMenuItemNames', changeMenu.readMenuItemNames);
 app.get('/changeMenu/readDietaryRestrictionNames', changeMenu.readDietaryRestrictionNames);
 app.put('/changeMenu/createOrUpdateMenuItem/:itemname', changeMenu.createOrUpdateMenuItem);
