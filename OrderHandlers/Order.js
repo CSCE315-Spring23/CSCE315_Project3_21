@@ -51,6 +51,8 @@ class Order {
         if (this.itemsOrdered.length < 1) {
             return;
         }
+
+        // Create a new ordertable entry
         let idQuery = "SELECT Id FROM ordertable_test WHERE id=(SELECT max(id) FROM ordertable_test)";
         let idResult = await pool.query(idQuery);
         let orderID = idResult.rows[0].id + 1;
@@ -58,10 +60,31 @@ class Order {
         const newOrderQuery = {
             text: `INSERT INTO ordertable_test (id,ordertimestamp,totalprice) values ($1,(to_timestamp(${Date.now()} / 1000.0)), $2)`,
             //text: 'INSERT INTO ordertable_test (Id,ordertimestamp,totalprice) VALUES ($1, $2, $3)',
-            values: [orderID,this.totalprice],
+            values: [orderID, this.totalprice],
         }
-        
         await pool.query(newOrderQuery);
+
+        // Next create every entry for order_to_menu table
+        let orderIDQuery = "SELECT order_key FROM order_to_menu WHERE order_key=(SELECT max(order_key) FROM order_to_menu)";
+        let orderIDResult = await pool.query(orderIDQuery);
+        let newOrderID = orderIDResult.rows[0].order_key + 1;
+
+        for (let i = 0; i < this.itemsOrdered.length; i++) {
+            orderIDQuery = "SELECT id FROM order_to_menu WHERE id=(SELECT max(id) FROM order_to_menu)";
+            orderIDResult = await pool.query(orderIDQuery);
+            let newID = orderIDResult.rows[0].id + 1;
+
+            const itemToOrderEntry = {
+                text: 'INSERT INTO order_to_menu (id,order_key,menuitem_key,quantity) values ($1, $2, $3, $4)',
+                values: [newID, newOrderID, this.itemsOrdered[i], 1],
+            }
+
+            await pool.query(itemToOrderEntry);
+        }
+
+        // Empty the order array
+        this.itemsOrdered = [];
+        this.totalprice = 0;
     }
 }
 
