@@ -40,7 +40,8 @@ app.get('/excessReport',dbExcessReport.getExcessReport);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 
 const changeMenu = require('./changeMenu');
-app.get('/changeMenu', changeMenu.readMenuItem);
+app.get('/changeMenu/readMenuItem', changeMenu.readMenuItem);
+app.get('/changeMenu/readMenuItemNames', changeMenu.readMenuItemNames);
 
 
 app.listen(port, () => {

@@ -8,8 +8,9 @@ const pool = require("./DB");
 */
 /* DB interaction methods */
 /*
-    submit name of menu item you would like to view in the table; get all columns for that row.
-    EXAMPLE QUERY IN POSTMAN: http://localhost:3000/changeMenu?menuItemName=Chicken Tortilla Soup
+    Submit name of menu item you would like to view in the table; get all columns for that row.
+    EXAMPLE QUERY IN POSTMAN:
+        http://localhost:3000/changeMenu/readMenuItem?menuItemName=Chicken Tortilla Soup
         (no request body)
 */
 const readMenuItem = (request, response) => {
@@ -22,9 +23,24 @@ const readMenuItem = (request, response) => {
             return;
         }
     // build query
-        // let query = 'SELECT * FROM menu_item WHERE itemname = $1', [menuItemName]; 
-    // build / execute query, get results
-    let query = "SELECT * FROM menu_item WHERE itemname = '"+ menuItemName+"';";
+        let query = "SELECT * FROM menu_item WHERE itemname = '"+ menuItemName+"';";
+    // get query results
+        pool.query(query, (error, results) => {
+            if (error) {
+            throw error;
+            }
+            response.status(200).json(results.rows);
+        });
+};
+/* Get the itemnames column of the menu_item table.
+    EXAMPLE QUERY IN POSTMAN:
+    http://localhost:3000/changeMenu/readMenuItemNames
+    (no request body)  
+*/
+const readMenuItemNames =(request, response) => {
+    // build query
+        let query = "SELECT itemname FROM menu_item;";
+    // get query results
         pool.query(query, (error, results) => {
             if (error) {
             throw error;
@@ -33,12 +49,14 @@ const readMenuItem = (request, response) => {
         });
 };
 /*
-    menuItemNamesTable() (get the itemnames column of the menu_item table)
     createOrUpdateMenuItem()
 */
+const createOrUpdateMenuItem =(request, response) => {
+    
+};
 
 module.exports = {
-    readMenuItem
+    readMenuItem,
+    readMenuItemNames,
+    createOrUpdateMenuItem
 };
-// module.exports = menuItemNamesTable;
-// module.exports = createOrUpdateMenuItem;
