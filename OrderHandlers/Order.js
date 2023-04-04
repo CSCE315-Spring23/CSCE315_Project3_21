@@ -32,7 +32,14 @@ class Order {
             console.log("Item added to itemsOrdered: ", menuItemKey);
             this.itemsOrdered.push(menuItemKey);
             console.log(this.itemsOrdered);
+
+            for (let i = 0; i < InvQrows.length; i++) {
+                let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+                await pool.query(inventoryUpdate);
+            }
         }
+
+        
     }
 
     async createOrder() {
