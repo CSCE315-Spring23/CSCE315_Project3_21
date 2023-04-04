@@ -3,10 +3,11 @@ const pool = require("../DB");
 class Order {
     constructor() {
         this.itemsOrdered = [];
+        this.totalprice = 0;
     }
 
     async addMenuItem(menuItemKey) {
-        console.log(menuItemKey);
+        //console.log(menuItemKey);
         let abletoMake = true;
         // Query all of the inventory items used by the menu item ordered
         let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
@@ -33,6 +34,10 @@ class Order {
             this.itemsOrdered.push(menuItemKey);
             console.log(this.itemsOrdered);
 
+            let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
+            let priceResult = await pool.query(priceQuery);
+            this.totalprice += priceResult.rows[0].price;
+
             for (let i = 0; i < InvQrows.length; i++) {
                 let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
                 await pool.query(inventoryUpdate);
@@ -43,7 +48,20 @@ class Order {
     }
 
     async createOrder() {
+        if (this.itemsOrdered.length < 1) {
+            return;
+        }
+        let idQuery = "SELECT Id FROM ordertable_test WHERE id=(SELECT max(id) FROM ordertable_test)";
+        let idResult = await pool.query(idQuery);
+        let orderID = idResult.rows[0].id + 1;
+
+        const newOrderQuery = {
+            text: `INSERT INTO ordertable_test (id,ordertimestamp,totalprice) values ($1,(to_timestamp(${Date.now()} / 1000.0)), $2)`,
+            //text: 'INSERT INTO ordertable_test (Id,ordertimestamp,totalprice) VALUES ($1, $2, $3)',
+            values: [orderID,this.totalprice],
+        }
         
+        await pool.query(newOrderQuery);
     }
 }
 

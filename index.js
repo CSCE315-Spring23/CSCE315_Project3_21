@@ -35,13 +35,15 @@ app.delete('/users/:id', db.deleteUser);
 
 
 const dbExcessReport = require('./excessReport');
-const addItemToOrder = require('./OrderHandlers/orderController');
+const {addItemToOrder} = require('./OrderHandlers/orderController');
+const {storeOrder} = require('./OrderHandlers/orderController');
 app.get('/excessReport',dbExcessReport.getExcessReport);
 
 
 app.get('/whatSalesTogether', getWhatSalesTogether);
 app.get('/restockReport', getRestockReport);
 app.get('/addItemToOrder', addItemToOrder);
+app.get('/storeOrder', storeOrder);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
