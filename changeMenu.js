@@ -126,19 +126,39 @@ async function createOrUpdateMenuItem(request, response){
     try{
         const {itemname} = request.params;
         const {price, category, imagelink, menutoinventory, menutodietaryrestriction} = request.body;
+        let priceStr = toString(price);
+        priceNum = parseInt(priceStr.substring(1,priceStr.length-3))*100+parseInt(priceStr.substring(priceStr.length-2));
         // build first query
             let query = "SELECT COUNT(itemname) FROM menu_item WHERE itemname = '"+ itemname +"';";
         // execute first query, store results.
             let result = await pool.query(query);
         if( result.rows[0].count == '0'){
-            // console.log("This item does not exist. It will be created.");
+            console.log("This item does not exist. It will be created.");
+            // create an entry in menu_item
+                let query1 = "INSERT INTO menu_item (itemname, price, category, imagelink) VALUES ("
+                    +itemname+","
+                    +priceNum+","
+                    +category+","
+                    +imagelink
+                    +");";
+                let result1 = await pool.query(query);
+                console.log("query executed");
+            // create entries in relationship_menutoinventory_unitquantities
+                
+            // create entries in relationship_menutodietaryrestriction
         }
         else if (result.rows[0].count == '1'){
             // console.log("This item exists. It will be updated.");
+
+            // update the entry in menu_item
+
+            // delete entries in relationship_menutoinventory_unitquantities
+            // create entries in relationship_menutoinventory_unitquantities
+            // delete entries in relationship_menutodietaryrestriction
+            // create entries in relationship_menutodietaryrestriction
         }
         else{
-            // throw Error('COUNT sql command returned unexpected result');
-            console.log('COUNT sql command returned unexpected result');
+            throw Error('COUNT sql command returned unexpected result');
         }
     }
     catch (err){
