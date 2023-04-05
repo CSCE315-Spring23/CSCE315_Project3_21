@@ -29,18 +29,15 @@ const getKey = (item1, item2) => {
  */
 
 const getWhatSalesTogether = (request, response) => {
-  const body = request.body;
+  const start = request.query.start;
+  const end = request.query.end;
+  const salesWith = request.query.salesWith;
+  const limit = request.query.limit || 100;
 
-  if (!body.start || !body.end) {
+  if (!start || !end) {
     response.status(400).json({ error: "start and end are required" });
     return;
   }
-
-  const start = body.start;
-  const end = body.end;
-  const salesWith = body.salesWith;
-  const limit = body.limit || 100;
-
   //build the query
 
   let query =
