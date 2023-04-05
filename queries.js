@@ -72,7 +72,6 @@ const getInventoryItems = (request, response) => {
   });
 };
 
-
 module.exports = {
   getEmployees,
   getEmployeeByPin,
@@ -82,6 +81,5 @@ module.exports = {
   deleteUser,
   */
   getInventoryItems,
-  
 };
 

@@ -33,6 +33,9 @@ app.delete('/users/:id', db.deleteUser);
 */
 //app.get('/inventory_items', db.getInventoryItems);
 
+const dbInventoryLevels = require('./inventoryLevelsEndDay');
+app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayRecommended);
+app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
 
 const dbExcessReport = require('./excessReport');
 const {addItemToOrder} = require('./OrderHandlers/orderController');
