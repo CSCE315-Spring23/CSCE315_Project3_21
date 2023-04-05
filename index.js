@@ -7,6 +7,8 @@ const port = 3000;
 
 const db = require('./queries');
 const getWhatSalesTogether = require('./whatSalesTogether');
+const getsalesReport = require('./salesReport');
+const getCustomerMenu = require('./menuCustomerView');
 const getRestockReport = require('./restockReport');
 
 app.use(bodyParser.json());
@@ -43,6 +45,8 @@ const {storeOrder} = require('./OrderHandlers/orderController');
 app.get('/excessReport',dbExcessReport.getExcessReport);
 
 
+app.get('/salesReport', getsalesReport);
+app.get('/menuCustomerView',getCustomerMenu);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 app.get('/restockReport', getRestockReport);
 app.get('/addItemToOrder', addItemToOrder);
