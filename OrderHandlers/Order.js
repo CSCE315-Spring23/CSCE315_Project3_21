@@ -42,9 +42,37 @@ class Order {
                 let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
                 await pool.query(inventoryUpdate);
             }
+        } 
+    }
+
+    async removeItem(menuItemKey) {
+        console.log("Item to be removed ", menuItemKey);
+
+        let contains = false;
+        for (let i = 0; i < this.itemsOrdered.length; i++) {
+            if (this.itemsOrdered[i] === menuItemKey) {
+                console.log("Removed item: ", this.itemsOrdered[i]);
+                this.itemsOrdered.splice(i, 1);
+                contains = true;
+                break;
+            }
+        }
+        if (contains === false) {
+            return;
         }
 
-        
+        let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
+        let inventoryResults = await pool.query(inventoryquantity_Query);
+        let InvQrows = inventoryResults.rows;
+
+        for (let i = 0; i < InvQrows.length; i++) {
+            let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+            await pool.query(inventoryUpdate);
+        }
+
+        let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
+        let priceResult = await pool.query(priceQuery);
+        this.totalprice -= priceResult.rows[0].price;
     }
 
     async createOrder() {
@@ -64,7 +92,7 @@ class Order {
         }
         await pool.query(newOrderQuery);
 
-        // Next create every entry for order_to_menu table
+        // Next create entries for every menu item ordered in order_to_menu table
         let orderIDQuery = "SELECT order_key FROM order_to_menu WHERE order_key=(SELECT max(order_key) FROM order_to_menu)";
         let orderIDResult = await pool.query(orderIDQuery);
         let newOrderID = orderIDResult.rows[0].order_key + 1;

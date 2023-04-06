@@ -40,8 +40,11 @@ app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayReco
 app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
 
 const dbExcessReport = require('./excessReport');
+/// Functions required for creating an order
 const {addItemToOrder} = require('./OrderHandlers/orderController');
 const {storeOrder} = require('./OrderHandlers/orderController');
+const {removeItemFromOrder} = require('./OrderHandlers/orderController');
+
 app.get('/excessReport',dbExcessReport.getExcessReport);
 
 
@@ -49,7 +52,8 @@ app.get('/salesReport', getsalesReport);
 app.get('/menuCustomerView',getCustomerMenu);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 app.get('/restockReport', getRestockReport);
-app.get('/addItemToOrder', addItemToOrder);
+app.get('/addItem', addItemToOrder);
+app.get('/removeItem', removeItemFromOrder);
 app.get('/storeOrder', storeOrder);
 
 app.listen(port, () => {
