@@ -58,6 +58,7 @@ class Order {
             }
         }
         if (contains === false) {
+            console.log("Order does not contain ", menuItemKey);
             return;
         }
 
