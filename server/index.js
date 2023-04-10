@@ -40,6 +40,7 @@ app.delete('/users/:id', db.deleteUser);
 const dbInventoryLevels = require('./inventoryLevelsEndDay');
 app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayRecommended);
 app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
+app.get('/inventoryLevelsEndDayCompletePlaceRestock', dbInventoryLevels.getInventoryLevelsEndDayCompletePlaceRestock);
 
 const dbExcessReport = require('./excessReport');
 /// Functions required for creating an order

@@ -94,9 +94,81 @@ const getInventoryLevelsEndDayRecordArrival = (request, response) => {
     response.status(200).send('Restock Order Process Completed Successfully, see console for more details');
 };
 
+const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
+    //see placeRestockOrderButton from project 2 for reference 
+    //get and format todays date
+    const date = new Date();
+    const year = date.getFullYear();
+    const monthIndex = padInt(date.getMonth()+1);
+    const day = padInt(date.getDate());
+    const hour = padInt(date.getHours());
+    const min = padInt(date.getMinutes());
+    const seconds = padInt(date.getSeconds());
+    
+    //create new order in restock_order with todays date
+    let maxIdQuery = "SELECT Id FROM restock_order WHERE id=(SELECT max(id) FROM restock_order) LIMIT 1;";
+    pool.query(maxIdQuery, (error, results) => {
+        if (error) {
+            throw error;
+        }
+        let id = (results.rows)[0].id+1;
+        //console.log(id);
+
+        const formatted = `${year}-${monthIndex}-${day} ${hour}:${min}:${seconds}`;
+        let cmdStr = "INSERT INTO restock_order (id,created,arrived) VALUES ("+id+",'"+formatted+"',NULL)";
+        pool.query(cmdStr, (error, results) => {
+            if (error) {
+                throw error;
+            }
+            console.log('Restock Order',id,'was created at', formatted);//'YYYY-MM-DD hh:mm:ss'
+
+            //get the id for relationship_restock to inventory (because serial isn't working right)
+            let maxIdQuery2 = "SELECT Id FROM relationship_restocktoinventory WHERE id=(SELECT max(id) FROM relationship_restocktoinventory) LIMIT 1;";
+            pool.query(maxIdQuery2, (error, results) => {
+                if (error) {
+                    throw error;
+                }
+                //get all values from inventory_table table 
+                let id2 = (results.rows)[0].id+1;
+                //get all inventory items
+                let inventoryQuery = "SElECT * FROM inventory_item;";
+                pool.query(inventoryQuery,(error,results) => {
+                    if(error){
+                        throw error;
+                    }
+                    let inventoryRows = results.rows;
+                    for(let i = 0; i < inventoryRows.length; i++){
+                        //update the relationship table if there are any shipment units in the quantity
+                        let updateRelationalTable = "INSERT INTO relationship_restocktoinventory (id, inventory_key, restockorder_key, quantity) VALUES("
+                        +id2+",'"
+                        +inventoryRows[i].itemname+"',"
+                        +id+", '"
+                        +inventoryRows[i].recommendedreorder
+                        +"');";
+
+                        if(inventoryRows[i].recommendedreorder > 0){
+                            //console.log(updateRelationalTable);
+                            id2++;
+                            pool.query(updateRelationalTable,(error,results) =>{
+                                if(error){
+                                    throw error;
+                                }
+                                //insert into does not have any results to worry about
+                                
+                            });
+                        }
+                    }
+                    console.log('All the appropriate inventory items were assosicated with the restock in the relationship table');
+                });
+            });
+        });
+
+    });
+    response.status(200).send('InventoryLevelsEndDayCompletePlaceRestock Completed Successfully, see console for more details');
+}
 
 module.exports = {
     getInventoryLevelsEndDayRecommended,
     getInventoryLevelsEndDayRecordArrival,
-
+    getInventoryLevelsEndDayCompletePlaceRestock,
 };
