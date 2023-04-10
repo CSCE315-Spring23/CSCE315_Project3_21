@@ -1,15 +1,95 @@
 const pool = require("./DB");
 
-/* helper methods */
 
 /* GUI navigation methods */
 /*
     switchtoManagerView() ("Back" button)
 */
+
+/* helper methods */
+
+async function createMenuToInventoryRelationships(itemName, listRelationships){
+    // find insertion point as an index
+        try{
+            let query_inspt = "SELECT id FROM relationship_menutoinventory_unitquantities ORDER BY id DESC LIMIT 1;"
+            let result_inspt = await pool.query(query_inspt);
+            if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: test the case where table is empty */
+                return;
+            }
+            h = 1 + result_inspt.rows[0].id;
+        }
+        catch (err) {
+            console.error(err.message);
+            return;
+        }
+        System.out.println(h);
+    // parse tokens
+        tokenArray = listRelationships.split("\\s*[,:]\\s*");
+    // make insertions
+        for (i = 0; i < tokenArray.length && tokenArray.length >=2; i+=2){
+            try{
+                let query_ins = "INSERT INTO relationship_menutoinventory_unitquantities (id,menuitemkey,inventoryitemkey,unitquantity) VALUES("
+                +"'"+ (h + i/2) + "', "
+                +"'"+itemName+"', "
+                +"'"+tokenArray[i]+"', "
+                +"'"+tokenArray[i+1]+"'"
+                +");";
+                let result_ins = await pool.query(query_ins);
+                /* TODO: alert user when insertion fails */
+                System.out.println(result_ins.command);
+                System.out.println(result_ins.fields);
+                System.out.println(result_ins.oid);
+                System.out.println(result_ins.rowCount);
+                System.out.println(result_ins.rows);
+            } catch (err) {
+                console.error(err.message);
+            }
+        }
+
+};
+
+async function createMenuToRestrictionsRelationships(itemName, listRelationships){
+    // find insertion point as an index
+        try{
+            let query_inspt = "SELECT id FROM relationship_menutodietaryrestriction ORDER BY id DESC LIMIT 1;"
+            let result_inspt = await pool.query(query_inspt);
+            if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: test the case where table is empty */
+                return;
+            }
+            h = 1 + result_inspt.rows[0].id;
+        }
+        catch (err) {
+            console.error(err.message);
+            return;
+        }
+        System.out.println(h);
+    // parse tokens
+        tokenArray = listRelationships.split("\\s*[,]\\s*");
+    // make insertions
+        for (i = 0; i < tokenArray.length; i+=2){
+            try{
+                let query_ins = "INSERT INTO relationship_menutodietaryrestriction (id,menuitemkey,dietaryrestrictionkey) VALUES("
+                +"'"+ (h + i) + "', "
+                +"'"+itemName+"', "
+                +"'"+tokenArray[i]+"'"
+                +");";
+                let result_ins = await pool.query(query_ins);
+                /* TODO: alert user when insertion fails */
+                System.out.println(result_ins.command);
+                System.out.println(result_ins.fields);
+                System.out.println(result_ins.oid);
+                System.out.println(result_ins.rowCount);
+                System.out.println(result_ins.rows);
+            } catch (err) {
+                console.error(err.message);
+            }
+        }
+};
+
 /* DB interaction methods */
 /*
     Submit name of menu item you would like to view in the table; get all columns for that row.
-    EXAMPLE QUERY IN POSTMAN:
+    EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
         http://localhost:3000/changeMenu/readMenuItem/Chicken Tortilla Soup
         http://localhost:3000/changeMenu/readMenuItem/Waffle Potato Chips
         http://localhost:3000/changeMenu/readMenuItem/Not a Menu Item
@@ -62,8 +142,8 @@ async function readMenuItem(request, response){
     }
 };
 /* Get the itemnames column of the menu_item table.
-    EXAMPLE QUERY IN POSTMAN:
-    http://localhost:3000/changeMenu/readitemnames
+    EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
+    http://localhost:3000/changeMenu/readMenuItemNames
     (no request body)  
 */
 const readMenuItemNames =(request, response) => {
@@ -78,7 +158,7 @@ const readMenuItemNames =(request, response) => {
         });
 };
 /* Get the restrictionname column of the dietary_restriction table.
-    EXAMPLE QUERY IN POSTMAN:
+    EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
     http://localhost:3000/changeMenu/readDietaryRestrictionNames
     (no request body)  
 */
@@ -98,36 +178,80 @@ const readDietaryRestrictionNames =(request, response) => {
     If itemname is in menu item table, then update the entry.
     Else, create a new entry.
 
-    EXAMPLE QUERIES IN POSTMAN:
+    EXAMPLE QUERIES IN POSTMAN (ensure that PUT method is selected):
         -create new menu item:
             http://localhost:3000/changeMenu/createOrUpdateMenuItem/Side Salad
-            request body:
+            request body (make sure to select "x-www-form-urlencoded"):
                 {
-                    "price": "499",
-                    "category": "sides",
-                    "imagelink": "https://www.chewboom.com/wp-content/uploads/2023/04/Chick-fil-A-Reverses-Course-Decides-To-Keep-Side-Salad-On-Menu-678x381.jpg",
-                    "menutoinventory": "Lettuce: 20, Tomato: 6",
-                    "menutodietaryrestriction": "vegan, vegetarian, gluten-free, dairy-free, nut-free"
+                    price: $4.99,
+                    category: sides,
+                    imagelink: https://www.chewboom.com/wp-content/uploads/2023/04/Chick-fil-A-Reverses-Course-Decides-To-Keep-Side-Salad-On-Menu-678x381.jpg,
+                    menutoinventory: Lettuce: 20, Tomato: 6
+                    menutodietaryrestriction: vegan, vegetarian, gluten-free, dairy-free, nut-free
                 }
+        - check:
+                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+        -update menu item
+            http://localhost:3000/changeMenu/createOrUpdateMenuItem/Side Salad
+            request body (make sure to select "x-www-form-urlencoded"):
+            {
+                price: $2.25,
+                category: dessert,
+                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
+                menutoinventory: ""
+                menutodietaryrestriction: ""
+            }
+        - check:
+                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+        -update menu item
+            http://localhost:3000/changeMenu/createOrUpdateMenuItem/Side Salad
+            request body (make sure to select "x-www-form-urlencoded"):
+            {
+                price: $2.25,
+                category: dessert,
+                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
+                menutoinventory: "Lettuce: 20"
+                menutodietaryrestriction: "vegan"
+            }
+        - check:
+                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+        -update menu item
+            http://localhost:3000/changeMenu/createOrUpdateMenuItem/Side Salad
+            request body (make sure to select "x-www-form-urlencoded"):
+            {
+                price: $2.25,
+                category: dessert,
+                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
+                menutoinventory: "Lettuce: 20, Tomato: 6, typo: 0, Chocolate Fudge Brownie: 0"
+                menutodietaryrestriction: "vegan"
+            }
+        - check:
+                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+        -update menu item
+            http://localhost:3000/changeMenu/createOrUpdateMenuItem/Side Salad
+            request body (make sure to select "x-www-form-urlencoded"):
+            {
+                price: $2.25,
+                category: dessert,
+                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
+                menutoinventory: "Lettuce: 20, Tomato: 6, Chocolate Fudge Brownie: 0"
+                menutodietaryrestriction: "typo"
+            }
+        - check:
+                http://localhost:3000/changeMenu/readMenuItem/Side Salad
         -erase new menu item through command-line (undo the effects of the test):
             DELETE FROM menu_item WHERE itemname='Side Salad';
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem/Chocolate Fudge Brownie
-            request body:
-            {
-                "price": "225",
-                "category": "dessert",
-                "imagelink": "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
-                "menutoinventory": "
-                "menutodietaryrestriction": "
-            }
+            DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = 'Side Salad';
+            DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = 'Side Salad';
+        - check:
+                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+
 */
 async function createOrUpdateMenuItem(request, response){
     try{
         const {itemname} = request.params;
         const {price, category, imagelink, menutoinventory, menutodietaryrestriction} = request.body;
-        let priceStr = toString(price);
-        priceNum = parseInt(priceStr.substring(1,priceStr.length-3))*100+parseInt(priceStr.substring(priceStr.length-2));
+        const priceStr = price.substring(1,price.length-3) + price.substring(price.length-2);
         // build first query
             let query = "SELECT COUNT(itemname) FROM menu_item WHERE itemname = '"+ itemname +"';";
         // execute first query, store results.
@@ -136,26 +260,38 @@ async function createOrUpdateMenuItem(request, response){
             console.log("This item does not exist. It will be created.");
             // create an entry in menu_item
                 let query1 = "INSERT INTO menu_item (itemname, price, category, imagelink) VALUES ("
-                    +itemname+","
-                    +priceNum+","
-                    +category+","
-                    +imagelink
+                    +"'"+itemname+"',"
+                    +priceStr+","
+                    +"'"+category+"',"
+                    +"'"+imagelink+"'"
                     +");";
-                let result1 = await pool.query(query);
-                console.log("query executed");
+                await pool.query(query1);
             // create entries in relationship_menutoinventory_unitquantities
-                
+                createMenuToInventoryRelationships(itemname, menutoinventory);
             // create entries in relationship_menutodietaryrestriction
+                createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
         }
         else if (result.rows[0].count == '1'){
-            // console.log("This item exists. It will be updated.");
+            console.log("This item exists. It will be updated.");
 
             // update the entry in menu_item
-
+                let query_upd = "UPDATE menu_item SET "
+                +"price = "+ priceStr +","
+                +"category = "+"'"+category+"'"+","
+                +"imagelink = "+"'"+imagelink+"'"
+                +" WHERE itemname = '"+ itemname +"';";
             // delete entries in relationship_menutoinventory_unitquantities
+                let query_del1 = "DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '"
+                + itemname +"';"
+                let result_del1 = await pool.query(query_del1);
             // create entries in relationship_menutoinventory_unitquantities
+                createMenuToInventoryRelationships(itemname, menutoinventory);
             // delete entries in relationship_menutodietaryrestriction
+                let query_del2 = "DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = '"
+                + itemname +"';"
+                let result_del2 = await pool.query(query_del2);
             // create entries in relationship_menutodietaryrestriction
+                createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
         }
         else{
             throw Error('COUNT sql command returned unexpected result');
@@ -163,6 +299,7 @@ async function createOrUpdateMenuItem(request, response){
     }
     catch (err){
         console.error(err.message);
+        response.status(500).json({message : "Error in creating/updating menu item."});
     }
 };
 
