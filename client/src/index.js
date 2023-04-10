@@ -1,13 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import RestockReportPage from './pages/RestockReportPage';
+import ErrorPage from './pages/ErrorPage';
+import LandingPage from './pages/LandingPage';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "/RestockReportPage",
+    element: <RestockReportPage />,
+    errorElement: <ErrorPage />,
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 

@@ -28,7 +28,7 @@ export default function MainAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Chick-fil-A POS
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>
