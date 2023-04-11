@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RestockReportPage from './pages/RestockReportPage';
+import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
 
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
     element: <RestockReportPage />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/ExcessReportPage",
+    element: <ExcessReportPage />,
+    errorElement: <ErrorPage />,
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
