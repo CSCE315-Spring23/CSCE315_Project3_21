@@ -4,6 +4,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import ExcessReportPage from '../pages/ExcessReportPage';
+
 
 export default function AppBarMenuButton() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -43,6 +45,7 @@ export default function AppBarMenuButton() {
         <MenuItem onClick={handleClose}>Restock Report</MenuItem>
         <MenuItem onClick={handleClose}>What Sells Together</MenuItem>
         <MenuItem onClick={handleClose}>Z Report</MenuItem>
+        <MenuItem onClick={handleClose}>Excess Report</MenuItem>
         <MenuItem onClick={handleClose}>Etc...</MenuItem>
       </Menu>
     </div>
