@@ -47,6 +47,7 @@ app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventor
 const {addItemToOrder} = require('./OrderHandlers/orderController');
 const {storeOrder} = require('./OrderHandlers/orderController');
 const {removeItemFromOrder} = require('./OrderHandlers/orderController');
+const getXreport = require('./Xreport');
 
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);
@@ -61,6 +62,7 @@ app.get('/restockReport', getRestockReport);
 app.get('/addItem', addItemToOrder);
 app.get('/removeItem', removeItemFromOrder);
 app.get('/storeOrder', storeOrder);
+app.get('/Xreport', getXreport);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
