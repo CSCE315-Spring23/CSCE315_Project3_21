@@ -41,13 +41,14 @@ const dbInventoryLevels = require('./inventoryLevelsEndDay');
 app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayRecommended);
 app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
 app.get('/inventoryLevelsEndDayCompletePlaceRestock', dbInventoryLevels.getInventoryLevelsEndDayCompletePlaceRestock);
+app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventoryLevelsEndDayCompleteDaySummary);
 
-const dbExcessReport = require('./excessReport');
 /// Functions required for creating an order
 const {addItemToOrder} = require('./OrderHandlers/orderController');
 const {storeOrder} = require('./OrderHandlers/orderController');
 const {removeItemFromOrder} = require('./OrderHandlers/orderController');
 
+const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);
 
 

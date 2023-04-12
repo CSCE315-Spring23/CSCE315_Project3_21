@@ -115,7 +115,7 @@ const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
         //console.log(id);
 
         const formatted = `${year}-${monthIndex}-${day} ${hour}:${min}:${seconds}`;
-        let cmdStr = "INSERT INTO restock_order (id,created,arrived) VALUES ("+id+",'"+formatted+"',NULL)";
+        let cmdStr = "INSERT INTO restock_order (id,created,arrived) VALUES ("+id+",'"+formatted+"',NULL);";
         pool.query(cmdStr, (error, results) => {
             if (error) {
                 throw error;
@@ -167,8 +167,48 @@ const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
     response.status(200).send('InventoryLevelsEndDayCompletePlaceRestock Completed Successfully, see console for more details');
 }
 
+const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
+    //get and format todays date
+    const date = new Date();
+    const year = date.getFullYear();
+    const monthIndex = padInt(date.getMonth()+1);
+    const day = padInt(date.getDate());
+    const hour = padInt(date.getHours());
+    const min = padInt(date.getMinutes());
+    const seconds = padInt(date.getSeconds());
+    
+    
+    //send command to get the all orders after the last day summary was created
+    let queryStr = "SELECT * from order_table where ordertimestamp > (SELECT max(daysumm_timestamp) from day_summary);";
+    pool.query(queryStr, (error, results) => {
+        if (error) {
+            throw error;
+        }
+        let rows1 = results.rows;
+        let totalDayPrice = 0;
+        let totalNumOrders = rows1.length;
+        for(let i = 0; i < rows1.length; i++){
+            totalDayPrice+=rows1[i].totalprice;
+        }
+        const formatted = `${year}-${monthIndex}-${day} ${hour}:${min}:${seconds}`;
+        let updateQueryStr = "INSERT INTO day_summary (daytotalsales, daytotalnumorders, daysumm_timestamp) VALUES ("+totalDayPrice+","+totalNumOrders+",'"+formatted+"');";
+        console.log(updateQueryStr);
+        pool.query(updateQueryStr, (error, results) => {
+            if (error) {
+                throw error;
+            }
+        });
+    });
+
+    response.status(200).send('InventoryLevelsEndDayCompleteDaySummary Completed Successfully, see console for more details');
+}
+
+
+
+
 module.exports = {
     getInventoryLevelsEndDayRecommended,
     getInventoryLevelsEndDayRecordArrival,
     getInventoryLevelsEndDayCompletePlaceRestock,
+    getInventoryLevelsEndDayCompleteDaySummary,
 };
