@@ -51,6 +51,8 @@ const {removeItemFromOrder} = require('./OrderHandlers/orderController');
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);
 
+const dbZReport = require('./zReport');
+app.get('/zReport',dbZReport.getZReport);
 
 app.get('/salesReport', getsalesReport);
 app.get('/menuCustomerView',getCustomerMenu);
