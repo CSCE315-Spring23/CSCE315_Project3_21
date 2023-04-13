@@ -7,6 +7,7 @@ import RestockReportPage from './pages/RestockReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
+import ServerPage from './pages/serverPage';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
   {
     path: "/LoginPage",
     element: <LoginPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/ServerPage",
+    element: <ServerPage/>,
     errorElement: <ErrorPage />,
   }
 ])
