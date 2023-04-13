@@ -88,7 +88,6 @@ class Order {
 
         const newOrderQuery = {
             text: `INSERT INTO ordertable_test (id,ordertimestamp,totalprice) values ($1,(to_timestamp(${Date.now()} / 1000.0)), $2)`,
-            //text: 'INSERT INTO ordertable_test (Id,ordertimestamp,totalprice) VALUES ($1, $2, $3)',
             values: [orderID, this.totalprice],
         }
         await pool.query(newOrderQuery);
