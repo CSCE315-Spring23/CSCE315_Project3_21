@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RestockReportPage from './pages/RestockReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
     element: <RestockReportPage />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/LoginPage",
+    element: <LoginPage/>,
+    errorElement: <ErrorPage />,
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
