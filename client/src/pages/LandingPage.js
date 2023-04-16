@@ -7,6 +7,7 @@ export default function LandingPage() {
         <h1>This is a WIP landing page</h1>
         <Link to ="/RestockReportPage"><button>Restock Report</button></Link>
         <Link to ="/ExcessReportPage"><button>Excess Report</button></Link>
+        <Link to ="/inventoryLevelsEndDaypage"><button>Inventory Levels End Day </button></Link>
       </div>
     );
   }
