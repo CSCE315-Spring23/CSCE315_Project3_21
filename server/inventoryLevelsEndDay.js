@@ -35,6 +35,15 @@ const getInventoryLevelsEndDayRecommended = (request, response) => {
     });
 };
 
+const getInventoryLevelsEndDayPendingRestock = (request, response) => {
+    pool.query('SELECT * from restock_order where arrived IS NULL;', (error, results) => {
+    if (error) {
+        throw error;
+    }
+    response.status(200).json(results.rows);
+    });
+};
+
 
 const getInventoryLevelsEndDayRecordArrival = (request, response) => {
     const restockOrderIdUsrInput = request.query.id;
@@ -208,6 +217,7 @@ const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
 
 module.exports = {
     getInventoryLevelsEndDayRecommended,
+    getInventoryLevelsEndDayPendingRestock,
     getInventoryLevelsEndDayRecordArrival,
     getInventoryLevelsEndDayCompletePlaceRestock,
     getInventoryLevelsEndDayCompleteDaySummary,

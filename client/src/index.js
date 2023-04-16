@@ -7,6 +7,7 @@ import RestockReportPage from './pages/RestockReportPage';
 import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
+import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
     path: "/ExcessReportPage",
     element: <ExcessReportPage />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/InventoryLevelsEndDayPage",
+    element: <InventoryLevelsEndDayPage />,
+    errorElement:<ErrorPage />
   }
 ])
 
