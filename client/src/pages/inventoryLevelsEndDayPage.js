@@ -33,31 +33,31 @@ function InventoryLevelsEndDayPage() {
             </MainAppBar>
         </Grid>
 
-        <Grid xs={12}>
-            <Grid>
-                <TextField helperText = "Enter Start Timestamp:" id = "startTextField" label = "YYYY-MM-DD HH:MM:SS"/>
-                <button>Submit</button>
-            </Grid>
-            <Title>
-                Inventory Item CRUD table to complete manual inventory or change recommended reorder quantity
-            </Title>
-            <Item>
+        <Grid xs = {6}>
+            Inventory Item CRUD table to complete manual inventory or change recommended reorder quantity
+            PLACEHOLDER!!!!!!
             <PendingRestockTable />
-                <button>Place Restock Order</button>
-            </Item>
-
-            <Title>
-                Table with all pending restock orders
-            </Title>
-            <Grid>
-                <TextField helperText = "Submit the id of the restock order:" id = "pendingRestockId"/>
-                <button>Record Arrival</button>
-            </Grid>
+        </Grid>
+        <Grid xs = {3}>
             <Item>
+                Table with all pending restock orders
                 <PendingRestockTable />
             </Item>
-
         </Grid>
+
+        <Grid xs = {3}>
+            <Item>
+                <button>Place Restock Order</button>
+            </Item>
+            <Item>
+                <TextField helperText = "Submit the id of the restock order:" id = "pendingRestockId"/>
+                <button>Record Arrival</button>
+            </Item>
+            <Item>
+                <button>End Day/ create Day Summary/ create Z Report</button>
+            </Item>
+            </Grid>
+
     </Grid>
     </div>
     
