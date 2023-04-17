@@ -43,12 +43,22 @@ app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndD
 app.get('/inventoryLevelsEndDayCompletePlaceRestock', dbInventoryLevels.getInventoryLevelsEndDayCompletePlaceRestock);
 app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventoryLevelsEndDayCompleteDaySummary);
 
-/// Functions required for creating an order
-const {addItemToOrder} = require('./OrderHandlers/orderController');
-const {storeOrder} = require('./OrderHandlers/orderController');
-const {removeItemFromOrder} = require('./OrderHandlers/orderController');
+/*    -ORDER FUNCTIONALITY-     */
+const {addItemToOrder, storeOrder, removeItemFromOrder} = require('./OrderHandlers/orderController');
+app.get('/addItem', addItemToOrder);
+app.get('/removeItem', removeItemFromOrder);
+app.get('/storeOrder', storeOrder);
+
+/*    -X REPORT-     */
 const getXreport = require('./Xreport');
-const getMenu = require('./queryMenu');
+app.get('/Xreport', getXreport);
+
+/*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
+const {getMenu, getEntrees, getSides, getDesserts} = require('./queryMenu');
+app.get('/ServerPage', getMenu);
+app.get('/ServerPage/getEntrees', getEntrees);
+app.get('/ServerPage/getSides', getSides);
+app.get('/ServerPage/getDesserts', getDesserts);
 
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);
@@ -60,11 +70,7 @@ app.get('/salesReport', getsalesReport);
 app.get('/menuCustomerView',getCustomerMenu);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 app.get('/restockReport', getRestockReport);
-app.get('/addItem', addItemToOrder);
-app.get('/removeItem', removeItemFromOrder);
-app.get('/storeOrder', storeOrder);
-app.get('/Xreport', getXreport);
-app.get('/ServerPage', getMenu);
+
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
