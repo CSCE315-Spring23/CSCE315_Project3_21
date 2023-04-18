@@ -15,11 +15,23 @@ code {
 .item-button button{
   margin-top: 20px;
   width: 150px;
-  background-color: #CB4335  ;
+  height: 50px;
+  background-color: #CB4335;
   color: antiquewhite;
   font-size: medium;
 }
 
-.itemCard Card{
-  font-size: larger;
+.item-description .price {
+  color: #3498DB;
+  font-size: 18px;
+}
+
+.category-button {
+  margin-left: 20px;
+  width: 300px;
+  height: 100px;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: #85C1E9;
+  border-radius: 25%;
 }

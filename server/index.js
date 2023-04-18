@@ -59,7 +59,6 @@ app.get('/ServerPage/getMenu', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);
 app.get('/ServerPage/getSides', getSides);
 app.get('/ServerPage/getDesserts', getDesserts);
-app.get('/StaticMenu', getMenu);
 
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);

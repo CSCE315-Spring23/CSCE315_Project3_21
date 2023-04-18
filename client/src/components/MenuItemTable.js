@@ -174,9 +174,9 @@ export default class MenuItemTable extends React.Component {
               colors="primary:#121331,secondary:#c71f16"
               style={{width:'75px',height:'75px'}}>
           </lord-icon>
-            <p>
-            Desserts
-            </p>
+          <p>
+          Desserts
+          </p>
           </div>
         </Button>
       <MaterialReactTable 

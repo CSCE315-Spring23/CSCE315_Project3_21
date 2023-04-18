@@ -1,14 +1,13 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import MainAppBar from '../components/MainAppBar.js';
-import MenuItemTable from '../components/MenuItemTable.js';
 import axios from "axios";
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
-import {Row, Col} from 'antd';
-import ItemList from "../components/ItemList.js";
+import {Row, Col, Button} from 'antd';
+import ItemCard from "../components/ItemCard.js";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -44,6 +43,45 @@ const StaticMenu = () => {
         getAllMenu()
     },[])
 
+    const getEntrees = async() => {
+      axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
+      .then(res => {
+        const menuData = res.data;
+        setItemsData(menuData);
+        console.log(menuData);
+        //this.setState({ data: menuData });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    }
+
+    const getSides = async() => {
+      axios.get(`http://localhost:3001/serverPage/getSides`, config)
+      .then(res => {
+        const menuData = res.data;
+        setItemsData(menuData);
+        console.log(menuData);
+        //this.setState({ data: menuData });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    }
+
+    const getDesserts = async() => {
+      axios.get(`http://localhost:3001/serverPage/getDesserts`, config)
+      .then(res => {
+        const menuData = res.data;
+        setItemsData(menuData);
+        console.log(menuData);
+        //this.setState({ data: menuData });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    }
+
     return (
         <div className="serverPage">
         <Grid container spacing={2}>
@@ -53,23 +91,49 @@ const StaticMenu = () => {
             </MainAppBar>
           </Grid>
           <Grid xs = {12}>
+            <Button className="category-button" onClick={getEntrees}> 
+              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+              <lord-icon
+              src="https://cdn.lordicon.com/xnfkhcfn.json"
+              trigger="hover"
+              colors="primary:#c71f16,secondary:#121331"
+              style={{width:'75px' ,height:'75px'}}>
+              </lord-icon>
+              Entrees
+            </Button>
+
+            <Button className="category-button" onClick={getSides}> 
+              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+              <lord-icon
+                  src="https://cdn.lordicon.com/fkytfmrm.json"
+                  trigger="hover"
+                  colors="primary:#121331,secondary:#c71f16"
+                  style={{width:'75px',height:'75px'}}>
+              </lord-icon>    
+              Sides
+            </Button>
+
+            <Button className="category-button" onClick={getDesserts}> 
+              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+              <lord-icon
+                  src="https://cdn.lordicon.com/elzyzcar.json"
+                  trigger="hover"
+                  colors="primary:#121331,secondary:#c71f16"
+                  style={{width:'75px',height:'75px'}}>
+              </lord-icon>
+              Desserts
+            </Button>
           </Grid>
           <Grid xs={12}>  
             <Row >
                 {
-                    itemsData.map(item => (
-                        <Col span = {4}>
-                        <ItemList item = {item} />
-                        </Col>
-                    ))
+                  itemsData.map(item => (
+                      <Col span = {4}>
+                      <ItemCard item = {item} />
+                      </Col>
+                  ))
                 }
             </Row>
-          </Grid>
-          <Grid xs={6}>
-            <Item>Placeholder 1 w/ xs=6</Item>
-          </Grid>
-          <Grid xs={6}>
-            <Item>Placeholder 2 w/ xs=6</Item>
           </Grid>
         </Grid>
   
