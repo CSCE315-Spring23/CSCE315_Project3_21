@@ -1,15 +1,13 @@
 
 import PendingRestockTable from '../components/PendingRestockTable.js';
-import React from 'react';
-
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
-import { TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
+import {useRef} from 'react';
 
 const config = {
     headers: {
@@ -17,8 +15,6 @@ const config = {
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
 };
-
-
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -51,10 +47,6 @@ function placeRestockOnclick(){
     });
 }
 
-function recordArrivalOnclick(){
-    alert('hello1');
-}
-
 function endDayOnclick(){
     axios.get(`http://localhost:3001/inventoryLevelsEndDay`, config)
         .then(res => {
@@ -75,6 +67,21 @@ function endDayOnclick(){
 
 // The grid max xs = 12
 function InventoryLevelsEndDayPage() {
+    const inputRef = useRef(null);
+    function recordArrivalOnclick(){
+        let idVal = inputRef.current.value;
+        let str = `http://localhost:3001/inventoryLevelsEndDayArrive?id=`+idVal;
+        axios.get(str, config)
+        .then(res => {
+            let str2 = idVal +' was processed as arrived';
+        alert(str2);
+        })
+        .catch((err) => {
+            alert(err);
+    });
+
+    }
+
     return (
     <ThemeProvider theme={cfa_theme}>
     <div className="InventoryLevelsEndDayPage">
@@ -101,7 +108,8 @@ function InventoryLevelsEndDayPage() {
                 <Button variant = 'contained' onClick = {placeRestockOnclick}>Place Restock Order</Button>
             </Item>
             <Item>
-                <TextField helperText = "Submit the id of the restock order:" id = "pendingRestockId"/>
+                Submit the id of the restock order:
+                <input ref = {inputRef} type = "text" id = "pendingRestockId" name = "pendingRestockId"/>
                 <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
             </Item>
             <Item>
