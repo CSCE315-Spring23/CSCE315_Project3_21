@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RestockReportPage from './pages/RestockReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
+import WhatSalesTogether from './pages/WhatSalesTogether';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
   {
     path: "/RestockReportPage",
     element: <RestockReportPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/WhatSalesTogether",
+    element: <WhatSalesTogether />,
     errorElement: <ErrorPage />,
   },
 ])
