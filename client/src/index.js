@@ -8,6 +8,7 @@ import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/serverPage';
+import StaticMenu from './pages/StaticMenu';
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/ServerPage",
+    path: "/ServerPage/GetMenu",
     element: <ServerPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/StaticMenu",
+    element: <StaticMenu/>,
     errorElement: <ErrorPage />,
   }
 ])

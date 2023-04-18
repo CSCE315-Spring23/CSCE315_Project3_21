@@ -29,9 +29,10 @@ const columns = [
       <Button variant = "contained"
         onClick={() => {
           alert(row.original.itemname) 
-          axios.get(`http://localhost:3001/XReport`, config)
+          axios.get(`http://localhost:3001/addItem?menuitem=` + row.original.itemname, config)
           .then(res => {
           console.log("Howdy")
+          console.log(res.data);
           })
           .catch((err) => {
           console.error(err);
@@ -69,6 +70,7 @@ export default class MenuItemTable extends React.Component {
 
     this.state = {
       data : [],
+      orderdata : [],
     };
 
     this.handleEntrees = this.handleEntrees.bind(this)
@@ -77,7 +79,7 @@ export default class MenuItemTable extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:3001/serverPage`, config)
+    axios.get(`http://localhost:3001/serverPage/getMenu`, config)
       .then(res => {
         const menuData = res.data;
         this.setState({ data: menuData });
@@ -140,7 +142,6 @@ export default class MenuItemTable extends React.Component {
           <p>
           Entrees
           </p>
-
         </Button>   
         <Button 
         variant = "outlined" 
@@ -190,7 +191,6 @@ export default class MenuItemTable extends React.Component {
         },
       }}
       
-      //handleEntrees = {this.handleEntrees}
 
       muiTableHeadCellProps={{
       //simple styling with the `sx` prop, works just like a style prop in this example
@@ -206,7 +206,7 @@ export default class MenuItemTable extends React.Component {
       }}
     />
 
-        </div>);
+    </div>);
   }
 
 };

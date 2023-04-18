@@ -55,10 +55,11 @@ app.get('/Xreport', getXreport);
 
 /*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
 const {getMenu, getEntrees, getSides, getDesserts} = require('./queryMenu');
-app.get('/ServerPage', getMenu);
+app.get('/ServerPage/getMenu', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);
 app.get('/ServerPage/getSides', getSides);
 app.get('/ServerPage/getDesserts', getDesserts);
+app.get('/StaticMenu', getMenu);
 
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);

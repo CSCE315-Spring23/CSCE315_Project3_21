@@ -11,6 +11,7 @@ import { Button, Menu, MenuItem, ThemeProvider, createTheme } from '@mui/materia
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 
+
 const config = {
   headers: {
     "Access-Control-Allow-Origin": "*",
@@ -43,7 +44,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 // The grid max xs = 12
-function serverPage() {
+export default class ServerPage extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render () {
   return (
     <ThemeProvider theme={theme}>
     <div className="serverPage">
@@ -53,59 +59,16 @@ function serverPage() {
             
           </MainAppBar>
         </Grid>
-        <Grid xs = {12} >
-        {/* <Button 
-        variant = "outlined" 
-        style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        
-        >
-          <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-          <lord-icon
-              src="https://cdn.lordicon.com/xnfkhcfn.json"
-              trigger="hover"
-              colors="primary:#c71f16,secondary:#121331"
-              style={{width:'75px' ,height:'75px'}}>
-          </lord-icon>
-          <p>
-          Entrees
-          </p>
-
-        </Button>
-        <Button variant = "outlined" style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}>
-          <div align = "center">
-            <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-            <lord-icon
-                src="https://cdn.lordicon.com/fkytfmrm.json"
-                trigger="hover"
-                colors="primary:#121331,secondary:#c71f16"
-                style={{width:'75px',height:'75px'}}>
-            </lord-icon>
-            <p>
-            Sides
-            </p>
-          </div>
-        </Button>
-        <Button variant = "outlined" style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}>
-          <div align = "center">
-          <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-          <lord-icon
-              src="https://cdn.lordicon.com/elzyzcar.json"
-              trigger="hover"
-              colors="primary:#121331,secondary:#c71f16"
-              style={{width:'75px',height:'75px'}}>
-          </lord-icon>
-            <p>
-            Desserts
-            </p>
-          </div>
-        </Button> */}
+        <Grid xs = {12}>
         </Grid>
-        <Grid xs={12}>
+        <Grid xs={12}>  
+          <Button style={{marginLeft : "100px"}}>
+              Howdy
+          </Button>
           <Item>
-            <MenuItemTable />
+            <MenuItemTable/>
           </Item>
         </Grid>
-
         <Grid xs={6}>
           <Item>Placeholder 1 w/ xs=6</Item>
         </Grid>
@@ -116,8 +79,8 @@ function serverPage() {
 
     </div>
     </ThemeProvider>
-  );
+    );
+  }
 }
 
-export default serverPage;
   
