@@ -4,15 +4,9 @@ import MainAppBar from '../components/MainAppBar.js';
 import MenuItemTable from '../components/MenuItemTable.js';
 import axios from "axios";
 import Grid from '@mui/material/Unstable_Grid2';
-//import React from 'react';
-//import axios from 'axios';
 import { styled } from '@mui/material/styles';
-//import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-//import Grid from '@mui/material/Unstable_Grid2';
-//import MainAppBar from '../components/MainAppBar.js';
-//import MenuItemTable from '../components/MenuItemTable.js';
-import { Button, Menu, MenuItem, ThemeProvider, createTheme } from '@mui/material';
+
 import {Row, Col} from 'antd';
 import ItemList from "../components/ItemList.js";
 
@@ -61,10 +55,10 @@ const StaticMenu = () => {
           <Grid xs = {12}>
           </Grid>
           <Grid xs={12}>  
-            <Row>
+            <Row >
                 {
                     itemsData.map(item => (
-                        <Col xs={24} lg={6} md={12} sm={6}>
+                        <Col span = {4}>
                         <ItemList item = {item} />
                         </Col>
                     ))

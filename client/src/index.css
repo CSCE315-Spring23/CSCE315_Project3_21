@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.item-button button{
+  margin-top: 20px;
+  width: 150px;
+  background-color: #CB4335  ;
+  color: antiquewhite;
+  font-size: medium;
+}
+
+.itemCard Card{
+  font-size: larger;
+}
