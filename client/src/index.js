@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
+import MenuBoard from './pages/MenuBoard.js';
 import { AuthContextProvider } from './login/AuthContext';
 
 
@@ -56,7 +57,12 @@ const router = createBrowserRouter([
   {
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
-    errorElement:<ErrorPage />
+    errorElement:<ErrorPage />,
+  },
+  {
+    path: "/MenuBoard",
+    element: <MenuBoard/>,
+    errorElement: <ErrorPage/>,
   },
 ])
 
