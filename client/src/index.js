@@ -7,7 +7,7 @@ import RestockReportPage from './pages/RestockReportPage';
 import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
-import WhatSalesTogether from './pages/WhatSalesTogether';
+import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
 import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
 import LoginPage from './pages/LoginPage';
 import { AuthContextProvider } from './login/AuthContext';
@@ -24,8 +24,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/WhatSalesTogether",
-    element: <WhatSalesTogether />,
+    path: "/WhatSalesTogetherPage",
+    element: <WhatSalesTogetherPage />,
     errorElement: <ErrorPage />,
   },
   {

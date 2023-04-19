@@ -48,7 +48,7 @@ export default function AppBarMenuButton() {
           Restock Report
         </MenuItem>
 
-        <MenuItem onClick={()=> navigate("/WhatSalesTogether")}>
+        <MenuItem onClick={()=> navigate("/WhatSalesTogetherPage")}>
           What Sells Together
         </MenuItem>
         <MenuItem onClick={()=> navigate("/ExcessReportPage")}>
