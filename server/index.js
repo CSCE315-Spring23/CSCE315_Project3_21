@@ -56,11 +56,12 @@ const getXreport = require('./Xreport');
 app.get('/Xreport', getXreport);
 
 /*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
-const {getMenu, getEntrees, getSides, getDesserts} = require('./queryMenu');
+const {getMenu, getEntrees, getSides, getDesserts, getSomeMenuItems} = require('./queryMenu');
 app.get('/ServerPage', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);
 app.get('/ServerPage/getSides', getSides);
 app.get('/ServerPage/getDesserts', getDesserts);
+app.get('/GetSomeMenuItems',getSomeMenuItems);
 
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);

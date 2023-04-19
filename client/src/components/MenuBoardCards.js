@@ -7,7 +7,7 @@ const MenuBoardItemCard = ({item}) => {
         <div >
             <Card
                 hoverable
-                style ={{width:100, marginBottom: 20, marginLeft: 20, fontSize: '16px', background: '#F2F4F4'}}
+                style ={{width:250,marginBottom: 20, marginLeft: 20, fontSize: '8px', background: '#F2F4F4'}}
                 cover={
                 <img 
                     alt={item.itemname} 
@@ -25,10 +25,9 @@ const MenuBoardItemCard = ({item}) => {
                             {"$" + item.price}
                         </p>
                     </div>
+                    
                 } />
-                <div className = "item-button" >
-                    <Button>Add Item</Button>
-                </div>
+                
 
             </Card>
         </div>

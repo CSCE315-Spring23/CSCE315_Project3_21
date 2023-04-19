@@ -28,8 +28,8 @@ const MenuBoard = () => {
     const [itemsData,setItemsData] = useState([])
 
     useEffect(() => {
-        const getAllMenu = async() => {
-            axios.get(`http://localhost:3001/serverPage`, config)
+        const getSomeMenuItems = async() => {
+            axios.get(`http://localhost:3001/GetSomeMenuItems`, config)
             .then(res => {
               const menuData = res.data;
               setItemsData(menuData);
@@ -40,7 +40,7 @@ const MenuBoard = () => {
               console.error(err);
             });
         }
-        getAllMenu()
+        getSomeMenuItems()
     },[])
 
     const getEntrees = async() => {
@@ -55,6 +55,20 @@ const MenuBoard = () => {
         console.error(err);
       });
     }
+
+    const getFewItems = async() => {
+        axios.get(`http://localhost:3001/GetSomeMenuItems`, config)
+        .then(res => {
+          const menuData = res.data;
+          setItemsData(menuData);
+          console.log(menuData);
+          //this.setState({ data: menuData });
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      }
+  
 
     const getSides = async() => {
       axios.get(`http://localhost:3001/serverPage/getSides`, config)
@@ -83,14 +97,14 @@ const MenuBoard = () => {
     }
 
     return (
-        <div className="serverPage">
+        <div className="MenuBoard">
         <Grid container spacing={2}>
           <Grid xs={12}>
             <MainAppBar>           
             </MainAppBar>
           </Grid>
           <Grid xs = {12}>
-            <Button className="category-button" onClick={getEntrees}> 
+            <Button className="category-button" onClick={getFewItems}> 
               <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
               <lord-icon
               src="https://cdn.lordicon.com/xnfkhcfn.json"
@@ -98,29 +112,7 @@ const MenuBoard = () => {
               colors="primary:#c71f16,secondary:#121331"
               style={{width:'75px' ,height:'75px'}}>
               </lord-icon>
-              Entrees
-            </Button>
-
-            <Button className="category-button" onClick={getSides}> 
-              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-              <lord-icon
-                  src="https://cdn.lordicon.com/fkytfmrm.json"
-                  trigger="hover"
-                  colors="primary:#121331,secondary:#c71f16"
-                  style={{width:'75px',height:'75px'}}>
-              </lord-icon>    
-              Sides
-            </Button>
-
-            <Button className="category-button" onClick={getDesserts}> 
-              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-              <lord-icon
-                  src="https://cdn.lordicon.com/elzyzcar.json"
-                  trigger="hover"
-                  colors="primary:#121331,secondary:#c71f16"
-                  style={{width:'75px',height:'75px'}}>
-              </lord-icon>
-              Desserts
+              Refresh
             </Button>
           </Grid>
           <Grid xs={12}>  
