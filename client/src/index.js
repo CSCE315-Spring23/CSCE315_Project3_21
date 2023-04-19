@@ -7,10 +7,19 @@ import RestockReportPage from './pages/RestockReportPage';
 import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
+<<<<<<< HEAD
 import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
+=======
+
+import LoginPage from './pages/LoginPage';
+import ServerPage from './pages/serverPage';
+import CustomerPage from './pages/CustomerPage';
+import WhatSalesTogether from './pages/WhatSalesTogether';
+>>>>>>> x_report
 import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
 import LoginPage from './pages/LoginPage';
 import { AuthContextProvider } from './login/AuthContext';
+
 
 const router = createBrowserRouter([
   {
@@ -24,8 +33,28 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+<<<<<<< HEAD
     path: "/WhatSalesTogetherPage",
     element: <WhatSalesTogetherPage />,
+=======
+    path: "/LoginPage",
+    element: <LoginPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/ServerPage",
+    element: <ServerPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/Customer",
+    element: <CustomerPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/WhatSalesTogether",
+    element: <WhatSalesTogether />,
+>>>>>>> x_report
     errorElement: <ErrorPage />,
   },
   {
