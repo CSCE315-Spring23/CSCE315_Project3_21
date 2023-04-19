@@ -6,7 +6,7 @@ const addItemToOrder = async (request, response) => {
     const menuItem = request.query.menuitem;
 
     if (!menuItem) {
-        response.status(400).json({error: "Please specify a menu item to add to order"});
+        response.status(200).json({error: "Please specify a menu item to add to order"});
         return;
     }
 
@@ -20,11 +20,16 @@ const removeItemFromOrder = async(request, response) => {
     const menuItem = request.query.menuitem;
 
     if (!menuItem) {
-        response.status(400).json({error: "Please specify a menu item to remove order"});
+        response.status(200).json({error: "Please specify a menu item to remove order"});
         return;
     }
 
     await order.removeItem(menuItem);
+    response.status(200).json(order);
+}
+
+const getOrder = async(request, response) => {
+    //console.log(order);
     response.status(200).json(order);
 }
 
@@ -37,5 +42,6 @@ const storeOrder = async (request, response) => {
 module.exports = {
     addItemToOrder,
     removeItemFromOrder,
-    storeOrder
+    storeOrder,
+    getOrder
 }

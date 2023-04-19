@@ -150,7 +150,7 @@ const SearchUI = ({ search }) => {
   );
 };
 
-function WhatSalesTogether() {
+function WhatSalesTogetherPage() {
   const [data, setData] = React.useState([]);
   const [searching, setSearching] = React.useState(false);
 
@@ -224,4 +224,4 @@ function WhatSalesTogether() {
   );
 }
 
-export default WhatSalesTogether;
+export default WhatSalesTogetherPage;

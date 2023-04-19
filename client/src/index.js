@@ -7,8 +7,14 @@ import RestockReportPage from './pages/RestockReportPage';
 import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
-import WhatSalesTogether from './pages/WhatSalesTogether';
+import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
+
+import LoginPage from './pages/LoginPage';
+import ServerPage from './pages/serverPage';
+import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
+import { AuthContextProvider } from './login/AuthContext';
+
 
 const router = createBrowserRouter([
   {
@@ -22,8 +28,23 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/WhatSalesTogether",
-    element: <WhatSalesTogether />,
+    path: "/WhatSalesTogetherPage",
+    element: <WhatSalesTogetherPage />,
+    errorElement: <ErrorPage/>
+  },
+  {
+    path: "/LoginPage",
+    element: <LoginPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/ServerPage",
+    element: <ServerPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/Customer",
+    element: <CustomerPage/>,
     errorElement: <ErrorPage />,
   },
   {
@@ -35,14 +56,19 @@ const router = createBrowserRouter([
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
     errorElement:<ErrorPage />
-  }
+  },
+  {
+    path: "/LoginPage",
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+    <AuthContextProvider>
     <RouterProvider router={router} />
-  </React.StrictMode>
+    </AuthContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
