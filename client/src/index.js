@@ -10,9 +10,9 @@ import LandingPage from './pages/LandingPage';
 import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
 
 import LoginPage from './pages/LoginPage';
-import ServerPage from './pages/serverPage';
+import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
-import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
+import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import { AuthContextProvider } from './login/AuthContext';
 
 
