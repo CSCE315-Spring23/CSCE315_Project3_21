@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
 import Box from '@mui/material/Box'
@@ -64,73 +64,68 @@ const columns = [
 
 ];
 
-export default class MenuItemTable extends React.Component {
-  constructor(props) {
-    super(props);
+const MenuItemTable = () => {
 
-    this.state = {
-      data : [],
-      orderdata : [],
-    };
+  const [MenuData, setMenuData] = useState([]);
 
-    this.handleEntrees = this.handleEntrees.bind(this)
-    this.handleDesserts = this.handleDesserts.bind(this)
-    this.handleSides = this.handleSides.bind(this)
+  useEffect(() => {
+    const getAllMenu = async() => {
+        axios.get(`http://localhost:3001/serverPage`, config)
+        .then(res => {
+          const menuData = res.data;
+          setMenuData(menuData);
+          //console.log(menuData);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+    getAllMenu()
+  },[])
+
+  const getEntrees = async() => {
+    axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
+    .then(res => {
+      const menuData = res.data;
+      setMenuData(menuData);
+      //console.log(menuData);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   }
 
-  componentDidMount() {
-    axios.get(`http://localhost:3001/serverPage/getMenu`, config)
-      .then(res => {
-        const menuData = res.data;
-        this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    
+  const getSides = async() => {
+    axios.get(`http://localhost:3001/serverPage/getSides`, config)
+    .then(res => {
+      const menuData = res.data;
+      setMenuData(menuData);
+      //console.log(menuData);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   }
 
-  handleEntrees() {
-    axios.get(`http://localhost:3001/ServerPage/getEntrees`, config)
-      .then(res => {
-        const entreeData = res.data;
-        this.setState({data: entreeData});
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const getDesserts = async() => {
+    axios.get(`http://localhost:3001/serverPage/getDesserts`, config)
+    .then(res => {
+      const menuData = res.data;
+      setMenuData(menuData);
+      //console.log(menuData);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   }
 
-  handleSides() {
-    axios.get(`http://localhost:3001/ServerPage/getSides`, config)
-      .then(res => {
-        const sidesData = res.data;
-        this.setState({data: sidesData});
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  handleDesserts() {
-    axios.get(`http://localhost:3001/ServerPage/getDesserts`, config)
-      .then(res => {
-        const entreeData = res.data;
-        this.setState({data: entreeData});
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
-
-  render()  {
-    // console.log(this.state.data.at(0));
+  
     return (
     <div>
         <Button 
         variant = "outlined" 
         style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        onClick={this.handleEntrees}
+        onClick={getEntrees}
         >
           <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
           <lord-icon
@@ -146,7 +141,7 @@ export default class MenuItemTable extends React.Component {
         <Button 
         variant = "outlined" 
         style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        onClick = {this.handleSides}
+        onClick = {getSides}
         >
           <div align = "center">
             <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
@@ -164,7 +159,7 @@ export default class MenuItemTable extends React.Component {
         <Button 
         variant = "outlined" 
         style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        onClick = {this.handleDesserts}
+        onClick = {getDesserts}
         >
           <div align = "center">
           <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
@@ -181,7 +176,7 @@ export default class MenuItemTable extends React.Component {
         </Button>
       <MaterialReactTable 
       columns={columns} 
-      data={this.state.data} 
+      data={MenuData} 
       displayColumnDefOptions={{
         'mrt-row-numbers': {
           size: 10,
@@ -205,8 +200,8 @@ export default class MenuItemTable extends React.Component {
         }
       }}
     />
-
-    </div>);
-  }
-
+    </div>
+    );
 };
+
+export default MenuItemTable;

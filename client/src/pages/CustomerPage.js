@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
     }
   };
 
-const StaticMenu = () => {
+const CustomerPage = () => {
     const [itemsData,setItemsData] = useState([])
 
     useEffect(() => {
@@ -86,8 +86,7 @@ const StaticMenu = () => {
         <div className="serverPage">
         <Grid container spacing={2}>
           <Grid xs={12}>
-            <MainAppBar>
-              
+            <MainAppBar>           
             </MainAppBar>
           </Grid>
           <Grid xs = {12}>
@@ -141,4 +140,4 @@ const StaticMenu = () => {
     );
 };
 
-export default StaticMenu;
+export default CustomerPage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
-//import Box from '@mui/material/Box';
+import { useEffect } from "react";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
@@ -10,6 +10,8 @@ import { Button, Menu, MenuItem, ThemeProvider, createTheme } from '@mui/materia
 
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
+import { Descriptions } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 
 
 const config = {
@@ -44,27 +46,63 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 // The grid max xs = 12
-export default class ServerPage extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+const ServerPage = () => {
 
-  render () {
+  const [ordertotal, setOrderTotal] = React.useState("$0");
+  const [orderItems, setOrderItems] = React.useState([]);
+
+  const getCurrentOrder = async() => {
+    axios.get(`http://localhost:3001/getOrder`, config)
+    .then(res => {
+      const orderData = res.data.itemsOrdered;
+      const orderPrice = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+orderPrice/100);
+      //console.log(ordertotal);
+    })
+    .catch((err) => {
+      console.error(err);
+    });  
+  }
+  useEffect(() => {
+    getCurrentOrder()
+    
+  },[])
+
   return (
     <ThemeProvider theme={theme}>
     <div className="serverPage">
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <MainAppBar>
-            
+          <MainAppBar>     
           </MainAppBar>
         </Grid>
         <Grid xs = {12}>
+            <div style={{marginLeft : "50px", }}>
+              <p>
+              Order Total : {ordertotal}
+              </p>
+              <p>
+              # of Items Ordered : {orderItems.length}
+              </p>
+              <Button 
+                style={{height: '50px', width: '180px'}}
+                onClick={() => {
+                  axios.get(`http://localhost:3001/getOrder`, config)
+                  .then(res => {
+                  setOrderTotal("$" + res.data.totalprice/100);
+                  setOrderItems(res.data.itemsOrdered);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+                }}>
+                View Order
+                <ShoppingCartOutlined/>
+              </Button>
+            </div>
         </Grid>
         <Grid xs={12}>  
-          <Button style={{marginLeft : "100px"}}>
-              Howdy
-          </Button>
           <Item>
             <MenuItemTable/>
           </Item>
@@ -80,7 +118,9 @@ export default class ServerPage extends React.Component {
     </div>
     </ThemeProvider>
     );
-  }
+  
 }
+
+export default ServerPage;
 
   

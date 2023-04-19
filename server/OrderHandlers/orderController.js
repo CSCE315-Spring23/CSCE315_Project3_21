@@ -28,6 +28,11 @@ const removeItemFromOrder = async(request, response) => {
     response.status(200).json(order);
 }
 
+const getOrder = async(request, response) => {
+    //console.log(order);
+    response.status(200).json(order);
+}
+
 const storeOrder = async (request, response) => {
     console.log("Creating an order and updating DB");
     response.status(200).json(order);
@@ -37,5 +42,6 @@ const storeOrder = async (request, response) => {
 module.exports = {
     addItemToOrder,
     removeItemFromOrder,
-    storeOrder
+    storeOrder,
+    getOrder
 }

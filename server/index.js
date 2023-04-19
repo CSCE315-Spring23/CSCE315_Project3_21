@@ -44,10 +44,11 @@ app.get('/inventoryLevelsEndDayCompletePlaceRestock', dbInventoryLevels.getInven
 app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventoryLevelsEndDayCompleteDaySummary);
 
 /*    -ORDER FUNCTIONALITY-     */
-const {addItemToOrder, storeOrder, removeItemFromOrder} = require('./OrderHandlers/orderController');
+const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder} = require('./OrderHandlers/orderController');
 app.get('/addItem', addItemToOrder);
 app.get('/removeItem', removeItemFromOrder);
 app.get('/storeOrder', storeOrder);
+app.get('/getOrder',getOrder);
 
 /*    -X REPORT-     */
 const getXreport = require('./Xreport');
@@ -55,7 +56,7 @@ app.get('/Xreport', getXreport);
 
 /*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
 const {getMenu, getEntrees, getSides, getDesserts} = require('./queryMenu');
-app.get('/ServerPage/getMenu', getMenu);
+app.get('/ServerPage', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);
 app.get('/ServerPage/getSides', getSides);
 app.get('/ServerPage/getDesserts', getDesserts);

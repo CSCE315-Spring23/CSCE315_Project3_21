@@ -8,7 +8,7 @@ import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/serverPage';
-import StaticMenu from './pages/StaticMenu';
+import CustomerPage from './pages/CustomerPage';
 
 const router = createBrowserRouter([
   {
@@ -27,13 +27,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/ServerPage/GetMenu",
+    path: "/ServerPage",
     element: <ServerPage/>,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/ServerPage",
-    element: <StaticMenu/>,
+    path: "/Customer",
+    element: <CustomerPage/>,
     errorElement: <ErrorPage />,
   }
 ])
