@@ -20,18 +20,19 @@ const config = {
     }
 };
 
+//customer page 
 export default class ExcessReportTable extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            start:this.start,
             data : [],
         };
     }
 
     componentDidMount() {
-        let dateStr = `2023-02-28 22:00:00`;
-        axios.get(`http://localhost:3001/ExcessReport?start=`+dateStr, config)
+        axios.get(`http://localhost:3001/ExcessReport?start=`+this.state.start, config)
         .then(res => {
             const reportData = res.data;
             this.setState({ data: reportData });
