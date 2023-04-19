@@ -4,11 +4,16 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RestockReportPage from './pages/RestockReportPage';
+import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
+
 import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/serverPage';
 import CustomerPage from './pages/CustomerPage';
+import WhatSalesTogether from './pages/WhatSalesTogether';
+import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
+
 
 const router = createBrowserRouter([
   {
@@ -35,6 +40,21 @@ const router = createBrowserRouter([
     path: "/Customer",
     element: <CustomerPage/>,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "/WhatSalesTogether",
+    element: <WhatSalesTogether />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/ExcessReportPage",
+    element: <ExcessReportPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/InventoryLevelsEndDayPage",
+    element: <InventoryLevelsEndDayPage />,
+    errorElement:<ErrorPage />
   }
 ])
 

@@ -42,6 +42,7 @@ app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayReco
 app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
 app.get('/inventoryLevelsEndDayCompletePlaceRestock', dbInventoryLevels.getInventoryLevelsEndDayCompletePlaceRestock);
 app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventoryLevelsEndDayCompleteDaySummary);
+app.get('/pendingRestock',dbInventoryLevels.getInventoryLevelsEndDayPendingRestock);
 
 /*    -ORDER FUNCTIONALITY-     */
 const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder} = require('./OrderHandlers/orderController');
