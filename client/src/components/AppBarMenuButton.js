@@ -1,10 +1,11 @@
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function AppBarMenuButton() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,6 +51,13 @@ export default function AppBarMenuButton() {
         <MenuItem onClick={()=> navigate("/WhatSalesTogether")}>
           What Sells Together
         </MenuItem>
+        <MenuItem onClick={()=> navigate("/ExcessReportPage")}>
+          Excess Report
+        </MenuItem>
+        <MenuItem onClick={()=> navigate("/InventoryLevelsEndDayPage")}>
+          Inventory
+        </MenuItem>
+
 
         
         <MenuItem>Z Report</MenuItem>

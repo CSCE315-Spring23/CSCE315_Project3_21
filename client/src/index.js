@@ -4,9 +4,11 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RestockReportPage from './pages/RestockReportPage';
+import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import LandingPage from './pages/LandingPage';
 import WhatSalesTogether from './pages/WhatSalesTogether';
+import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,16 @@ const router = createBrowserRouter([
     element: <WhatSalesTogether />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/ExcessReportPage",
+    element: <ExcessReportPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/InventoryLevelsEndDayPage",
+    element: <InventoryLevelsEndDayPage />,
+    errorElement:<ErrorPage />
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
