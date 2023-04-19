@@ -23,6 +23,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
+    path: "/LoginPage",
+    element: <LoginPage/>,
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/RestockReportPage",
     element: <RestockReportPage />,
     errorElement: <ErrorPage />,
@@ -32,11 +37,7 @@ const router = createBrowserRouter([
     element: <WhatSalesTogetherPage />,
     errorElement: <ErrorPage/>
   },
-  {
-    path: "/LoginPage",
-    element: <LoginPage/>,
-    errorElement: <ErrorPage />,
-  },
+  
   {
     path: "/ServerPage",
     element: <ServerPage/>,
@@ -56,11 +57,6 @@ const router = createBrowserRouter([
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
     errorElement:<ErrorPage />
-  },
-  {
-    path: "/LoginPage",
-    element: <LoginPage />,
-    errorElement: <ErrorPage />,
   },
 ])
 
