@@ -10,9 +10,9 @@ import LandingPage from './pages/LandingPage';
 import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
 
 import LoginPage from './pages/LoginPage';
-import ServerPage from './pages/serverPage';
+import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
-import InventoryLevelsEndDayPage from './pages/inventoryLevelsEndDayPage';
+import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import { AuthContextProvider } from './login/AuthContext';
 
 
@@ -21,6 +21,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <LandingPage />,
     errorElement: <ErrorPage />
+  },
+  {
+    path: "/LoginPage",
+    element: <LoginPage/>,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/RestockReportPage",
@@ -32,11 +37,7 @@ const router = createBrowserRouter([
     element: <WhatSalesTogetherPage />,
     errorElement: <ErrorPage/>
   },
-  {
-    path: "/LoginPage",
-    element: <LoginPage/>,
-    errorElement: <ErrorPage />,
-  },
+  
   {
     path: "/ServerPage",
     element: <ServerPage/>,
@@ -56,11 +57,6 @@ const router = createBrowserRouter([
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
     errorElement:<ErrorPage />
-  },
-  {
-    path: "/LoginPage",
-    element: <LoginPage />,
-    errorElement: <ErrorPage />,
   },
 ])
 
