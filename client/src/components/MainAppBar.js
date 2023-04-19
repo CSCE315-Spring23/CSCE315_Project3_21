@@ -6,6 +6,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import AppBarMenuButton from './AppBarMenuButton';
+import { UserAuth } from '../login/AuthContext';
+import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 const cfa_theme = createTheme({
   palette: {
@@ -19,6 +22,24 @@ const cfa_theme = createTheme({
 });
 
 export default function MainAppBar() {
+  const { logOut, user } = UserAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user == null) {
+      navigate('/LoginPage');
+      console.log("Successfully logged out")
+    }
+  }, [user]);
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ThemeProvider theme={cfa_theme}>
       <Box sx={{ flexGrow: 1 }}>
@@ -28,7 +49,7 @@ export default function MainAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Chick-fil-A POS
             </Typography>
-            <Button color="inherit">Logout</Button>
+            <Button onClick={handleSignOut} color="inherit">Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>
