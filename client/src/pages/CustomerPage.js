@@ -29,7 +29,7 @@ const CustomerPage = () => {
 
     useEffect(() => {
         const getAllMenu = async() => {
-            axios.get(`http://localhost:3001/serverPage/getMenu`, config)
+            axios.get(`http://localhost:3001/serverPage`, config)
             .then(res => {
               const menuData = res.data;
               setItemsData(menuData);
