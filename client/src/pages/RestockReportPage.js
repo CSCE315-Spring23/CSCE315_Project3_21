@@ -7,6 +7,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 
+import { Typography } from '@mui/material';
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
@@ -19,26 +21,33 @@ const Item = styled(Paper)(({ theme }) => ({
 function RestockReportPage() {
   return (
     <div className="RestockReportPage">
-      <Grid container spacing={2}>
-        <Grid xs={12}>
-          <MainAppBar>
-          </MainAppBar>
-        </Grid>
+        <Grid container spacing={2}>
+          <Grid xs={12}>
+            <MainAppBar>
+            </MainAppBar>
+          </Grid>
 
-        <Grid xs={12}>
-          <Item>
-            <RestockReportTable />
-          </Item>
-        </Grid>
+          <Grid xs={12}>
+            <Item>
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+              Restock Report Table
+            </Typography>
+            </Item>
+          </Grid>
 
-        <Grid xs={6}>
-          <Item>Placeholder 1 w/ xs=6</Item>
-        </Grid>
-        <Grid xs={6}>
-          <Item>Placeholder 2 w/ xs=6</Item>
-        </Grid>
-      </Grid>
+          <Grid xs={12}>
+            <Item>
+              <RestockReportTable />
+            </Item>
+          </Grid>
 
+          <Grid xs={6}>
+            <Item>Placeholder 1 w/ xs=6</Item>
+          </Grid>
+          <Grid xs={6}>
+            <Item>Placeholder 2 w/ xs=6</Item>
+          </Grid>
+        </Grid>
     </div>
   );
 }
