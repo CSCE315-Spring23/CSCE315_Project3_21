@@ -16,6 +16,7 @@ import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import MenuBoard from './pages/MenuBoard.js';
 import SalesReportPage from './pages/SalesReportPage.js';
 import { AuthContextProvider } from './login/AuthContext';
+import TestTranslatePage from './pages/TestTranslatePage';
 
 
 const router = createBrowserRouter([
@@ -65,6 +66,12 @@ const router = createBrowserRouter([
     element: <MenuBoard/>,
     errorElement: <ErrorPage/>,
   },
+  {
+    path: "/TestTranslatePage",
+    element: <TestTranslatePage />,
+    errorElement:<ErrorPage />
+  },
+
   {
     path: "/SalesReport",
     element: <SalesReportPage/>,
