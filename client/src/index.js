@@ -14,6 +14,7 @@ import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import MenuBoard from './pages/MenuBoard.js';
+import SalesReportPage from './pages/SalesReportPage.js';
 import { AuthContextProvider } from './login/AuthContext';
 
 
@@ -64,6 +65,11 @@ const router = createBrowserRouter([
     element: <MenuBoard/>,
     errorElement: <ErrorPage/>,
   },
+  {
+    path: "/SalesReport",
+    element: <SalesReportPage/>,
+    errorElement: <ErrorPage/>,
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

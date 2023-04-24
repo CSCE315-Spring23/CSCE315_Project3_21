@@ -40,30 +40,15 @@ const getsalesReport = (request, response) => {
   }
   //build the query
 
-  let query =
-    "select * from relationship_ordertomenu where order_key in\n" + "(";
+  
+    let query = "SELECT * from relationship_ordertomenu where order_key in (SELECT id from order_table where ordertimestamp >= '";
+    query += start;
+    query += "AND ordertimestamp <= '";
+    query += end;
+    query += "');";
 
-  let timeFilter =
-    "select id from order_table where\n" +
-    "TO_CHAR(ordertimestamp,'HH24:MI:SS') >= '" +
-    padInt(start) +
-    ":00:00'\n" +
-    "and\n" +
-    "TO_CHAR(ordertimestamp,'HH24:MI:SS')<='" +
-    padInt(end) +
-    ":00:00'\n";
+  
 
-  let menuFilter = "";
-
-  if (salesWith) {
-    timeFilter = "(" + timeFilter + ")";
-    let menuFilterBase =
-      " INTERSECT select order_key from relationship_ordertomenu where menuitem_key = ";
-
-    menuFilter = menuFilterBase + "'" + salesWith+ "'";
-  }
-
-  query += timeFilter + ")\norder by order_key\n;";
 
   pool.query(query, (error, results) => {
     if (error) {

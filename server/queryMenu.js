@@ -75,7 +75,7 @@ const getDesserts = async(request, response) => {
 }
 
 const getSomeMenuItems = async(request, response) => {
-    let query = "SELECT * FROM menu_item WHERE category IN('entree', 'dessert') order by random() LIMIT 10"
+    let query = "SELECT * FROM menu_item WHERE category IN('entree', 'dessert') order by random() LIMIT 12"
     let results = await pool.query(query);
 
     let rows = results.rows;

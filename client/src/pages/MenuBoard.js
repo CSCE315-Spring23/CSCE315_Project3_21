@@ -1,6 +1,6 @@
 import React from "react";
 import { useState,useEffect } from "react";
-import MainAppBar from '../components/MainAppBar.js';
+import MenuBoardBar from '../components/MenuBoardBar.js';
 import axios from "axios";
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
@@ -100,8 +100,8 @@ const MenuBoard = () => {
         <div className="MenuBoard">
         <Grid container spacing={2}>
           <Grid xs={12}>
-            <MainAppBar>           
-            </MainAppBar>
+            <MenuBoardBar>           
+            </MenuBoardBar>
           </Grid>
           <Grid xs = {12}>
             <Button className="category-button" onClick={getFewItems}> 
