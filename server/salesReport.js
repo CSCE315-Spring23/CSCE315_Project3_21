@@ -41,7 +41,7 @@ const getsalesReport = (request, response) => {
   //build the query
 
   
-    let query = "SELECT * from relationship_ordertomenu where order_key in (SELECT id from order_table where ordertimestamp >= '";
+    let query = "SELECT * from relationship_ordertomenu where order_key in (SELECT id FROM order_table WHERE ordertimestamp >= '";
     query += start;
     query += "AND ordertimestamp <= '";
     query += end;

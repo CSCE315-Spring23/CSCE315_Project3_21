@@ -25,8 +25,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const SearchUI = ({ search }) => {
-  const [startHour, setStartHour] = React.useState(null);
-  const [endHour, setEndHour] = React.useState(null);
+  const [startDate, setStartDate] = React.useState(null);
+  const [endDate, setEndDate] = React.useState(null);
   
 
   const [error1, setError1] = React.useState(null);
@@ -36,14 +36,14 @@ const SearchUI = ({ search }) => {
   const handleSearch = () => {
     
     if (!error1 && !error2) {
-      if (startHour == null || endHour == null) {
-        setError3("Please choose valid hours first");
+      if (startDate == null || endDate == null) {
+        setError3("Please choose valid date first");
         return;
       }
       setError3(null);
-      search(startHour, endHour);
+      search(startDate, endDate);
     } else {
-      setError3("Please choose valid hours");
+      setError3("Please choose valid date");
     }
   };
 
@@ -60,16 +60,13 @@ const SearchUI = ({ search }) => {
             <TextField
               style={{ width: "100%" }}
               onChange={(e) => {
-                if (e.target.value > 24) {
-                  setError1("Starting hour must be less than 24");
-                } else {
+
                   setError1(null);
-                  setStartHour(e.target.value);
+                  setStartDate(e.target.value);
                 }
-              }}
-              label="Starting Hour"
+              }
+              label="Starting Date"
               type="number"
-              inputProps={{ min: "0", max: "24" }}
               error={error1 == null ? false : true}
               helperText={error1}
             />
@@ -81,20 +78,15 @@ const SearchUI = ({ search }) => {
             <TextField
               style={{ width: "100%" }}
               onChange={(e) => {
-                if (e.target.value > 24) {
-                  setError2("Ending hour must be less than 24");
-                } else if (e.target.value < startHour) {
-                  setError2("Ending hour must be greater than starting hour");
-                } else {
+                
                   setError2(null);
-                  setEndHour(e.target.value);
-                }
+                  setEndDate(e.target.value);
+                
               }}
               error={error2 == null ? false : true}
               helperText={error2}
-              label="Ending hour"
+              label="Ending Date"
               type="number"
-              inputProps={{ min: "0", max: "23" }}
             />
           </Item>
         </Grid>
@@ -169,22 +161,8 @@ function SalesReportPage() {
             <center>
               <Item style={{ width: "50%", maxWidth: "500px" }}>
                 <table border={"black"} style={{ width: "100%" }}>
-                  <tr>
-                    <th>Pairs</th>
-                    <th>Quantity</th>
-                  </tr>
-                  {data.map((item, i) => {
-                    return (
-                      <tr key={i}>
-                        <td>
-                          <span style={{ color: "red" }}>{item.item1}</span>
-                          <br></br>
-                          <span style={{ color: "red" }}>{item.item2}</span>
-                        </td>
-                        <td>{item.count}</td>
-                      </tr>
-                    );
-                  })}
+                  
+                  
                 </table>
               </Item>
             </center>

@@ -16,7 +16,7 @@ import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import MenuBoard from './pages/MenuBoard.js';
 import SalesReportPage from './pages/SalesReportPage.js';
 import { AuthContextProvider } from './login/AuthContext';
-import TestTranslatePage from './pages/TestTranslatePage';
+import TestTranslatePage from './pages/TestTranslatePage.js';
 
 
 const router = createBrowserRouter([
