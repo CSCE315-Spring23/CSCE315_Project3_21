@@ -1,11 +1,15 @@
 import ExcessReportTable from '../components/ExcessReportTable.js';
-import React from 'react';
+import React, {useState} from 'react';
 
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
-import { TextField, Button } from '@mui/material';
+import { Button } from '@mui/material';
+
+import { DateTimePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
@@ -22,34 +26,37 @@ const Title = styled(Paper)(({ theme }) => ({
   color: 'black',
 }));
 
-export default class ExcessReportPage extends React.Component {
-  render() {
-    var startIn = "2023-02-28 22:30:00";
+export default function ExcessReportPage(){
+  const [start, setStart] = useState('');
+  var startIn = "2023-02-28 22:30:00";
     return (
         <Grid container spacing={2}>
           <Grid xs={12}>
             <MainAppBar>
             </MainAppBar>
           </Grid>
-  
           <Grid xs={12}>
             <Grid>
-                <TextField 
-                  helperText = "Enter Start Timestamp:" 
-                  id = {startIn} 
-                  label = "YYYY-MM-DD HH:MM:SS" 
+              <LocalizationProvider dateAdapter={AdapterDayjs} adaprterLocale={'en-gb'}>
+                <DateTimePicker 
+                  value={start}
+                  onChange={(e)=>setStart(e)}
+                  format = "YYYY/MM/DD HH:mm:ss"
                 />
-                <Button variant = 'contained'
-                  >Submit</Button>
+              </LocalizationProvider>
+            <Button
+              variant = "contained"
+              onClick ={()=>alert(start)}
+              >Submit
+            </Button>
             </Grid>
             <Item>
               <Title>
                 Table including all items that have used less than 10% of their inventory in the given time
               </Title>
-              <ExcessReportTable startVal = {startIn}/>
+              <ExcessReportTable startVal = {start}/>
             </Item>
           </Grid>
         </Grid>
-    );
-  }
+  );
 }

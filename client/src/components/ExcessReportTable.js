@@ -29,7 +29,7 @@ export default class ExcessReportTable extends React.Component {
         };
     }
     componentDidMount() {
-        const str = `http://localhost:3001/ExcessReport?start= `+this.state.start;
+        var str = `http://localhost:3001/ExcessReport?start= `+this.state.start;
         axios.get(str, config)
             .then(res => {
                 const reportData = res.data;
