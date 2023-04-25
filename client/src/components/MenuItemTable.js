@@ -3,7 +3,7 @@ import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'; 
 
 const config = {
   headers: {
@@ -12,12 +12,25 @@ const config = {
   }
 };
 
+function addItemHandler(ItemName) {
+  axios.get(`http://localhost:3001/addItem?menuitem=` + ItemName, config)
+    .then(res => {
+      console.log(res.data);
+      document.getElementById('total').innerText = "Total price: $" + res.data.totalprice/100;
+      document.getElementById('num-items').innerText = res.data.itemsOrdered.length;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
 const columns = [
   {
-    accessorFn: (row) => row.itemname, //accessorFn used to join multiple data into a single cell
+    //accessorFn: (row) => row.itemname, //accessorFn used to join multiple data into a single cell
     id: 'menuItem', //id is still required when using accessorFn instead of accessorKey
     header: 'Menu Item',
-    size: 250,
+    size: 100,
+    
     Cell: ({ renderedCellValue, row }) => (  
       <Box
         sx={{
@@ -27,20 +40,14 @@ const columns = [
         }}
       >
       <Button variant = "contained"
+        style = {{width: '100px', fontSize: '12px'}}
         onClick={() => {
-          alert(row.original.itemname) 
-          axios.get(`http://localhost:3001/addItem?menuitem=` + row.original.itemname, config)
-          .then(res => {
-          console.log("Howdy")
-          console.log(res.data);
-          })
-          .catch((err) => {
-          console.error(err);
-          });
+          alert("Adding " + row.original.itemname + " to order!")
+          addItemHandler(row.original.itemname)
           }
         }>
         Add Item
-        </Button>
+      </Button>
       <img
         alt="avatar"
         height={50}
@@ -48,16 +55,19 @@ const columns = [
         loading="lazy"
         style={{ borderRadius: '50%' }}
       />
-        {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-        <span>{renderedCellValue}</span>
+      {row.original.itemname}
+      {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
+      <span>{renderedCellValue}</span>
       </Box>
     ),
   },
   {
+    size: 50,
     accessorKey: 'price',
     header: 'Price($)',
   },
   {
+    size: 50,
     accessorKey: 'category',
     header: 'Category',
   },
@@ -67,21 +77,39 @@ const columns = [
 const MenuItemTable = () => {
 
   const [MenuData, setMenuData] = useState([]);
+  const [ordertotal, setOrderTotal] = React.useState("$0");
+  const [orderItems, setOrderItems] = React.useState([]);
 
   useEffect(() => {
-    const getAllMenu = async() => {
-        axios.get(`http://localhost:3001/serverPage`, config)
-        .then(res => {
-          const menuData = res.data;
-          setMenuData(menuData);
-          //console.log(menuData);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
     getAllMenu()
+    getCurrentOrder()
   },[])
+
+  const getAllMenu = async() => {
+    axios.get(`http://localhost:3001/serverPage`, config)
+    .then(res => {
+      const menuData = res.data;
+      setMenuData(menuData);
+      //console.log(menuData);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }
+
+  const getCurrentOrder = async() => {
+    axios.get(`http://localhost:3001/getOrder`, config)
+    .then(res => {
+      const orderData = res.data.itemsOrdered;
+      const orderPrice = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+orderPrice/100);
+      //console.log(ordertotal);
+    })
+    .catch((err) => {
+      console.error(err);
+    });  
+  }
 
   const getEntrees = async() => {
     axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
@@ -120,77 +148,78 @@ const MenuItemTable = () => {
   }
 
   
-    return (
-    <div>
-        <Button 
-        variant = "outlined" 
-        style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        onClick={getEntrees}
-        >
-          <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-          <lord-icon
-              src="https://cdn.lordicon.com/xnfkhcfn.json"
-              trigger="hover"
-              colors="primary:#c71f16,secondary:#121331"
-              style={{width:'75px' ,height:'75px'}}>
-          </lord-icon>
-          <p>
-          Entrees
-          </p>
-        </Button>   
-        <Button 
-        variant = "outlined" 
-        style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        onClick = {getSides}
-        >
-          <div align = "center">
-            <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-            <lord-icon
-                src="https://cdn.lordicon.com/fkytfmrm.json"
-                trigger="hover"
-                colors="primary:#121331,secondary:#c71f16"
-                style={{width:'75px',height:'75px'}}>
-            </lord-icon>
-            <p>
-            Sides
-            </p>
+  return (
+  <div>
+    <div className = "server-tab">
+      <Button 
+      variant = "outlined" 
+      style={{paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px'}}
+      onClick={getEntrees}
+      >
+        <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+        <lord-icon
+            src="https://cdn.lordicon.com/xnfkhcfn.json"
+            trigger="hover"
+            colors="primary:#c71f16,secondary:#121331"
+            style={{width:'75px' ,height:'75px'}}>
+       </lord-icon>
+        <p>
+        Entrees
+        </p>
+      </Button>  
+
+      <Button 
+      variant = "outlined" 
+      style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px'}}
+      onClick = {getSides}
+      >
+        <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+        <lord-icon
+          src="https://cdn.lordicon.com/fkytfmrm.json"
+          trigger="hover"
+          colors="primary:#121331,secondary:#c71f16"
+          style={{width:'75px',height:'75px'}}>
+        </lord-icon>
+        <p>
+        Sides
+        </p>
+      </Button>
+
+      <Button 
+      variant = "outlined" 
+      style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px'}}
+      onClick = {getDesserts}
+      >
+        <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+        <lord-icon
+          src="https://cdn.lordicon.com/elzyzcar.json"
+          trigger="hover"
+          colors="primary:#121331,secondary:#c71f16"
+          style={{width:'75px',height:'75px'}}>
+        </lord-icon>
+        <p>
+        Desserts
+        </p>
+      </Button>
+      <div className='order-info'>
+        <div className = 'shopping-cart'>
+          <div id = 'num-items'>
+            {orderItems.length}
           </div>
-        </Button>
-        <Button 
-        variant = "outlined" 
-        style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column'}}
-        onClick = {getDesserts}
-        >
-          <div align = "center">
-          <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-          <lord-icon
-              src="https://cdn.lordicon.com/elzyzcar.json"
-              trigger="hover"
-              colors="primary:#121331,secondary:#c71f16"
-              style={{width:'75px',height:'75px'}}>
-          </lord-icon>
-          <p>
-          Desserts
-          </p>
-          </div>
-        </Button>
+          <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
+        </div>
+        <h2 id = "total" >
+          Order Total: {ordertotal}
+        </h2>
+      </div>
+    </div>
       <MaterialReactTable 
       columns={columns} 
       data={MenuData} 
-      displayColumnDefOptions={{
-        'mrt-row-numbers': {
-          size: 10,
-        },
-        'mrt-row-expand': {
-          size: 10,
-        },
-      }}
-      
-
       muiTableHeadCellProps={{
       //simple styling with the `sx` prop, works just like a style prop in this example
         sx: {
-          fontSize: '25px',
+          fontSize: '22px'
         }, 
       }}
 
@@ -199,7 +228,7 @@ const MenuItemTable = () => {
           fontSize : '18px'
         }
       }}
-    />
+      />
     </div>
     );
 };

@@ -35,3 +35,33 @@ code {
   background-color: #85C1E9;
   border-radius: 25%;
 }
+
+.server-tab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.order-info {
+  font-family: 'Courier New', Courier, monospace;
+  width: 300px;
+  align-self:flex-end;
+  margin-left: 35%;
+  margin-bottom: 1%;
+  padding: 15px;
+  border-style: solid;
+  border-radius: 10%;
+  color: #154360;
+  border-color: #154360;
+  background-color:#E5E8E8;
+}
+
+.order-info .shopping-cart {
+  display: flex;
+  flex-direction: row;
+}
+
+.shopping-cart #num-items {
+  font-size: 18px;
+  font-weight: bold;
+}
