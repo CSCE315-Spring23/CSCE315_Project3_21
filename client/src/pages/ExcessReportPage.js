@@ -28,6 +28,7 @@ const Title = styled(Paper)(({ theme }) => ({
 
 export default function ExcessReportPage(){
   const [start, setStart] = useState('');
+  const [submit, setSubmit]= useState(false);
   var startIn = "2023-02-28 22:30:00";
     return (
         <Grid container spacing={2}>
@@ -41,12 +42,12 @@ export default function ExcessReportPage(){
                 <DateTimePicker 
                   value={start}
                   onChange={(e)=>setStart(e)}
-                  format = "YYYY/MM/DD HH:mm:ss"
+                  format = "YYYY-MM-DD HH:mm:ss"
                 />
               </LocalizationProvider>
             <Button
               variant = "contained"
-              onClick ={()=>alert(start)}
+              onClick ={()=>setSubmit(true)}
               >Submit
             </Button>
             </Grid>
@@ -54,7 +55,10 @@ export default function ExcessReportPage(){
               <Title>
                 Table including all items that have used less than 10% of their inventory in the given time
               </Title>
-              <ExcessReportTable startVal = {start}/>
+              {submit 
+                ?<ExcessReportTable startVal = {start}/>
+                : "test"}
+              
             </Item>
           </Grid>
         </Grid>

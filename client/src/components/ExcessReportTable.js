@@ -1,6 +1,8 @@
 import React from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
+import Moment from 'react-moment';
+import moment from 'moment/moment.js';
 
 const columns = [
     {
@@ -28,8 +30,11 @@ export default class ExcessReportTable extends React.Component {
             data : [],
         };
     }
+    
     componentDidMount() {
-        var str = `http://localhost:3001/ExcessReport?start= `+this.state.start;
+        var t = new Date(this.state.start);
+        var format = moment(t).format("YYYY-MM-DD hh:mm:ss"); 
+        var str = `http://localhost:3001/ExcessReport?start= `+format;
         axios.get(str, config)
             .then(res => {
                 const reportData = res.data;
