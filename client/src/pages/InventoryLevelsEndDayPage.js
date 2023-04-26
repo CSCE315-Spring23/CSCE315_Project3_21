@@ -1,11 +1,10 @@
 
 import PendingRestockTable from '../components/PendingRestockTable.js';
-import { styled } from '@mui/material/styles';
+import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import Button from '@mui/material/Button';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import {useRef} from 'react';
 
@@ -51,14 +50,6 @@ function endDayOnclick(){
     axios.get(`http://localhost:3001/inventoryLevelsEndDay`, config)
         .then(res => {
         alert('The reccommended reorder quantities were updated')
-        })
-        .catch((err) => {
-            alert(err);
-    });
-
-    axios.get(`http://localhost:3001/inventoryLevelsEndDayCompleteDaySummary`, config)
-        .then(res => {
-        alert('The day summary/ Z report was created');
         })
         .catch((err) => {
             alert(err);

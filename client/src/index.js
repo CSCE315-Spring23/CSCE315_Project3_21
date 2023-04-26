@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
+import XZReportPage from './pages/XZReportPage';
 import { AuthContextProvider } from './login/AuthContext';
 
 
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
   {
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
+    errorElement:<ErrorPage />
+  },
+  {
+    path: "/XZReportPage",
+    element: <XZReportPage />,
     errorElement:<ErrorPage />
   },
 ])
