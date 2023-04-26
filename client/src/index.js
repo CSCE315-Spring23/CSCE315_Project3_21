@@ -18,7 +18,6 @@ import SalesReportPage from './pages/SalesReportPage.js';
 import { AuthContextProvider } from './login/AuthContext';
 import TestTranslatePage from './pages/TestTranslatePage.js';
 
-
 const router = createBrowserRouter([
   {
     path: "/",
