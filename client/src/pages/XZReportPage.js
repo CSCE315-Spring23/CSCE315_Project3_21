@@ -1,5 +1,6 @@
-import PendingRestockTable from '../components/PendingRestockTable.js';
-import React from 'react';
+import ZReportTable from '../components/ZReportTable.js';
+import XReportTable from '../components/XReportTable.js';
+import React, {useState} from 'react';
 
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -7,6 +8,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { Typography } from '@mui/material';
 
 const config = {
     headers: {
@@ -23,6 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+
 const cfa_theme = createTheme({
     palette: {
         primary: {
@@ -34,50 +37,39 @@ const cfa_theme = createTheme({
     },
 });
 
-function zOnClick(){
-    axios.get(`http://localhost:3001/inventoryLevelsEndDayCompleteDaySummary`, config)
-        .then(res => {
-        alert('The day summary/ Z report was created');
-        })
-        .catch((err) => {
-            alert(err);
-    });
-}
-function xOnClick(){
-    axios.get(`http://localhost:3001/inventoryLevelsEndDayCompleteDaySummary`, config)
-        .then(res => {
-        alert('The day summary/ Z report was created');
-        })
-        .catch((err) => {
-            alert(err);
-    });
-}
 
 // The grid max xs = 12
 function XZReportPage() {
+  const [createdX, setCreatedX]= useState(false);
+  const [createdZ, setCreatedZ]= useState(false);
   return (
     <ThemeProvider theme={cfa_theme}>
     <div className="XZPage">
-        <Grid container spacing={2}>
           <Grid xs={12}>
             <MainAppBar>
             </MainAppBar>
           </Grid>
-          <Grid xs={4}>
+        <Grid container spacing = {2}>
+          <Grid>
             <Item>
-                <Button variant = 'contained' onClick = {xOnClick}>Create X Report</Button>
-            </Item>
-            <Item>
-                <Button variant = 'contained' onClick = {zOnClick}>Create Z Report</Button>
+              
+              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                X Report
+            </Typography>
+              {createdX ?<XReportTable/>
+                : <Button variant = 'contained' onClick = {()=>setCreatedX(true)}>Create X Report</Button>}
             </Item>
           </Grid>
-          <Grid xs={4}>
-            X Report
-            <PendingRestockTable/>
-          </Grid>
-          <Grid xs={4}>
-            Z Report
-            <PendingRestockTable/>
+        </Grid>
+        <Grid container spacing = {2}>
+          <Grid>
+            <Item>
+              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                Z Report
+            </Typography>
+            {createdZ ?<ZReportTable/>
+                : <Button variant = 'contained' onClick = {()=>setCreatedZ(true)}>Create Z Report</Button>}
+            </Item>
           </Grid>
         </Grid>
     </div>

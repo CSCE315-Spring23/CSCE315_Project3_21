@@ -39,10 +39,15 @@ app.delete('/users/:id', db.deleteUser);
 
 const dbInventoryLevels = require('./inventoryLevelsEndDay');
 app.get('/inventoryLevelsEndDay', dbInventoryLevels.getInventoryLevelsEndDayRecommended);
+
+/*    -RESTOCK ORDER-     */
 app.get('/inventoryLevelsEndDayArrive', dbInventoryLevels.getInventoryLevelsEndDayRecordArrival);
 app.get('/inventoryLevelsEndDayCompletePlaceRestock', dbInventoryLevels.getInventoryLevelsEndDayCompletePlaceRestock);
-app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventoryLevelsEndDayCompleteDaySummary);
 app.get('/pendingRestock',dbInventoryLevels.getInventoryLevelsEndDayPendingRestock);
+
+/*    -Z REPORT-     */
+app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventoryLevelsEndDayCompleteDaySummary);
+app.get('/ZReport',dbInventoryLevels.getZReport);
 
 /*    -ORDER FUNCTIONALITY-     */
 const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder} = require('./OrderHandlers/orderController');
