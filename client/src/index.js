@@ -21,7 +21,7 @@ import TestTranslatePage from './pages/TestTranslatePage.js';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: <LoginPage />,
     errorElement: <ErrorPage />
   },
   {
