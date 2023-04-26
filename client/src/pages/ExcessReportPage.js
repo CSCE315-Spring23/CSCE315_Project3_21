@@ -1,11 +1,12 @@
 import ExcessReportTable from '../components/ExcessReportTable.js';
 import React, {useState} from 'react';
 
-import { styled } from '@mui/material/styles';
+import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import { Button } from '@mui/material';
+
 
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -26,11 +27,22 @@ const Title = styled(Paper)(({ theme }) => ({
   color: 'black',
 }));
 
+const cfa_theme = createTheme({
+  palette: {
+      primary: {
+          main: '#E51636',
+      },
+      secondary: {
+          main: '#E51636',
+      },
+  },
+});
+
 export default function ExcessReportPage(){
   const [start, setStart] = useState('');
   const [submit, setSubmit]= useState(false);
-  var startIn = "2023-02-28 22:30:00";
     return (
+      <ThemeProvider theme={cfa_theme}>
         <Grid container spacing={2}>
           <Grid xs={12}>
             <MainAppBar>
@@ -50,6 +62,12 @@ export default function ExcessReportPage(){
               onClick ={()=>setSubmit(true)}
               >Submit
             </Button>
+            <Grid xs = {1}></Grid>
+            <Button
+              variant = "contained"
+              onClick = {()=> window.location.reload()}
+            > Reset to pick new date 
+              </Button>
             </Grid>
             <Item>
               <Title>
@@ -57,10 +75,11 @@ export default function ExcessReportPage(){
               </Title>
               {submit 
                 ?<ExcessReportTable startVal = {start}/>
-                : "test"}
+                : "No date selected"}
               
             </Item>
           </Grid>
         </Grid>
+    </ThemeProvider>
   );
 }
