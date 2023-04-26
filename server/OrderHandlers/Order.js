@@ -32,15 +32,15 @@ class Order {
         if (abletoMake == true) {
             console.log("Item added to itemsOrdered: ", menuItemKey);
             // this.itemsOrdered.push(menuItemKey);
-            console.log(this.itemsOrdered);
 
             let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
             let priceResult = await pool.query(priceQuery);
             this.itemsOrdered.push({
                 itemname : menuItemKey,
-                price: priceResult.rows[0].price
+                price: priceResult.rows[0].price/100.0
             })
             this.totalprice += priceResult.rows[0].price;
+            console.log(this.itemsOrdered);
 
             for (let i = 0; i < InvQrows.length; i++) {
                 let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";

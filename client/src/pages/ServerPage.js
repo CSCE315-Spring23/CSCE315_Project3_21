@@ -1,18 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import MenuItemTable from '../components/MenuItemTable.js';
-import { Button, Menu, MenuItem, ThemeProvider, createTheme } from '@mui/material';
+import ShoppingCartTable from '../components/ShoppingCart.js';
+import {ThemeProvider, createTheme } from '@mui/material';
 
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
-import { Descriptions } from 'antd';
 import {Tabs} from 'antd';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 const config = {
   headers: {
@@ -20,19 +19,6 @@ const config = {
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
   }
 };
-
-const items = [
-    {
-      label: 'Menu',
-      key: '1',
-      children: <MenuItemTable></MenuItemTable>
-    },
-    {
-      label: 'View Order',
-      key: '2',
-      children: <div></div>
-    }
-  ]
 
 // For the button icons
 document.querySelectorAll('lord-icon').forEach((element) => {
@@ -50,7 +36,6 @@ const theme = createTheme({
   }
 })
 
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
@@ -61,6 +46,54 @@ const Item = styled(Paper)(({ theme }) => ({
 
 // The grid max xs = 12
 const ServerPage = () => {
+
+  function addItemHandler(ItemName) {
+    axios.get(`http://localhost:3001/addItem?menuitem=` + ItemName, config)
+      .then(res => {
+        console.log(res.data);
+        document.getElementById('total').innerText = "Total price: $" + res.data.totalprice/100;
+        document.getElementById('num-items').innerText = res.data.itemsOrdered.length;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  const [orderItems, setOrderItems] = React.useState([]);
+  const [ordertotal, setOrderTotal] = React.useState("$0");
+
+  useEffect(() => {
+    getCurrentOrder();
+  },[orderItems, ordertotal])
+
+  function getCurrentOrder() {
+    axios.get(`http://localhost:3001/getOrder`, config)
+    .then(res => {
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    });  
+  }
+
+  const items = [
+    {
+      label: 'Menu',
+      key: '1',
+      children: <MenuItemTable OrderItems = {orderItems} OrderTotal = {ordertotal} AddItem = {addItemHandler}></MenuItemTable>
+    },
+    {
+      label: 'View Order',
+      key: '2',
+      children: <ShoppingCartTable OrderItems = {orderItems} OrderTotal = {ordertotal}></ShoppingCartTable>
+    }
+  ]
 
   return (
     <ThemeProvider theme={theme}>
