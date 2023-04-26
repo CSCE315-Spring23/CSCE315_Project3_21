@@ -14,6 +14,7 @@ import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import { AuthContextProvider } from './login/AuthContext';
+import TestTranslatePage from './pages/TestTranslatePage';
 
 
 const router = createBrowserRouter([
@@ -58,6 +59,12 @@ const router = createBrowserRouter([
     element: <InventoryLevelsEndDayPage />,
     errorElement:<ErrorPage />
   },
+  {
+    path: "/TestTranslatePage",
+    element: <TestTranslatePage />,
+    errorElement:<ErrorPage />
+  },
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
