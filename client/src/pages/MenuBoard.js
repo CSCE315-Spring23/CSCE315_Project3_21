@@ -6,8 +6,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
-import {Row, Col, Button} from 'antd';
+import {Row, Col, Button, Card} from 'antd';
 import ItemCard from "../components/MenuBoardCards.js";
+import ReactWeatherComponent from "../components/ReactWeatherComponent.js";
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -42,7 +44,7 @@ const MenuBoard = () => {
         }
         getSomeMenuItems()
     },[])
-
+    
     const getEntrees = async() => {
       axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
       .then(res => {
@@ -102,19 +104,13 @@ const MenuBoard = () => {
           <Grid xs={12}>
             <MenuBoardBar>           
             </MenuBoardBar>
-          </Grid>
-          <Grid xs = {12}>
-            <Button className="category-button" onClick={getFewItems}> 
-              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-              <lord-icon
-              src="https://cdn.lordicon.com/xnfkhcfn.json"
-              trigger="hover"
-              colors="primary:#c71f16,secondary:#121331"
-              style={{width:'75px' ,height:'75px'}}>
-              </lord-icon>
-              Refresh
-            </Button>
-          </Grid>
+          </Grid >
+          
+          <Grid xs={12}>
+            
+            <ReactWeatherComponent>
+            </ReactWeatherComponent>
+            </Grid>
           <Grid xs={12}>  
             <Row >
                 {
