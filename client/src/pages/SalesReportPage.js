@@ -66,7 +66,7 @@ const SearchUI = ({ search }) => {
                 }
               }
               label="Starting Date"
-              type="number"
+              type="string"
               error={error1 == null ? false : true}
               helperText={error1}
             />
@@ -86,7 +86,7 @@ const SearchUI = ({ search }) => {
               error={error2 == null ? false : true}
               helperText={error2}
               label="Ending Date"
-              type="number"
+              type="string"
             />
           </Item>
         </Grid>
