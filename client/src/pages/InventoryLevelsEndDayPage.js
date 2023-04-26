@@ -7,6 +7,7 @@ import MainAppBar from '../components/MainAppBar.js';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import {useRef} from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const config = {
     headers: {
@@ -40,6 +41,7 @@ function placeRestockOnclick(){
     axios.get(`http://localhost:3001/inventoryLevelsEndDayCompletePlaceRestock`, config)
         .then(res => {
         alert('The restock order was placed. Check the console for more details');
+        window.location.reload();
         })
         .catch((err) => {
             alert(err);
@@ -65,6 +67,7 @@ function InventoryLevelsEndDayPage() {
         axios.get(str, config)
         .then(res => {
             let str2 = idVal +' was processed as arrived';
+            window.location.reload();
         alert(str2);
         })
         .catch((err) => {
@@ -104,7 +107,7 @@ function InventoryLevelsEndDayPage() {
                 <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
             </Item>
             <Item>
-                <Button variant = 'contained' onClick = {endDayOnclick}>End Day/ create Day Summary/ create Z Report</Button>
+                <Button variant = 'contained' onClick = {endDayOnclick}>Update Recommended Restock Order Quantities</Button>
             </Item>
             </Grid>
 
