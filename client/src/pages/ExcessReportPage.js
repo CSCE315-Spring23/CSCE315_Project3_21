@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import { Button } from '@mui/material';
-
+import { Typography } from '@mui/material';
 
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -70,9 +70,9 @@ export default function ExcessReportPage(){
               </Button>
             </Grid>
             <Item>
-              <Title>
-                Table including all items that have used less than 10% of their inventory in the given time
-              </Title>
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+              Table including all items that have used less than 10% of their inventory in the given time
+            </Typography>
               {submit 
                 ?<ExcessReportTable startVal = {start}/>
                 : "No date selected"}
