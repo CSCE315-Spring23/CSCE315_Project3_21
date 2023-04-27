@@ -1,79 +1,82 @@
 const pool = require("./DB");
 
-
-/* GUI navigation methods */
-/*
-    switchtoManagerView() ("Back" button)
-*/
-
 /* helper methods */
 
 async function createMenuToInventoryRelationships(itemName, listRelationships) {
-    if (listRelationships==="" || listRelationships==null){
-        return;
-    }
     // find insertion point as an index
         try{
+            if (listRelationships==="" ){
+                return;
+            }
+
             let query_inspt = "SELECT id FROM relationship_menutoinventory_unitquantities ORDER BY id DESC LIMIT 1;"
             let result_inspt = await pool.query(query_inspt);
             if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: add the ability to insert into an empty table */
                 console.log("Cannot insert in to menutoinventory unit quantity table; it is empty");
-                throw ("error in creating menu-to-inventory unit quantity relationships.");
+                throw Error("error in creating menu-to-inventory unit quantity relationships.");
             }
             h = 1 + result_inspt.rows[0].id;
         }
         catch (err) {
             console.log(err.message);
-            throw ("error in creating menu-to-inventory unit quantity relationships.");
+            throw Error("error in creating menu-to-inventory unit quantity relationships.");
         }
     // parse tokens
-        tokenArray = listRelationships.split("\\s*[,:]\\s*");
+        tokenArray = listRelationships.split(",");
     // make insertions
-        for (i = 0; i < tokenArray.length && tokenArray.length >=2; i+=2){
+        for (let i in tokenArray){
             try{
+                console.log(tokenArray[i]);
+                console.log(tokenArray[i].split(":")[0]);
+                console.log(tokenArray[i].split(":")[1]);
                 let query_ins = "INSERT INTO relationship_menutoinventory_unitquantities (id,menuitemkey,inventoryitemkey,unitquantity) VALUES("
-                +"'"+ (h + i/2) + "', "
+                +"'"+ (h + i) + "', "
                 +"'"+itemName+"', "
-                +"'"+tokenArray[i]+"', "
-                +"'"+tokenArray[i+1]+"'"
+                +"'"+tokenArray[i].split(":")[0]+"', "
+                +"'"+tokenArray[i].split(":")[1]+"'"
                 +");";
+                console.log(query_ins);
                 let result_ins = await pool.query(query_ins);
-                /* TODO: alert user when insertion fails */
+                i++;
+
             } catch (err) {
                 console.error(err.message);
-                throw ("error in creating menu-to-inventory unit quantity relationships.");
+                throw Error("error in creating menu-to-inventory unit quantity relationships.");
             }
         }
 };
 
 async function createMenuToRestrictionsRelationships(itemName, listRelationships){
-    if (listRelationships==="" || listRelationships==null){
-        return;
-    }
     // find insertion point as an index
         try{
+            if (listRelationships==="" ){
+                return;
+            }
+
             let query_inspt = "SELECT id FROM relationship_menutodietaryrestriction ORDER BY id DESC LIMIT 1;"
             let result_inspt = await pool.query(query_inspt);
             if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: test the case where table is empty */
                 console.log("Cannot insert into menu-to-dietary-restrictions table; it is empty.");
-                throw ("error in creating menu-to-dietary-restrictions relationships.");
+                throw Error("error in creating menu-to-dietary-restrictions relationships.");
             }
             h = 1 + result_inspt.rows[0].id;
         }
         catch (err) {
             console.error(err.message);
-            throw ("error in creating menu-to-dietary-restrictions relationships.");
+            throw Error("error in creating menu-to-dietary-restrictions relationships.");
         }
     // parse tokens
-        tokenArray = listRelationships.split("\\s*[,]\\s*");
+        tokenArray = listRelationships.split(",");
     // make insertions
-        for (i = 0; i < tokenArray.length; i+=2){
+        for (let i in tokenArray){
             try{
                 let query_ins = "INSERT INTO relationship_menutodietaryrestriction (id,menuitemkey,dietaryrestrictionkey) VALUES("
                 +"'"+ (h + i) + "', "
                 +"'"+itemName+"', "
                 +"'"+tokenArray[i]+"'"
                 +");";
+                console.log(query_ins);
+                console.log(typeof listRelationships)
                 let result_ins = await pool.query(query_ins);
                 /* TODO: alert user when insertion fails */
                 // console.log(result_ins.command);
@@ -83,7 +86,7 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
                 // console.log(result_ins.rows);
             } catch (err) {
                 console.error(err.message);
-                throw ("error in creating menu-to-dietary-restrictions relationships.");
+                throw Error("error in creating menu-to-dietary-restrictions relationships.");
             }
         }
 };
@@ -99,8 +102,9 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
 */
 async function readMenuItem(request, response){
     try {
+        console.log("The route is not broken.");
         // get parameters
-            const {itemname} = request.params;
+            const {itemname} = request.body;
         // queries
             let query1 = "SELECT * FROM menu_item WHERE itemname = '"+ itemname+"';";
             let result1 = await pool.query(query1);
@@ -142,16 +146,17 @@ async function readMenuItem(request, response){
     } catch (err) {
         console.error(err.message);
         response.status(500).json({message : "Could not read "+itemname});
+        return;
     }
 };
 /* Get the itemnames column of the menu_item table.
     EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
-    http://localhost:3000/changeMenu/readMenuItemNames
+    http://localhost:3000/changeMenu/readMenuItems // TODO: replace changeMenu part of all routes with the menu page name "menu"
     (no request body)  
 */
-const readMenuItemNames =(request, response) => {
+const readMenuItems =(request, response) => {
     // build query
-        let query = "SELECT itemname FROM menu_item;";
+        let query = "SELECT * FROM menu_item;";
     // get query results
         try{
             pool.query(query, (error, results) => {
@@ -162,6 +167,7 @@ const readMenuItemNames =(request, response) => {
             });
         } catch (err) {
             response.status(500).json({message : "Could not read menu item names"});
+            return;
         }
 };
 
@@ -183,6 +189,7 @@ const readDietaryRestrictionNames =(request, response) => {
         });
     } catch (err){
         response.status(500).json({message : "Could not read dietary restriction names"});
+        return;
     }
 };
 
@@ -191,22 +198,22 @@ const readDietaryRestrictionNames =(request, response) => {
     Else, create a new entry.
 
     EXAMPLE QUERIES IN POSTMAN (ensure that PUT method is selected):
-        - create/update menu item with null name field (should return error)
+        - create/update menu item with empty string name field (should return error)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
                 {
                     price: $4.99
                 }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
-        - create menu item with name field specified but other fields are null (should return error)
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
+        - create menu item with name field specified but other fields are empty strings (should return error)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
                 {
                     itemname: Side Salad
                 }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -create new menu item:
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -219,24 +226,24 @@ const readDietaryRestrictionNames =(request, response) => {
                     menutodietaryrestriction: vegan, vegetarian, gluten-free, dairy-free, nut-free
                 }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
-        - update menu item with name field specified but other fields are null (should return error)
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
+        - update menu item with name field specified but other fields are empty strings (should return error)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
                 {
                     itemname: Side Salad
                 }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         - update menu item (only select field - price)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
             {
                 itemname: Side Salad,
-                price: $1000.00,
+                price: $99.99,
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         - update menu item (only select field - price, category)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -246,7 +253,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 category: desserts
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         - update menu item (only select field - menutoinventory)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
                 request body (make sure to select "x-www-form-urlencoded"):
@@ -254,7 +261,7 @@ const readDietaryRestrictionNames =(request, response) => {
                     menutoinventory: Lettuce: 21, Tomato: 6
                 }
             - check:
-                    http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                    http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -update menu item
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -267,7 +274,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 menutodietaryrestriction: ""
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -update menu item
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -280,7 +287,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 menutodietaryrestriction: ""
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -update menu item
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -293,7 +300,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 menutodietaryrestriction: ""
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -update menu item
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -306,7 +313,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 menutodietaryrestriction: "vegan"
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -update menu item
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -319,7 +326,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 menutodietaryrestriction: "vegan"
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -update menu item
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -332,20 +339,22 @@ const readDietaryRestrictionNames =(request, response) => {
                 menutodietaryrestriction: "typo"
             }
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
         -erase new menu item through command-line (undo the effects of the test):
             DELETE FROM menu_item WHERE itemname='Side Salad';
             DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = 'Side Salad';
             DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = 'Side Salad';
         - check:
-                http://localhost:3000/changeMenu/readMenuItem/Side Salad
+                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
 
 */
 async function createOrUpdateMenuItem(request, response){   
     try{
+        console.log("The route is not broken.");
         const {itemname, price, category, imagelink, menutoinventory, menutodietaryrestriction} = request.body;
-        const priceStr = price.substring(1,price.length-3) + price.substring(price.length-2);
-        if (itemname==="" || itemname==null){
+        let priceStr = String(price);
+        priceStr = priceStr.substring(1,price.length-3) + priceStr.substring(price.length-2);
+        if (itemname==="" ){
             console.log('Please specify menu item name.');
             throw Error('Please specify menu item name.');
         }
@@ -354,14 +363,14 @@ async function createOrUpdateMenuItem(request, response){
         // execute first query, store results.
             let result = await pool.query(query);
         if( result.rows[0].count == '0'){
-            if (price==="" || price==null ||
-                category==="" || category==null ||
-                imagelink==="" || imagelink==null ||
-                menutoinventory==="" || menutoinventory==null ||
-                menutodietaryrestriction==="" || menutodietaryrestriction==null
+            if (price===""  ||
+                category===""  ||
+                imagelink===""  ||
+                menutoinventory===""  ||
+                menutodietaryrestriction==="" 
                 ){
-                console.log('Cannot create a new menu item with empty fields.');
-                throw Error('Cannot create a new menu item with empty fields.');
+                console.log("Cannot create a new menu item with empty fields.");
+                throw Error("Cannot create a new menu item with empty fields.");
             }
             console.log("This item does not exist. It will be created.");
             // create an entry in menu_item
@@ -374,27 +383,27 @@ async function createOrUpdateMenuItem(request, response){
                 await pool.query(query1);
 
             // create entries in relationship_menutoinventory_unitquantities
-                createMenuToInventoryRelationships(itemname, menutoinventory);
+                await createMenuToInventoryRelationships(itemname, menutoinventory);
             // create entries in relationship_menutodietaryrestriction
-                createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
+                 await createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
             // return status
                 response.status(200).json({message: "Successfully added "+ itemname});
         }
         else if (result.rows[0].count == '1'){
-            console.log("This item exists. Specified fields will be updated.");
+            console.log("This item exists. Nonempty fields will be updated.");
 
             // update the entry in menu_item if applicable
-                if ((!(price==="") & !(price==null)) ||
-                (!(price==="") & !(price==null)) ||
-                (!(imagelink==="") & !(imagelink==null))){
+                if ((!(price==="")) ||
+                (!(category==="")) ||
+                (!(imagelink===""))){
                     let query_upd = "UPDATE menu_item SET ";
-                    if (!(price==="") & !(price==null)){
+                    if (!(price==="")){
                         query_upd = query_upd + "price = "+ priceStr +",";
                     }
-                    if (!(price==="") & !(price==null)){
+                    if (!(category==="")){
                         query_upd = query_upd +"category = "+"'"+category+"'"+",";
                     }
-                    if (!(imagelink==="") & !(imagelink==null)){
+                    if (!(imagelink==="")){
                         query_upd = query_upd +"imagelink = "+"'"+imagelink+"'"+",";
                     }
                     // remove final comma
@@ -402,19 +411,22 @@ async function createOrUpdateMenuItem(request, response){
                     query_upd = query_upd +" WHERE itemname = '"+ itemname +"';";
                     await pool.query(query_upd);
                 }
-                
-            // delete entries in relationship_menutoinventory_unitquantities
-                let query_del1 = "DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '"
-                + itemname +"';"
-                await pool.query(query_del1);
-            // create entries in relationship_menutoinventory_unitquantities
-                createMenuToInventoryRelationships(itemname, menutoinventory);
-            // delete entries in relationship_menutodietaryrestriction
-                let query_del2 = "DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = '"
-                + itemname +"';"
-                await pool.query(query_del2);
-            // create entries in relationship_menutodietaryrestriction
-                createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
+            if (!(menutoinventory==="")){
+                // delete entries in relationship_menutoinventory_unitquantities
+                    let query_del1 = "DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '"
+                    + itemname +"';"
+                    await pool.query(query_del1);
+                // create entries in relationship_menutoinventory_unitquantities
+                    await createMenuToInventoryRelationships(itemname, menutoinventory);
+            }
+            if (!(menutodietaryrestriction==="")){
+                // delete entries in relationship_menutodietaryrestriction
+                    let query_del2 = "DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = '"
+                    + itemname +"';"
+                    await pool.query(query_del2);
+                // create entries in relationship_menutodietaryrestriction
+                    await createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
+            }    
             // return status
                 response.status(200).json({message: "successfully updated "+itemname});
         }
@@ -426,12 +438,13 @@ async function createOrUpdateMenuItem(request, response){
     catch (err){
         console.error(err.message);
         response.status(500).json({message: err.message});
+        return;
     }
 };
 
 module.exports = {
     readMenuItem,
-    readMenuItemNames,
+    readMenuItems,
     readDietaryRestrictionNames,
     createOrUpdateMenuItem
 };
