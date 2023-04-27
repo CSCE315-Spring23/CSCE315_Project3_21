@@ -16,11 +16,10 @@ import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
 import { AuthContextProvider } from './login/AuthContext';
 import TestTranslatePage from './pages/TestTranslatePage';
 
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: <LoginPage />,
     errorElement: <ErrorPage />
   },
   {

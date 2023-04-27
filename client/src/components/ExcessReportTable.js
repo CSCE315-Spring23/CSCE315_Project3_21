@@ -1,6 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
+import Moment from 'react-moment';
+import moment from 'moment/moment.js';
 
 const columns = [
     {
@@ -21,30 +23,29 @@ const config = {
 };
 
 export default class ExcessReportTable extends React.Component {
-    constructor(props) {
+    constructor(props){
         super(props);
-
         this.state = {
+            start: this.props.startVal,
             data : [],
         };
     }
-
+    
     componentDidMount() {
-        let dateStr = `2023-02-28 22:00:00`;
-        axios.get(`http://localhost:3001/ExcessReport?start=`+dateStr, config)
-        .then(res => {
-            const reportData = res.data;
-            this.setState({ data: reportData });
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-        
-    }
-
-    render() {
+        var t = new Date(this.state.start);
+        var format = moment(t).format("YYYY-MM-DD hh:mm:ss"); 
+        var str = `http://localhost:3001/ExcessReport?start= `+format;
+        axios.get(str, config)
+            .then(res => {
+                const reportData = res.data;
+                this.setState({data: reportData});
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+    render(){
         console.log(this.state.data.at(0));
         return <MaterialReactTable columns={columns} data={this.state.data} />;
     }
-
 };
