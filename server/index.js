@@ -73,6 +73,12 @@ app.get('/menuCustomerView',getCustomerMenu);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 app.get('/restockReport', getRestockReport);
 
+/* MENU_ITEM CRUD TABLE */
+const {readMenuItem, readMenuItems, readDietaryRestrictionNames, createOrUpdateMenuItem} = require('./changeMenu');
+app.get('/readMenuItem', readMenuItem);
+app.get('/readMenuItems', readMenuItems);
+app.get('/readDietaryRestrictionNames', readDietaryRestrictionNames);
+app.post('/createOrUpdateMenuItem', createOrUpdateMenuItem);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
