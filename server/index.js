@@ -80,6 +80,12 @@ app.get('/readMenuItems', readMenuItems);
 app.get('/readDietaryRestrictionNames', readDietaryRestrictionNames);
 app.post('/createOrUpdateMenuItem', createOrUpdateMenuItem);
 
+/* INVENTORY_ITEM CRUD TABLE */
+const {readInventoryItem, readInventoryItems, createOrUpdateInventoryItem} = require('./changeInventory');
+app.get('/readInventoryItem', readInventoryItem);
+app.get('/readInventoryItems', readInventoryItems);
+app.post('/createOrUpdateInventoryItem', createOrUpdateInventoryItem);
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
