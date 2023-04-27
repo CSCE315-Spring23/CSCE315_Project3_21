@@ -39,6 +39,29 @@ async function readInventoryItem(request, response){
     }
 }
 
+/* Get the entire inventory_item table.
+    EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
+    http://localhost:3000/inventory/readInventoryItems
+    (no request body)  
+*/
+const readInventoryItems =(request, response) => {
+    // build query
+        let query = "SELECT * FROM inventory_item;";
+    // get query results
+        try{
+            pool.query(query, (error, results) => {
+                if (error) {
+                throw error;
+                }
+                response.status(200).json(results.rows);
+            });
+        } catch (err) {
+            response.status(500).json({message : "Could not read menu item names"});
+            return;
+        }
+};
+
 module.exports = {
-    readInventoryItem
+    readInventoryItem,
+    readInventoryItems
 };

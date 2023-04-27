@@ -149,7 +149,7 @@ async function readMenuItem(request, response){
         return;
     }
 };
-/* Get the itemnames column of the menu_item table.
+/* Get the entire menu_item table.
     EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
     http://localhost:3000/changeMenu/readMenuItems // TODO: replace changeMenu part of all routes with the menu page name "menu"
     (no request body)  
