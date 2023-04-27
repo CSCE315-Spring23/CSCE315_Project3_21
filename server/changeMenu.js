@@ -197,7 +197,7 @@ const readDietaryRestrictionNames =(request, response) => {
     If itemname is in menu item table, then update the entry.
     Else, create a new entry.
 
-    EXAMPLE QUERIES IN POSTMAN (ensure that PUT method is selected):
+    EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
         - create/update menu item with empty string name field (should return error)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
@@ -227,7 +227,7 @@ const readDietaryRestrictionNames =(request, response) => {
                 }
         - check:
                 http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        - update menu item with name field specified but other fields are empty strings (should return error)
+        - update menu item with name field specified but other fields are empty strings
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
             request body (make sure to select "x-www-form-urlencoded"):
                 {
@@ -344,8 +344,6 @@ const readDietaryRestrictionNames =(request, response) => {
             DELETE FROM menu_item WHERE itemname='Side Salad';
             DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = 'Side Salad';
             DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = 'Side Salad';
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
 
 */
 async function createOrUpdateMenuItem(request, response){   
@@ -372,7 +370,7 @@ async function createOrUpdateMenuItem(request, response){
                 console.log("Cannot create a new menu item with empty fields.");
                 throw Error("Cannot create a new menu item with empty fields.");
             }
-            console.log("This item does not exist. It will be created.");
+            console.log(""+itemname+" does not exist. It will be created.");
             // create an entry in menu_item
                 let query1 = "INSERT INTO menu_item (itemname, price, category, imagelink) VALUES ("
                 +"'"+itemname+"',"
@@ -390,7 +388,7 @@ async function createOrUpdateMenuItem(request, response){
                 response.status(200).json({message: "Successfully added "+ itemname});
         }
         else if (result.rows[0].count == '1'){
-            console.log("This item exists. Nonempty fields will be updated.");
+            console.log(""+itemname+" exists. Nonempty fields will be updated.");
 
             // update the entry in menu_item if applicable
                 if ((!(price==="")) ||
@@ -428,7 +426,7 @@ async function createOrUpdateMenuItem(request, response){
                     await createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
             }    
             // return status
-                response.status(200).json({message: "successfully updated "+itemname});
+                response.status(200).json({message: "updated "+itemname});
         }
         else{
             console.log('COUNT sql command returned unexpected result');
