@@ -9,7 +9,6 @@ import AppBarMenuButton from './AppBarMenuButton';
 import { UserAuth } from '../login/AuthContext';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
-import GoogleTranslateButton from './GoogleTranslateButton';
 
 const cfa_theme = createTheme({
   palette: {
@@ -50,7 +49,6 @@ export default function MainAppBar() {
             <Typography variant= "h4" padding = "10px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
               Chick-fil-A POS
             </Typography>
-            <GoogleTranslateButton />
             <Button onClick={handleSignOut} color="inherit">Logout</Button>
           </Toolbar>
         </AppBar>
