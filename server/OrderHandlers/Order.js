@@ -7,7 +7,7 @@ class Order {
     }
 
     async addMenuItem(menuItemKey) {
-        //console.log(menuItemKey);
+        console.log(menuItemKey);
         let abletoMake = true;
         // Query all of the inventory items used by the menu item ordered
         let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
@@ -30,13 +30,17 @@ class Order {
 
         // If we have all of the required inventory quantities add the menu item to itemsOrdered
         if (abletoMake == true) {
-            console.log("Item added to itemsOrdered: ", menuItemKey);
-            this.itemsOrdered.push(menuItemKey);
-            console.log(this.itemsOrdered);
+            console.log("Item added to order: ", menuItemKey);
+            // this.itemsOrdered.push(menuItemKey);
 
             let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
             let priceResult = await pool.query(priceQuery);
+            this.itemsOrdered.push({
+                itemname : menuItemKey,
+                price: priceResult.rows[0].price/100.0
+            })
             this.totalprice += priceResult.rows[0].price;
+            console.log(this.itemsOrdered);
 
             for (let i = 0; i < InvQrows.length; i++) {
                 let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
@@ -50,7 +54,7 @@ class Order {
 
         let contains = false;
         for (let i = 0; i < this.itemsOrdered.length; i++) {
-            if (this.itemsOrdered[i] === menuItemKey) {
+            if (this.itemsOrdered[i].itemname === menuItemKey) {
                 console.log("Removed item: ", this.itemsOrdered[i]);
                 this.itemsOrdered.splice(i, 1);
                 contains = true;

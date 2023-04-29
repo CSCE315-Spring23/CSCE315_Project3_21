@@ -18,6 +18,8 @@ import SalesReportPage from './pages/SalesReportPage.js';
 import { AuthContextProvider } from './login/AuthContext';
 import TestTranslatePage from './pages/TestTranslatePage.js';
 
+import GoogleTranslateButton from './components/GoogleTranslateButton';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -80,9 +82,13 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <div>
+    <GoogleTranslateButton />
     <AuthContextProvider>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </AuthContextProvider>
+  </div>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function
