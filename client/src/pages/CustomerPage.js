@@ -1,144 +1,163 @@
-import React from "react";
-import { useState,useEffect } from "react";
-import MainAppBar from '../components/MainAppBar.js';
-import axios from "axios";
+import React from 'react';
+import axios from 'axios';
+import { useEffect} from "react";
 import Grid from '@mui/material/Unstable_Grid2';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+import MainAppBar from '../components/MainAppBar.js';
+import CustomerMenu from '../components/CustomerMenu.js'
+import OrderCart from '../components/OrderCart.js';
+import {ThemeProvider, createTheme } from '@mui/material';
 
-import {Row, Col, Button} from 'antd';
-import ItemCard from "../components/ItemCard.js";
+import lottie from 'lottie-web';
+import { defineElement } from 'lord-icon-element';
+import {Tabs} from 'antd';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
-  const config = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    }
-  };
-
-const CustomerPage = () => {
-    const [itemsData,setItemsData] = useState([])
-
-    useEffect(() => {
-        getAllMenu()
-    },[])
-
-    const getAllMenu = async() => {
-      axios.get(`http://localhost:3001/serverPage`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    const getEntrees = async() => {
-      axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    const getSides = async() => {
-      axios.get(`http://localhost:3001/serverPage/getSides`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    const getDesserts = async() => {
-      axios.get(`http://localhost:3001/serverPage/getDesserts`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    return (
-        <div className="serverPage">
-        <Grid container spacing={2}>
-          <Grid xs={12}>
-            <MainAppBar>           
-            </MainAppBar>
-          </Grid>
-          <Grid xs = {12}>
-            <Button className="category-button" onClick={getEntrees}> 
-              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-              <lord-icon
-              src="https://cdn.lordicon.com/xnfkhcfn.json"
-              trigger="hover"
-              colors="primary:#c71f16,secondary:#121331"
-              style={{width:'75px' ,height:'75px'}}>
-              </lord-icon>
-              Entrees
-            </Button>
-
-            <Button className="category-button" onClick={getSides}> 
-              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-              <lord-icon
-                  src="https://cdn.lordicon.com/fkytfmrm.json"
-                  trigger="hover"
-                  colors="primary:#121331,secondary:#c71f16"
-                  style={{width:'75px',height:'75px'}}>
-              </lord-icon>    
-              Sides
-            </Button>
-
-            <Button className="category-button" onClick={getDesserts}> 
-              <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
-              <lord-icon
-                  src="https://cdn.lordicon.com/elzyzcar.json"
-                  trigger="hover"
-                  colors="primary:#121331,secondary:#c71f16"
-                  style={{width:'75px',height:'75px'}}>
-              </lord-icon>
-              Desserts
-            </Button>
-          </Grid>
-          <Grid xs={12}>  
-            <Row >
-                {
-                  itemsData.map(item => (
-                      <Col span = {4}>
-                      <ItemCard item = {item} />
-                      </Col>
-                  ))
-                }
-            </Row>
-          </Grid>
-        </Grid>
-  
-      </div>
-    );
+const config = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  }
 };
 
+// For the button icons
+document.querySelectorAll('lord-icon').forEach((element) => {
+  element.addEventListener('ready', () => {
+    element.classList.add('ready');
+  });
+});
+defineElement(lottie.loadAnimation);
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main : '#E51636',
+    }
+  }
+})
+
+// The grid max xs = 12
+const CustomerPage = () => {
+
+  function addItemHandler(ItemName) {
+    axios.get(`http://localhost:3001/addItem?menuitem=` + ItemName, config)
+      .then(res => {
+        const orderData = res.data.itemsOrdered;
+        const OrderTot = res.data.totalprice;
+        setOrderItems(orderData);
+        setOrderTotal("$"+ OrderTot/100);
+  
+        document.getElementById('num-items').innerText = orderItems.length;
+        document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function removeItemHandler(ItemName) {
+    axios.get(`http://localhost:3001/removeItem?menuitem=` + ItemName, config)
+      .then(res => {
+        const orderData = res.data.itemsOrdered;
+        const OrderTot = res.data.totalprice;
+        setOrderItems(orderData);
+        setOrderTotal("$"+ OrderTot/100);
+  
+        document.getElementById('num-items').innerText = orderItems.length;
+        document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  function getCurrentOrder() {
+    axios.get(`http://localhost:3001/getOrder`, config)
+    .then(res => {
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    });  
+  }
+
+  function sendOrderHandler() {
+    axios.get(`http://localhost:3001/storeOrder`, config)
+    .then(res => {
+      alert("Your order will now be sent and made!")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
+  const [orderItems, setOrderItems] = React.useState([]);
+  const [ordertotal, setOrderTotal] = React.useState("$0");
+
+  useEffect(() => {
+    getCurrentOrder();
+  },[])
+
+  const items = [
+    {
+      label: 'Menu',
+      key: '1',
+      children: <CustomerMenu 
+        OrderItems = {orderItems}
+        OrderTotal = {ordertotal} 
+        AddItem = {addItemHandler}> 
+      </CustomerMenu>
+    },
+    {
+      label: 'View Order',
+      key: '2',
+      children: <OrderCart 
+        OrderItems = {orderItems} 
+        OrderTotal = {ordertotal} 
+        RemoveItem = {removeItemHandler}
+        SendOrder = {sendOrderHandler}
+        >
+        
+      </OrderCart>
+    }
+  ]
+
+  return (
+    <ThemeProvider theme={theme}>
+    <div className="serverPage">
+      <Grid container spacing={2}>
+        <Grid xs={12}>
+          <MainAppBar>     
+          </MainAppBar>
+        </Grid>
+        <Grid xs = {12}>
+          <Tabs 
+          tabPosition='left'
+          defaultActiveKey='1'
+          items = {items}
+          >  
+          </Tabs>
+        </Grid>
+      </Grid>
+
+    </div>
+    </ThemeProvider>
+    );
+  
+}
+
 export default CustomerPage;
+
+  

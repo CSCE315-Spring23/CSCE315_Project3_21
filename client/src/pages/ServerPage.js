@@ -4,7 +4,7 @@ import { useEffect} from "react";
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import MenuItemTable from '../components/MenuItemTable.js';
-import ShoppingCart from '../components/ShoppingCart.js';
+import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
 
 import lottie from 'lottie-web';
@@ -122,14 +122,14 @@ const ServerPage = () => {
     {
       label: 'View Order',
       key: '2',
-      children: <ShoppingCart 
+      children: <OrderCart 
         OrderItems = {orderItems} 
         OrderTotal = {ordertotal} 
         RemoveItem = {removeItemHandler}
         SendOrder = {sendOrderHandler}
         >
         
-      </ShoppingCart>
+      </OrderCart>
     }
   ]
 
