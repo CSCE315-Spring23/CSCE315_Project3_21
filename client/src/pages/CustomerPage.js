@@ -28,20 +28,21 @@ const CustomerPage = () => {
     const [itemsData,setItemsData] = useState([])
 
     useEffect(() => {
-        const getAllMenu = async() => {
-            axios.get(`http://localhost:3001/serverPage`, config)
-            .then(res => {
-              const menuData = res.data;
-              setItemsData(menuData);
-              console.log(menuData);
-              //this.setState({ data: menuData });
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        }
         getAllMenu()
     },[])
+
+    const getAllMenu = async() => {
+      axios.get(`http://localhost:3001/serverPage`, config)
+      .then(res => {
+        const menuData = res.data;
+        setItemsData(menuData);
+        console.log(menuData);
+        //this.setState({ data: menuData });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+    }
 
     const getEntrees = async() => {
       axios.get(`http://localhost:3001/serverPage/getEntrees`, config)

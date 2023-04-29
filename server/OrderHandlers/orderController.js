@@ -35,8 +35,8 @@ const getOrder = async(request, response) => {
 
 const storeOrder = async (request, response) => {
     console.log("Creating an order and updating DB");
-    response.status(200).json(order);
     await order.createOrder();
+    response.status(200).json(order);
 }
 
 module.exports = {
