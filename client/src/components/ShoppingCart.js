@@ -1,21 +1,12 @@
-import React, { useState,useEffect } from 'react';
+import React from 'react';
 import MaterialReactTable from 'material-react-table';
-import axios from 'axios';
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'; 
 import {
     IconButton,
     Tooltip,
   } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-
-const config = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    }
-};
 
 const columns = [
     {
@@ -30,12 +21,9 @@ const columns = [
     },
 ];
 
-const ShoppingCartTable = (props) => {
+const ShoppingCart = (props) => {
 
-    useEffect(() => {
-       //props.GetOrder();
-      },[])
-
+    
     return (
       <div>
         <div className='order-info'>
@@ -49,19 +37,39 @@ const ShoppingCartTable = (props) => {
           Order Total: {props.OrderTotal}
         </h2>
         </div>
+        <button className='checkout-button' onClick={props.SendOrder}>
+          Send Order
+        </button>
         <MaterialReactTable 
         columns={columns}
         data = {props.OrderItems}
         enableEditing
         renderRowActions={({ row, table }) => (
             <Box sx={{ display: 'flex', gap: '1rem' }}>
-              <Tooltip arrow placement="right" title="Delete">
-                <IconButton color="error" onClick={() => {}}>
+              <Tooltip arrow placement="right" title="Remove Item">
+                <IconButton color="error" 
+                  onClick={() => {
+                    alert("Removing " + row.original.itemname + " from order!")
+                    props.RemoveItem(row.original.itemname);
+                  }}>
                   <Delete />
                 </IconButton>
               </Tooltip>
             </Box>
           )}
+          muiTableHeadCellProps={{
+            //simple styling with the `sx` prop, works just like a style prop in this example
+            sx: {
+              fontSize: '22px',
+              textDecoration: 'underline'
+            }, 
+          }}
+          muiTableBodyCellProps={{
+            sx: {
+              fontSize : '18px',
+              color: '#1A5276'
+            }
+          }}
         >
         </MaterialReactTable>
       </div>  
@@ -69,4 +77,4 @@ const ShoppingCartTable = (props) => {
     )
 }
 
-export default ShoppingCartTable;
+export default ShoppingCart;

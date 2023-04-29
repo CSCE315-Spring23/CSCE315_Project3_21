@@ -30,7 +30,7 @@ class Order {
 
         // If we have all of the required inventory quantities add the menu item to itemsOrdered
         if (abletoMake == true) {
-            console.log("Item added to itemsOrdered: ", menuItemKey);
+            console.log("Item added to order: ", menuItemKey);
             // this.itemsOrdered.push(menuItemKey);
 
             let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 

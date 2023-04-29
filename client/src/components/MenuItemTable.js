@@ -25,6 +25,7 @@ const MenuItemTable = (props) => {
       //accessorFn: (row) => row.itemname, //accessorFn used to join multiple data into a single cell
       id: 'menuItem', //id is still required when using accessorFn instead of accessorKey
       header: 'Menu Item',
+      accessorKey: 'itemname',
       size: 100,
       
       Cell: ({ renderedCellValue, row }) => (  
@@ -51,7 +52,6 @@ const MenuItemTable = (props) => {
           loading="lazy"
           style={{ borderRadius: '50%' }}
         />
-        {row.original.itemname}
         {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
         <span>{renderedCellValue}</span>
         </Box>
@@ -124,7 +124,7 @@ const MenuItemTable = (props) => {
     <div className = "server-tab">
       <Button 
       variant = "outlined" 
-      style={{paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px'}}
+      style={{fontSize : '18px',paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px', textTransform : 'capitalize'}}
       onClick={getEntrees}
       >
         <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
@@ -141,7 +141,7 @@ const MenuItemTable = (props) => {
 
       <Button 
       variant = "outlined" 
-      style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px'}}
+      style={{fontSize : '18px' ,marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px', textTransform : 'capitalize'}}
       onClick = {getSides}
       >
         <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
@@ -158,7 +158,7 @@ const MenuItemTable = (props) => {
 
       <Button 
       variant = "outlined" 
-      style={{marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px'}}
+      style={{fontSize : '18px' , marginLeft : '3%', paddingLeft : '3%', paddingRight : '3%', alignContent : 'center', flexDirection : 'column', marginBottom : '10px', textTransform : 'capitalize'}}
       onClick = {getDesserts}
       >
         <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
@@ -190,12 +190,14 @@ const MenuItemTable = (props) => {
     muiTableHeadCellProps={{
     //simple styling with the `sx` prop, works just like a style prop in this example
       sx: {
+        textDecoration: 'underline',
         fontSize: '22px'
       }, 
     }}
     muiTableBodyCellProps={{
       sx: {
-        fontSize : '18px'
+        fontSize : '18px',
+        color : '#1A5276',
       }
     }}
     />

@@ -1,12 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import { styled } from '@mui/material/styles';
-import { useEffect, useState } from "react";
-import Paper from '@mui/material/Paper';
+import { useEffect} from "react";
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import MenuItemTable from '../components/MenuItemTable.js';
-import ShoppingCartTable from '../components/ShoppingCart.js';
+import ShoppingCart from '../components/ShoppingCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
 
 import lottie from 'lottie-web';
@@ -36,35 +34,40 @@ const theme = createTheme({
   }
 })
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
-
 // The grid max xs = 12
 const ServerPage = () => {
 
   function addItemHandler(ItemName) {
     axios.get(`http://localhost:3001/addItem?menuitem=` + ItemName, config)
       .then(res => {
-        console.log(res.data);
-        document.getElementById('total').innerText = "Total price: $" + res.data.totalprice/100;
-        document.getElementById('num-items').innerText = res.data.itemsOrdered.length;
+        const orderData = res.data.itemsOrdered;
+        const OrderTot = res.data.totalprice;
+        setOrderItems(orderData);
+        setOrderTotal("$"+ OrderTot/100);
+  
+        document.getElementById('num-items').innerText = orderItems.length;
+        document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
       })
       .catch((err) => {
         console.error(err);
       });
   }
 
-  const [orderItems, setOrderItems] = React.useState([]);
-  const [ordertotal, setOrderTotal] = React.useState("$0");
-
-  useEffect(() => {
-    getCurrentOrder();
-  },[orderItems, ordertotal])
+  function removeItemHandler(ItemName) {
+    axios.get(`http://localhost:3001/removeItem?menuitem=` + ItemName, config)
+      .then(res => {
+        const orderData = res.data.itemsOrdered;
+        const OrderTot = res.data.totalprice;
+        setOrderItems(orderData);
+        setOrderTotal("$"+ OrderTot/100);
+  
+        document.getElementById('num-items').innerText = orderItems.length;
+        document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
   function getCurrentOrder() {
     axios.get(`http://localhost:3001/getOrder`, config)
@@ -82,16 +85,51 @@ const ServerPage = () => {
     });  
   }
 
+  function sendOrderHandler() {
+    axios.get(`http://localhost:3001/storeOrder`, config)
+    .then(res => {
+      alert("Your order will now be sent and made!")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
+  const [orderItems, setOrderItems] = React.useState([]);
+  const [ordertotal, setOrderTotal] = React.useState("$0");
+
+  useEffect(() => {
+    getCurrentOrder();
+  },[])
+
   const items = [
     {
       label: 'Menu',
       key: '1',
-      children: <MenuItemTable OrderItems = {orderItems} OrderTotal = {ordertotal} AddItem = {addItemHandler}></MenuItemTable>
+      children: <MenuItemTable 
+        OrderItems = {orderItems}
+        OrderTotal = {ordertotal} 
+        AddItem = {addItemHandler}> 
+      </MenuItemTable>
     },
     {
       label: 'View Order',
       key: '2',
-      children: <ShoppingCartTable OrderItems = {orderItems} OrderTotal = {ordertotal}></ShoppingCartTable>
+      children: <ShoppingCart 
+        OrderItems = {orderItems} 
+        OrderTotal = {ordertotal} 
+        RemoveItem = {removeItemHandler}
+        SendOrder = {sendOrderHandler}
+        >
+        
+      </ShoppingCart>
     }
   ]
 
@@ -110,12 +148,6 @@ const ServerPage = () => {
           items = {items}
           >  
           </Tabs>
-        </Grid>
-        <Grid xs={6}>
-          <Item>Placeholder 1 w/ xs=6</Item>
-        </Grid>
-        <Grid xs={6}>
-          <Item>Placeholder 2 w/ xs=6</Item>
         </Grid>
       </Grid>
 
