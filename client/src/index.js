@@ -77,7 +77,8 @@ const router = createBrowserRouter([
     path: "/SalesReport",
     element: <SalesReportPage/>,
     errorElement: <ErrorPage/>,
-  }
+  },
+  
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

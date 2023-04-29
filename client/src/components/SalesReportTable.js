@@ -35,6 +35,7 @@ export default class SalesReportTable extends React.Component {
         super(props);
         this.state = {
             start: this.props.startVal,
+            end: this.props.endVal,
             data : [],
         };
     }
@@ -44,7 +45,7 @@ export default class SalesReportTable extends React.Component {
         var t2 = new Date(this.state.end);
         var format = moment(t).format("YYYY-MM-DD hh:mm:ss"); 
         var format2 = moment(t2).format("YYYY-MM-DD hh:mm:ss");
-        var str = `http://localhost:3001/SalesReport?start= `+format+'&end='+format2;
+        var str = `http://localhost:3001/getSalesReport?start=`+format+`&end=`+format2;
         axios.get(str, config)
             .then(res => {
                 const reportData = res.data;

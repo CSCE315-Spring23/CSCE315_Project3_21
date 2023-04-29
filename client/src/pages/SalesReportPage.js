@@ -43,7 +43,6 @@ export default function SalesReportPage(){
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
   const [submit, setSubmit]= useState(false);
-  const [submit2, setSubmit2] = useState(false);
     return (
       <ThemeProvider theme={cfa_theme}>
         <Grid container spacing={2}>
@@ -64,7 +63,7 @@ export default function SalesReportPage(){
               <LocalizationProvider dateAdapter={AdapterDayjs} adaprterLocale={'en-gb'}>
                 <DateTimePicker 
                   value={end}
-                  onChange={(e)=>setEnd(e)}
+                  onChange={(e)=>setEnd(e)} 
                   format = "YYYY-MM-DD HH:mm:ss"
                 />
               </LocalizationProvider>
@@ -86,8 +85,8 @@ export default function SalesReportPage(){
                 Sales Report Table
             </Typography>
               {submit
-                ?<SalesReportTable startVal = {start}/>
-                : "No date selected"}, <SalesReportTable endVal = {end}/>
+                ?<SalesReportTable startVal = {start} endVal = {end}/>
+                : "No date selected"}
               
             </Item>
           </Grid>
