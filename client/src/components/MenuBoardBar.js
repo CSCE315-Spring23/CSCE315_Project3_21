@@ -21,7 +21,7 @@ const cfa_theme = createTheme({
   },
 });
 
-export default function MainAppBar() {
+export default function MenuBoardBar() {
   const { logOut, user } = UserAuth();
   const navigate = useNavigate();
 
@@ -45,7 +45,6 @@ export default function MainAppBar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color='primary'>
           <Toolbar>
-            <AppBarMenuButton />
             <Typography variant= "h4" padding = "10px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
               Chick-fil-A POS
             </Typography>

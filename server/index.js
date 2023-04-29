@@ -61,11 +61,12 @@ const getXreport = require('./Xreport');
 app.get('/Xreport', getXreport);
 
 /*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
-const {getMenu, getEntrees, getSides, getDesserts} = require('./queryMenu');
+const {getMenu, getEntrees, getSides, getDesserts, getSomeMenuItems} = require('./queryMenu');
 app.get('/ServerPage', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);
 app.get('/ServerPage/getSides', getSides);
 app.get('/ServerPage/getDesserts', getDesserts);
+app.get('/GetSomeMenuItems',getSomeMenuItems);
 
 const dbExcessReport = require('./excessReport');
 app.get('/excessReport',dbExcessReport.getExcessReport);
@@ -73,11 +74,23 @@ app.get('/excessReport',dbExcessReport.getExcessReport);
 const dbZReport = require('./zReport');
 app.get('/zReport',dbZReport.getZReport);
 
-app.get('/salesReport', getsalesReport);
+app.get('/getSalesReport', getsalesReport);
 app.get('/menuCustomerView',getCustomerMenu);
 app.get('/whatSalesTogether', getWhatSalesTogether);
 app.get('/restockReport', getRestockReport);
 
+/* MENU_ITEM CRUD TABLE */
+const {readMenuItem, readMenuItems, readDietaryRestrictionNames, createOrUpdateMenuItem} = require('./changeMenu');
+app.get('/readMenuItem', readMenuItem);
+app.get('/readMenuItems', readMenuItems);
+app.get('/readDietaryRestrictionNames', readDietaryRestrictionNames);
+app.post('/createOrUpdateMenuItem', createOrUpdateMenuItem);
+
+/* INVENTORY_ITEM CRUD TABLE */
+const {readInventoryItem, readInventoryItems, createOrUpdateInventoryItem} = require('./changeInventory');
+app.get('/readInventoryItem', readInventoryItem);
+app.get('/readInventoryItems', readInventoryItems);
+app.post('/createOrUpdateInventoryItem', createOrUpdateInventoryItem);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

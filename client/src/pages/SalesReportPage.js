@@ -11,6 +11,7 @@ import { Typography } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import SalesReportTable from '../components/SalesReportTable.js';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
@@ -38,8 +39,9 @@ const cfa_theme = createTheme({
   },
 });
 
-export default function ExcessReportPage(){
+export default function SalesReportPage(){
   const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
   const [submit, setSubmit]= useState(false);
     return (
       <ThemeProvider theme={cfa_theme}>
@@ -57,11 +59,20 @@ export default function ExcessReportPage(){
                   format = "YYYY-MM-DD HH:mm:ss"
                 />
               </LocalizationProvider>
+
+              <LocalizationProvider dateAdapter={AdapterDayjs} adaprterLocale={'en-gb'}>
+                <DateTimePicker 
+                  value={end}
+                  onChange={(e)=>setEnd(e)} 
+                  format = "YYYY-MM-DD HH:mm:ss"
+                />
+              </LocalizationProvider>
             <Button
               variant = "contained"
               onClick ={()=>setSubmit(true)}
-              >Submit
+              >submit
             </Button>
+            
             <Grid xs = {1}></Grid>
             <Button
               variant = "contained"
@@ -71,10 +82,10 @@ export default function ExcessReportPage(){
             </Grid>
             <Item>
             <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-              Table including all items that have used less than 10% of their inventory in the given time
+                Sales Report Table
             </Typography>
-              {submit 
-                ?<ExcessReportTable startVal = {start}/>
+              {submit
+                ?<SalesReportTable startVal = {start} endVal = {end}/>
                 : "No date selected"}
               
             </Item>
