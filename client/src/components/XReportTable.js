@@ -15,7 +15,6 @@ const columns = [
     accessorKey: 'numOrders',
     header: 'Total number of orders since the last Z Report',
   },
-  
 ];
 
 const config = {
@@ -30,16 +29,15 @@ export default class XReportTable extends React.Component {
         super(props);
 
         this.state = {
-            data : [],
+            data :[],
         };
     }
 
     componentDidMount() {
-      
-        axios.get(`http://localhost:3001/Xreport`, config)
+        axios.get(`http://localhost:3001/XReport`, config)
         .then(res => {
-            const reportData = res.data;
-            this.setState({ data: reportData });
+          const reportData  = res.data;
+            this.setState({ data: reportData});
         })
         .catch((err) => {
             console.error(err);
@@ -48,7 +46,7 @@ export default class XReportTable extends React.Component {
     };
 
     render() {
-      
+      console.log(this.state.data.at(0));
       return <MaterialReactTable columns={columns} data={this.state.data} />;
     }
 

@@ -7,15 +7,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
 import Button from '@mui/material/Button';
-import axios from 'axios';
 import { Typography } from '@mui/material';
-
-const config = {
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    }
-};
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
@@ -64,11 +56,14 @@ function XZReportPage() {
         <Grid container spacing = {2}>
           <Grid>
             <Item>
-              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Z Report
-            </Typography>
+              </Typography>
+              <Typography variant="h8" component="div" sx={{ flexGrow: 1 }}>
+                Note: The Z report acts like a day summary and therefore makes the most logical sense when created at the end of each day
+              </Typography>
             {createdZ ?<ZReportTable/>
-                : <Button variant = 'contained' onClick = {()=>setCreatedZ(true)}>Create Z Report</Button>}
+                : <Button variant = 'contained' onClick = {()=>setCreatedZ(true)}>Create New Z Report</Button>}
             </Item>
           </Grid>
         </Grid>

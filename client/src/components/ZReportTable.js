@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import axios from 'axios';
 import MaterialReactTable from 'material-react-table';
 
