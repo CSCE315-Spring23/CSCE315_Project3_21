@@ -15,7 +15,7 @@ async function readInventoryItem(request, response){
     try{
         console.log("The route is not broken.");
         // get parameters
-            const {itemname} = request.body;
+            const {itemname} = request.query.name;
         // query inventory item table
             let query1 = "SELECT * FROM inventory_item WHERE itemname = '"+ itemname+"';";
             let result1= await pool.query(query1);
