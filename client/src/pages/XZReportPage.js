@@ -1,7 +1,6 @@
 import ZReportTable from '../components/ZReportTable.js';
 import XReportTable from '../components/XReportTable.js';
 import React, {useState} from 'react';
-
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -37,36 +36,37 @@ function XZReportPage() {
   return (
     <ThemeProvider theme={cfa_theme}>
     <div className="XZPage">
-          <Grid xs={12}>
-            <MainAppBar>
-            </MainAppBar>
+          <Grid xs={12} >
+            <MainAppBar />
+            <Item />
+            <Item />
           </Grid>
         <Grid container spacing = {2}>
-          <Grid>
+          <Item>
+              <Typography variant="h6" component="Grid" >
+                Last Z Report
+              </Typography>
+              <ZReportTable createZ = {false}/>
+            </Item>
             <Item>
-              
-              <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" >
+                Current Z Report
+              </Typography>
+              <div>
+                Note: The Z report acts like a day summary and therefore makes the most logical sense when created at the end of each day
+              </div>
+            {createdZ ? <ZReportTable createZ = {true}/>
+                : <Button variant = 'contained' onClick = {()=>setCreatedZ(true)}>Show Updated Z Report</Button>}
+            </Item>
+            <Item>
+              <Typography variant="h6">
                 X Report
             </Typography>
               {createdX ?<XReportTable/>
                 : <Button variant = 'contained' onClick = {()=>setCreatedX(true)}>Create X Report</Button>}
             </Item>
           </Grid>
-        </Grid>
-        <Grid container spacing = {2}>
-          <Grid>
-            <Item>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Z Report
-              </Typography>
-              <Typography variant="h8" component="div" sx={{ flexGrow: 1 }}>
-                Note: The Z report acts like a day summary and therefore makes the most logical sense when created at the end of each day
-              </Typography>
-            {createdZ ?<ZReportTable/>
-                : <Button variant = 'contained' onClick = {()=>setCreatedZ(true)}>Create New Z Report</Button>}
-            </Item>
-          </Grid>
-        </Grid>
+
     </div>
     </ThemeProvider>
   );

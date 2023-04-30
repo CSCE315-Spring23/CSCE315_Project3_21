@@ -4,16 +4,16 @@ import MaterialReactTable from 'material-react-table';
 
 const columns = [
   {
-    accessorKey: 'datetime',
-    header: 'Timestamp',
-  },
-  {
     accessorKey: 'totalSales',
     header: 'Total Sales since the last Z Report',
   },
   {
     accessorKey: 'numOrders',
     header: 'Total number of orders since the last Z Report',
+  },
+  {
+    accessorKey: 'datetime',
+    header: 'Timestamp',
   },
 ];
 

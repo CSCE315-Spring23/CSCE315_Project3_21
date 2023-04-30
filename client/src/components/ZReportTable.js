@@ -27,20 +27,22 @@ const config = {
 export default class ZReportTable extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            data : [],
+          createNew: this.props.createZ,
+          data : [],
         };
     }
 
     componentDidMount() {
-      axios.get(`http://localhost:3001/inventoryLevelsEndDayCompleteDaySummary`, config)
+      if(this.state.createNew){
+        axios.get(`http://localhost:3001/inventoryLevelsEndDayCompleteDaySummary`, config)
         .then(res => {
         alert('The day summary/ Z report was created');
         })
         .catch((err) => {
-            alert(err);
+          alert(err);
       });
+      }
         axios.get(`http://localhost:3001/Zreport`, config)
         .then(res => {
             const reportData = res.data;
