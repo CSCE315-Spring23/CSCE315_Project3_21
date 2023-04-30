@@ -6,33 +6,32 @@ const pool = require("./DB");
 /*
     Submit name of inventory item you would like to view in the table; get all columns for that row.
     EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-        http://localhost:3000/inventory/readInventoryItem/Lettuce
-        http://localhost:3000/inventory/readInventoryItem/Waffle Potato Chips
-        http://localhost:3000/inventory/readInventoryItem/Not an Inventory Item
-        (no request body)
+        http://localhost:3000/readInventoryItem?name=Regular Chicken Patty
+        http://localhost:3000/readInventoryItem?name= 
+        (no name specified)
 */
 async function readInventoryItem(request, response){
     try{
         console.log("The route is not broken.");
         // get parameters
-            const {itemname} = request.query.name;
+        const itemname = request.query.name;
         // query inventory item table
-            let query1 = "SELECT * FROM inventory_item WHERE itemname = '"+ itemname+"';";
-            let result1= await pool.query(query1);
-            if (result1.rowCount == '0'){
-                response.status(500).json({message : ""+itemname+" is not an inventory item."});
-                return;
-            }
+        let query1 = "SELECT * FROM inventory_item WHERE itemname = '"+ itemname+"';";
+        let result1= await pool.query(query1);
+        if (result1.rowCount == '0'){
+            response.status(500).json({message : ""+itemname+" is not an inventory item."});
+            return;
+        }
         // no relationship tables to query
         // construct response
-            response.status(200).json({
-                    itemname : result1.rows[0].itemname,
-                    shipmentunit : result1.rows[0].shipmentunit,
-                    shipmentunitstring : result1.rows[0].shipmentunitstring,
-                    currentquantity : result1.rows[0].currentquantity,
-                    maxquantity: result1.rows[0].maxquantity,
-                    recommendedreorder: result1.rows[0].recommendedreorder
-                });
+        response.status(200).json({
+            itemname : result1.rows[0].itemname,
+            shipmentunit : result1.rows[0].shipmentunit,
+            shipmentunitstring : result1.rows[0].shipmentunitstring,
+            currentquantity : result1.rows[0].currentquantity,
+            maxquantity: result1.rows[0].maxquantity,
+            recommendedreorder: result1.rows[0].recommendedreorder
+        });
     } catch (err) {
         console.error(err.message);
         response.status(500).json({message: "Could not read "+itemname});
@@ -41,8 +40,7 @@ async function readInventoryItem(request, response){
 
 /* Get the entire inventory_item table.
     EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
-    http://localhost:3000/inventory/readInventoryItems
-    (no request body)  
+    http://localhost:3001/readInventoryItems
 */
 const readInventoryItems =(request, response) => {
     // build query
@@ -62,6 +60,7 @@ const readInventoryItems =(request, response) => {
 };
 
 /*
+Pseudocode for the function below
 If itemname is in menu item table, then update the entry.
 Else, create a new entry.
 
@@ -135,7 +134,6 @@ async function createOrUpdateInventoryItem(request, response){
         
         // if itemname is not specified, return error.
             if (itemname==="" ){
-                console.log('Please specify inventory item name.');
                 throw Error('Please specify inventory item name.');
             }
         // determine whether inventory item exists
@@ -152,7 +150,6 @@ async function createOrUpdateInventoryItem(request, response){
                     maxquantity===""  ||
                     recommendedreorder==="" 
                 ){
-                    console.log("Cannot create a new menu item with empty fields.");
                     throw Error("Cannot create a new menu item with empty fields.");
                 }
             console.log(""+itemname+" does not exist. It will be created.");
@@ -209,7 +206,6 @@ async function createOrUpdateInventoryItem(request, response){
                 response.status(200).json({message: "updated "+itemname});
         }
         else{
-            console.log('COUNT sql command returned unexpected result');
             throw Error('COUNT sql command returned unexpected result');
         }
     }

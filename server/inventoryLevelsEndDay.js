@@ -1,5 +1,8 @@
 const pool = require("./DB");
 
+/* 
+    Functon to add a zero to single digit numbers to ensure the timestamp will be properly formatted
+*/
 const padInt = (num) => {
     if (num < 10) {
         return "0" + num;
@@ -7,6 +10,10 @@ const padInt = (num) => {
     return num;
     };
 
+/*
+    The following updates the recommended reorder quantities for all inventory items
+    Example query: localhost:3001/inventoryLevelsEndDay
+*/
 const getInventoryLevelsEndDayRecommended = (request, response) => {
     pool.query('SELECT * FROM inventory_item;', (error, results) => {
     if (error) {
@@ -35,6 +42,9 @@ const getInventoryLevelsEndDayRecommended = (request, response) => {
     });
 };
 
+/*
+    query the table to get the restock orders where there is no arrived value specified
+*/
 const getInventoryLevelsEndDayPendingRestock = (request, response) => {
     pool.query('SELECT * from restock_order where arrived IS NULL;', (error, results) => {
     if (error) {
@@ -44,7 +54,10 @@ const getInventoryLevelsEndDayPendingRestock = (request, response) => {
     });
 };
 
-
+/*
+    process arrival of restock order by incrementing the current quantity, setting the arrival date in the restock_order table
+    Example: localhost:3001/inventoryLevelsEndDayArrive?id=75
+*/
 const getInventoryLevelsEndDayRecordArrival = (request, response) => {
     const restockOrderIdUsrInput = request.query.id;
     if(!restockOrderIdUsrInput){
@@ -103,6 +116,10 @@ const getInventoryLevelsEndDayRecordArrival = (request, response) => {
     response.status(200).send('Restock Order Process Completed Successfully, see console for more details');
 };
 
+/*
+    create a new restock order 
+    Example: localhost:3001/inventoryLevelsEndDayCompletePlaceRestock
+*/
 const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
     //see placeRestockOrderButton from project 2 for reference 
     //get and format todays date
@@ -171,11 +188,14 @@ const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
                 });
             });
         });
-
     });
     response.status(200).send('InventoryLevelsEndDayCompletePlaceRestock Completed Successfully, see console for more details');
 }
 
+/*
+    Generate Z report/ day summary and add it to the day_summary table
+    Example: localhost:3001/inventoryLevelsEndDayCompleteDaySummary
+*/
 const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
     //get and format todays date
     const date = new Date();
@@ -211,6 +231,11 @@ const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
 
     response.status(200).send('InventoryLevelsEndDayCompleteDaySummary Completed Successfully, see console for more details');
 }
+
+/*
+    Query the day summary table to get the most recent Z report
+    Example: localhost:3001/ZReport
+*/
 const getZReport = (request, response) => {
     pool.query('SELECT * from day_summary where daysumm_timestamp = (SELECT max(daysumm_timestamp) from day_summary)', (error, results) => {
     if (error) {
