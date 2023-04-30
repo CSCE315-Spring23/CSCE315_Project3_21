@@ -7,7 +7,6 @@ import MainAppBar from '../components/MainAppBar.js';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import {useRef} from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const config = {
     headers: {
