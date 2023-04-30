@@ -9,8 +9,8 @@ const getXreport = async (request, response) => {
     // Query the total sales since last generated Z Report
     let pricequery = `SELECT SUM(totalprice) FROM ordertable_test WHERE ordertimestamp >= (SELECT MAX(daysumm_timestamp) FROM day_summary) AND ordertimestamp <= to_timestamp(${t}/1000.0)`;
     let results = await pool.query(pricequery);
-    totSales += parseInt(results.rows[0].sum);
-
+    totSales += results.rows[0].sum;
+    
     // Query the number of orders since last Z report
     let numOrderQuery = `SELECT COUNT(totalprice) FROM ordertable_test WHERE ordertimestamp >= (SELECT MAX(daysumm_timestamp) FROM day_summary) AND ordertimestamp <= to_timestamp(${t}/1000.0)`;
     results = await pool.query(numOrderQuery);
@@ -18,12 +18,9 @@ const getXreport = async (request, response) => {
 
     console.log("Date: ", t2, "\nTotal Sales: ",totSales, "\n# of Orders: ",num_orders);
 
-    const responseData = {
-        datetime : t2,
-        totalSales : totSales,
-        numOrders : num_orders
-    }
-    response.status(200).json(responseData);
+    const responseArr = [];
+    responseArr.push({'datetime' : t2,'totalSales' : totSales, 'numOrders' : num_orders});
+    response.status(200).json(responseArr);
 }
 
 module.exports = getXreport;
