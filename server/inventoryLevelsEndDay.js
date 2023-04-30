@@ -211,7 +211,14 @@ const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
 
     response.status(200).send('InventoryLevelsEndDayCompleteDaySummary Completed Successfully, see console for more details');
 }
-
+const getZReport = (request, response) => {
+    pool.query('SELECT * from day_summary where daysumm_timestamp = (SELECT max(daysumm_timestamp) from day_summary)', (error, results) => {
+    if (error) {
+        throw error;
+    }
+    response.status(200).json(results.rows);
+    });
+};
 
 
 
@@ -221,4 +228,5 @@ module.exports = {
     getInventoryLevelsEndDayRecordArrival,
     getInventoryLevelsEndDayCompletePlaceRestock,
     getInventoryLevelsEndDayCompleteDaySummary,
+    getZReport,
 };

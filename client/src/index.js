@@ -13,6 +13,7 @@ import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
+import XZReportPage from './pages/XZReportPage';
 import MenuBoard from './pages/MenuBoard.js';
 import SalesReportPage from './pages/SalesReportPage.js';
 import { AuthContextProvider } from './login/AuthContext';
@@ -61,6 +62,11 @@ const router = createBrowserRouter([
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
     errorElement:<ErrorPage />,
+  },
+  {
+    path: "/XZReportPage",
+    element: <XZReportPage />,
+    errorElement:<ErrorPage />
   },
   {
     path: "/MenuBoard",

@@ -65,10 +65,10 @@ export default function AppBarMenuButton() {
         <MenuItem onClick={() => navigate("/SalesReport")}>
           Sales Report
           </MenuItem>
-
-        
-        <MenuItem>Z Report</MenuItem>
-        <MenuItem>Etc...</MenuItem>
+        <MenuItem onClick = {() => navigate("/XZReportPage")}>
+          Z and X Reports
+          </MenuItem>
+        <MenuItem>Menu Board</MenuItem>
       </Menu>
     </div>
   );
