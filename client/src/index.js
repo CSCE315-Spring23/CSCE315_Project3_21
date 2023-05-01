@@ -6,13 +6,13 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RestockReportPage from './pages/RestockReportPage';
 import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
-import LandingPage from './pages/LandingPage';
 import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
 
 import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
 import InventoryLevelsEndDayPage from './pages/InventoryLevelsEndDayPage';
+import ChangeMenuPage from './pages/ChangeMenuPage'
 import XZReportPage from './pages/XZReportPage';
 import MenuBoard from './pages/MenuBoard.js';
 import SalesReportPage from './pages/SalesReportPage.js';
@@ -61,6 +61,11 @@ const router = createBrowserRouter([
   {
     path: "/InventoryLevelsEndDayPage",
     element: <InventoryLevelsEndDayPage />,
+    errorElement:<ErrorPage />,
+  },
+  {
+    path: "/ChangeMenuPage",
+    element: <ChangeMenuPage />,
     errorElement:<ErrorPage />,
   },
   {

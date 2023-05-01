@@ -104,7 +104,7 @@ async function readMenuItem(request, response){
     try {
         console.log("The route is not broken.");
         // get parameters
-            const {itemname} = request.body;
+            const itemname = request.query.name;
         // queries
             let query1 = "SELECT * FROM menu_item WHERE itemname = '"+ itemname+"';";
             let result1 = await pool.query(query1);
