@@ -9,7 +9,12 @@ import { UserAuth } from '../login/AuthContext';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import MenuBoardBarButton from './MenuBoardBarButton';
-
+/**
+ * 
+ * cfa_theme used to create the theme of the menu board app bar
+ * 
+ * 
+ */
 const cfa_theme = createTheme({
   palette: {
     primary: {
@@ -20,7 +25,12 @@ const cfa_theme = createTheme({
     },
   },
 });
-
+/**
+ * 
+ * MenuBoardBar function is used to generate the app bar of the menu board
+ * 
+ * 
+ */
 export default function MenuBoardBar() {
   const { logOut, user } = UserAuth();
   const navigate = useNavigate();
@@ -37,7 +47,12 @@ export default function MenuBoardBar() {
       console.log(error);
     }
   };
-
+/**
+ * 
+ * returns the menu board bar with all of the necessary features. 
+ * 
+ * 
+ */
   return (
     <ThemeProvider theme={cfa_theme}>
       <Box sx={{ flexGrow: 1 }}>

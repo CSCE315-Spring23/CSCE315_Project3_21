@@ -4,8 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./index.js",
-    "generate-docs": "jsdoc -c ./package-doc.json"
+    "dev": "nodemon ./index.js"
   },
   "keywords": [],
   "author": "",
@@ -26,5 +25,4 @@
   },
   "homepage": "https://github.com/nemo0/node-postgres-crud-api#readme",
   "description": ""
-
 }

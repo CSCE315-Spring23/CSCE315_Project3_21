@@ -25,10 +25,21 @@ const Item = styled(Paper)(({ theme }) => ({
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
   };
-
+/**
+ * 
+ * MenuBoard function created to generate the menu board page. 
+ * 
+ * 
+ */
 const MenuBoard = () => {
     const [itemsData,setItemsData] = useState([])
-
+  /**
+ * 
+ * getSomeMenuItems function created to query the database for a few random menu items 
+ * to use on the menu board
+ * 
+ * 
+ */
     useEffect(() => {
         const getSomeMenuItems = async() => {
             axios.get(`http://localhost:3001/GetSomeMenuItems`, config)
@@ -45,59 +56,11 @@ const MenuBoard = () => {
         getSomeMenuItems()
     },[])
     
-    const getEntrees = async() => {
-      axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    const getFewItems = async() => {
-        axios.get(`http://localhost:3001/GetSomeMenuItems`, config)
-        .then(res => {
-          const menuData = res.data;
-          setItemsData(menuData);
-          console.log(menuData);
-          //this.setState({ data: menuData });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      }
-  
-
-    const getSides = async() => {
-      axios.get(`http://localhost:3001/serverPage/getSides`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    const getDesserts = async() => {
-      axios.get(`http://localhost:3001/serverPage/getDesserts`, config)
-      .then(res => {
-        const menuData = res.data;
-        setItemsData(menuData);
-        console.log(menuData);
-        //this.setState({ data: menuData });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
+/**
+ * 
+ * returns the menu board with the items in cards with the weather displayed below that. 
+ * 
+ */
     return (
         <div className="MenuBoard">
         <Grid container spacing={2}>
@@ -105,12 +68,7 @@ const MenuBoard = () => {
             <MenuBoardBar>           
             </MenuBoardBar>
           </Grid >
-          
-          <Grid xs={12}>
-            
-            <ReactWeatherComponent>
-            </ReactWeatherComponent>
-            </Grid>
+        
           <Grid xs={12}>  
             <Row >
                 {
@@ -122,6 +80,12 @@ const MenuBoard = () => {
                 }
             </Row>
           </Grid>
+          <Grid xs={12}>
+            
+            <ReactWeatherComponent>
+            </ReactWeatherComponent>
+            
+            </Grid>
         </Grid>
   
       </div>

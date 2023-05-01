@@ -3,8 +3,12 @@ import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
 import Moment from 'react-moment';
 import moment from 'moment/moment.js';
-/** This is a description of the foo function. */
-const columns = [
+/**
+ * 
+ *columns var set up to store the columns of the sales report table from the database
+ * 
+ */
+    const columns = [
     {
         accessorKey: 'id',
         header: 'ID',
@@ -22,14 +26,18 @@ const columns = [
         header: 'Quantity',
     },
 ];
-/** This is a description of the foo function. */
+
 const config = {
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
 };
-/** This is a description of the foo function. */
+/** 
+ * SalesReportTable class sets up the table of the sales report page. 
+ * This class also queries the database with the values from the date time pickers on the web page.
+ * It also displays the data.
+ */
 export default class SalesReportTable extends React.Component {
     constructor(props){
         super(props);
