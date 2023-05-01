@@ -4,7 +4,7 @@
     "dayjs": "^1.11.7"
   },
   "scripts": {
-    "generate-docs": "jsdoc -c ./package-doc.json"
+    "generate-docs": "jsdoc -c ./package-doc.json -r"
   }
 
 }
