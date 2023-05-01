@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
-import {Delete, Edit} from '@mui/icons-material';
+import {Edit} from '@mui/icons-material';
 import { Icon, IconButton, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box'
 
@@ -21,6 +21,28 @@ const InventoryCRUDTable = (props) => {
   },[])
 
   const columns = [
+    {
+        id:'action',
+        header:'Action',
+        accessorKey:'action',
+        size:10,
+        Cell: ({ renderedCellValue, row }) => (  
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+              }}
+            >
+            <Tooltip arrow placement="left" title="Edit">
+              <IconButton >
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <span>{renderedCellValue}</span>
+            </Box>
+        ),//would be very easy to add delete functionality but backend does not exist so I did not 
+    },
     {
       header: 'Inventory Item Name',
       accessorKey: 'itemname',
@@ -75,30 +97,10 @@ const InventoryCRUDTable = (props) => {
     }}
     muiTableProps={{sx :{tableLayout:'fixed'}}}
     defaultColumn={{
-      minSize: 10,
-      maxSize: 100,
-      size: 50,
+      minSize: 5,
+      maxSize: 80,
+      size: 20,
     }}
-
-    displayColumnDefOptions={{
-        'mrt-row-actions':{
-            align:'center'
-        }
-    }}
-    renderRowActions={({row,table})=> (
-        <Box>
-            <Tooltip arrow placement="left" title="Edit">
-              <IconButton >
-                <Edit />
-              </IconButton>
-            </Tooltip>
-            <Tooltip arrow placement="right" title="Delete">
-              <IconButton >
-                <Delete />
-              </IconButton>
-            </Tooltip>
-        </Box>
-    )} 
     />
     
   </div>

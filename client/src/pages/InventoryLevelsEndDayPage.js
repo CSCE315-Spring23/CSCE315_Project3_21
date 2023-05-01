@@ -83,7 +83,10 @@ function InventoryLevelsEndDayPage() {
             </MainAppBar>
         </Grid>
         <Grid xs = {8}>
-            Inventory Table
+            <Button variant = 'contained' onClick={()=>alert('hi')}>
+                Create New Inventory Item
+            </Button>
+            Inventory Table 
             <InventoryCRUDTable />
         </Grid>
             <Grid xs = {2}>
