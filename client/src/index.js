@@ -7,7 +7,7 @@ import RestockReportPage from './pages/RestockReportPage';
 import ExcessReportPage from './pages/ExcessReportPage';
 import ErrorPage from './pages/ErrorPage';
 import WhatSalesTogetherPage from './pages/WhatSalesTogetherPage';
-
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import ServerPage from './pages/ServerPage';
 import CustomerPage from './pages/CustomerPage';
