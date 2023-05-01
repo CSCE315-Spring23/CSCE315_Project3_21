@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
-import {Edit} from '@mui/icons-material';
-import { Icon, IconButton, Tooltip } from '@mui/material';
+import {Delete, Edit} from '@mui/icons-material';
+import { IconButton, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box'
 
 const config = {
@@ -13,8 +13,24 @@ const config = {
 };
 
 const InventoryCRUDTable = (props) => {
-
   const [InventoryData, setInventoryData] = useState([]);
+
+    const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
+        //update the db table
+        let queryStr = 'http://localhost:3001/createOrUpdateInventoryItem';
+        axios.post(queryStr,values,config)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+
+        //handle on the material react table
+        InventoryData[row.index] = values;
+        setInventoryData([...InventoryData]);//send/receive api updates here, then refetch or update local table data for re-render
+        exitEditingMode(); //required to exit editing mode and close modal
+    };
 
   useEffect(() => {
     getAllInventory()
@@ -22,29 +38,7 @@ const InventoryCRUDTable = (props) => {
 
   const columns = [
     {
-        id:'action',
-        header:'Action',
-        accessorKey:'action',
-        size:10,
-        Cell: ({ renderedCellValue, row }) => (  
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-              }}
-            >
-            <Tooltip arrow placement="left" title="Edit">
-              <IconButton >
-                <Edit />
-              </IconButton>
-            </Tooltip>
-            <span>{renderedCellValue}</span>
-            </Box>
-        ),//would be very easy to add delete functionality but backend does not exist so I did not 
-    },
-    {
-      header: 'Inventory Item Name',
+      header: 'Item Name',
       accessorKey: 'itemname',
     },
     {
@@ -84,6 +78,9 @@ const InventoryCRUDTable = (props) => {
     <MaterialReactTable 
     columns={columns} 
     data={InventoryData}
+    editingMode="modal"
+    enableEditing
+    onEditingRowSave={handleSaveRowEdits}
     muiTableHeadCellProps={{
     //simple styling with the `sx` prop, works just like a style prop in this example
       sx: {
@@ -98,9 +95,23 @@ const InventoryCRUDTable = (props) => {
     muiTableProps={{sx :{tableLayout:'fixed'}}}
     defaultColumn={{
       minSize: 5,
-      maxSize: 80,
+      maxSize: 50,
       size: 20,
     }}
+    renderRowActions={({ row, table }) => (
+        <Box>
+          <Tooltip arrow placement="left" title="Edit">
+            <IconButton onClick={() => table.setEditingRow(row)}>
+              <Edit />
+            </IconButton>
+          </Tooltip>
+          <Tooltip arrow placement="right" title="Delete">
+            <IconButton color="error" >
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      )}
     />
     
   </div>
