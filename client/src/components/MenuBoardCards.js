@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card } from "antd";
+import { Card } from "antd";
 
 const MenuBoardItemCard = ({item}) => {
     const {Meta} = Card;
@@ -7,9 +7,10 @@ const MenuBoardItemCard = ({item}) => {
         <div >
             <Card
                 hoverable
-                style ={{width:250,marginBottom: 20, marginLeft: 20, fontSize: '8px', background: '#F2F4F4'}}
+                style ={{fontSize: '8px', background: '#F2F4F4', height:200, lineHeight:1}}
                 cover={
                 <img 
+                    style ={{width:130, marginLeft:'60px'}}
                     alt={item.itemname} 
                     src={item.imageLink} 
                     />
@@ -18,17 +19,13 @@ const MenuBoardItemCard = ({item}) => {
                 <Meta title={item.itemname}
                 description = {
                     <div className="item-description">
-                        <p>
-                            {item.itemname}
-                        </p>
-                        <p className="price">
+                        <div className="price">
                             {"$" + item.price}
-                        </p>
+                        </div>
                     </div>
                     
                 } />
                 
-
             </Card>
         </div>
     )
