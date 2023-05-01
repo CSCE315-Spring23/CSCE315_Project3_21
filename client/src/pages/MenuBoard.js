@@ -105,13 +105,7 @@ const MenuBoard = () => {
             <MenuBoardBar>           
             </MenuBoardBar>
           </Grid >
-          
-          <Grid xs={2}>
-            
-            <ReactWeatherComponent>
-            </ReactWeatherComponent>
-            
-            </Grid>
+        
           <Grid xs={12}>  
             <Row >
                 {
@@ -123,6 +117,12 @@ const MenuBoard = () => {
                 }
             </Row>
           </Grid>
+          <Grid xs={12}>
+            
+            <ReactWeatherComponent>
+            </ReactWeatherComponent>
+            
+            </Grid>
         </Grid>
   
       </div>
