@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
-import {Delete, Edit} from '@mui/icons-material';
+import {Edit} from '@mui/icons-material';
 import {
     Box,
     Button,
@@ -22,6 +22,11 @@ const config = {
   }
 };
 
+/*
+primary reference for the following table https://www.material-react-table.com/docs/examples/editing-crud
+CRUD stands for Create, Read, Update, Delete 
+This example does not include delete given the scope of the assignment
+*/
 const InventoryCRUDTable = (props) => {
   const [InventoryData, setInventoryData] = useState([]);
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -193,6 +198,5 @@ export const CreateNewRowModal = ({ open, columns, onClose, onSubmit }) => {
       </Dialog>
     );
 };
-
 
 export default InventoryCRUDTable;

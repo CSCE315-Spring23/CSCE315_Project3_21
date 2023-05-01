@@ -1,10 +1,8 @@
 import InventoryCRUDTable from '../components/InventoryCRUDTable.js';
 import PendingRestockTable from '../components/PendingRestockTable.js';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+import { styled, ThemeProvider, createTheme, Paper, Button, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
-import Button from '@mui/material/Button';
 import axios from 'axios';
 import {useRef} from 'react';
 
@@ -83,12 +81,20 @@ function InventoryLevelsEndDayPage() {
             </MainAppBar>
         </Grid>
         <Grid xs = {8}>
-            Inventory Table 
+            <Item>
+                <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                    Inventory Table 
+                </Typography>
+            </Item>
             <InventoryCRUDTable />
         </Grid>
             <Grid xs = {2}>
                 <div>
-                    Table with all pending restock orders
+                    <Item>
+                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                            Table with all pending restock orders
+                        </Typography>
+                    </Item>
                     <PendingRestockTable />
                 </div>
             </Grid>
@@ -97,7 +103,9 @@ function InventoryLevelsEndDayPage() {
                     <Button variant = 'contained' onClick = {placeRestockOnclick}>Place Restock Order</Button>
                 </Item>
                 <Item>
-                    Submit the id of the restock order:
+                    <Typography variant="h6" component="div" >
+                        Enter the restock order id:
+                    </Typography>
                     <input ref = {inputRef} type = "text" id = "pendingRestockId" name = "pendingRestockId"/>
                     <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
                 </Item>
