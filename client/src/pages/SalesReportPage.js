@@ -31,7 +31,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 /**
  * 
- * Title 
+ * Title created with specific configs
  * 
  */
 const Title = styled(Paper)(({ theme }) => ({
@@ -40,7 +40,11 @@ const Title = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: 'black',
 }));
-
+/**
+ * 
+ * theme of the page created with cfa_theme
+ * 
+ */
 const cfa_theme = createTheme({
   palette: {
       primary: {
@@ -51,7 +55,13 @@ const cfa_theme = createTheme({
       },
   },
 });
-
+/**
+ * 
+ * Sales Report Page function used to build the webpage 
+ * Has setStart, setEnd, and setSubmit vars to help store values from the date timer
+ * 
+ * 
+ */
 export default function SalesReportPage(){
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: server/salesReport.js</title>
+    <title>JSDoc: Source: client/src/components/MenuBoardCards.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: server/salesReport.js</h1>
+    <h1 class="page-title">Source: client/src/components/MenuBoardCards.js</h1>
 
     
 
@@ -26,64 +26,48 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const pool = require("./DB");
-
-
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import { Button, Card } from "antd";
 /**
  * 
- *
- * getSalesReport is used to query our database for the sales report with the dates specified
- */
-
-const getsalesReport = (request, response) => {
-  const start = request.query.start;
-  const end = request.query.end;
-  const limit = request.query.limit || 100;
-  const salesWith = request.salesWith;
-
-  if (!start || !end) {
-    response.status(400).json({ error: "start and end are required" });
-    return;
-  }
-  //build the query
-
-  
-    let query = "SELECT * from relationship_ordertomenu where order_key in (SELECT id FROM order_table WHERE ordertimestamp >= '";
-    query += start;
-    query += "' AND ordertimestamp &lt;= '";
-    query += end;
-    query += "');";
-
-
-  
-
-  /**
+ * MenuBoardItemCard function is used to generate the item cards used in the menu board.
  * 
- *
- * pool.query is used here to format the data into rows and columns. 
+ * 
  */
-  pool.query(query, (error, results) => {
-    if (error) {
-      throw error;
-    }
-    let rows = results.rows;
-        let res = [];
-        //console.log(rows);
-        for (let i = 0; i &lt; rows.length; i++) {
-            
-            res.push({
-                id: rows[i].id,
-                order_key: rows[i].order_key,
-                menuitem_key: rows[i].menuitem_key,
-                quantity: rows[i].quantity,
-            });
-        }
-        response.status(200).json(res);
-    });
-};
+const MenuBoardItemCard = ({item}) => {
+    const {Meta} = Card;
+    return (
+        &lt;div >
+            &lt;Card
+                hoverable
+                style ={{width:250,marginBottom: 20, marginLeft: 20, fontSize: '8px', background: '#F2F4F4'}}
+                cover={
+                &lt;img 
+                    alt={item.itemname} 
+                    src={item.imageLink} 
+                    />
+                }
+            >
+                &lt;Meta title={item.itemname}
+                description = {
+                    &lt;div className="item-description">
+                        &lt;p>
+                            {item.itemname}
+                        &lt;/p>
+                        &lt;p className="price">
+                            {"$" + item.price}
+                        &lt;/p>
+                    &lt;/div>
+                    
+                } />
+                
 
-module.exports = getsalesReport;
-</code></pre>
+            &lt;/Card>
+        &lt;/div>
+    )
+}
+
+export default MenuBoardItemCard;</code></pre>
         </article>
     </section>
 

@@ -1,6 +1,13 @@
 import React from "react";
 import { Card } from "antd";
 
+import { Button, Card } from "antd";
+/**
+ * 
+ * MenuBoardItemCard function is used to generate the item cards used in the menu board.
+ * 
+ * 
+ */
 const MenuBoardItemCard = ({item}) => {
     const {Meta} = Card;
     return (

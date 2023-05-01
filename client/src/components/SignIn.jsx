@@ -24,12 +24,15 @@ const SignIn = () => {
       }
       console.log("Successfully logged in");
     }
+    else {
+      navigate('/');
+    }
   }, [user]);
 
   return (
-    <div>
-      <h1 className='text-center text-3xl font-bold py-8'>Sign in</h1>
-      <div className='max-w-[240px] m-auto py-4'>
+    <div className='emp-signin'>
+      <h2 className='empHeader-signin'>Employee Sign In</h2>
+      <div>
         <GoogleButton onClick={handleGoogleSignIn} />
       </div>
     </div>

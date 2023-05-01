@@ -25,10 +25,21 @@ const Item = styled(Paper)(({ theme }) => ({
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
   };
-
+/**
+ * 
+ * MenuBoard function created to generate the menu board page. 
+ * 
+ * 
+ */
 const MenuBoard = () => {
     const [itemsData,setItemsData] = useState([])
-
+  /**
+ * 
+ * getSomeMenuItems function created to query the database for a few random menu items 
+ * to use on the menu board
+ * 
+ * 
+ */
     useEffect(() => {
         const getSomeMenuItems = async() => {
             axios.get(`http://localhost:3001/GetSomeMenuItems`, config)
@@ -45,7 +56,11 @@ const MenuBoard = () => {
         getSomeMenuItems()
     },[])
     
-
+/**
+ * 
+ * returns the menu board with the items in cards with the weather displayed below that. 
+ * 
+ */
     return (
         <div className="MenuBoard">
         <Grid container spacing={2}>
