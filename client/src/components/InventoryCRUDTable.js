@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
+import {Delete, Edit} from '@mui/icons-material';
+import { Icon, IconButton, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'; 
 
 const config = {
   headers: {
@@ -22,48 +22,28 @@ const InventoryCRUDTable = (props) => {
 
   const columns = [
     {
-      id: 'itemname',
       header: 'Inventory Item Name',
       accessorKey: 'itemname',
-      size: 100,
-      
-      Cell: ({ renderedCellValue, row }) => (  
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
-        {/* using renderedCellValue instead of cell.getValue() preserves filter match highlighting */}
-        <span>{renderedCellValue}</span>
-        </Box>
-      ),
     },
     {
-      size: 50,
       accessorKey: 'shipmentunit',
-      header: 'Shipment Unit in Product Units',
+      header: 'Shipment Unit (Product Units)',
     },
     {
-      size: 50,
       accessorKey: 'shipmentunitstring',
-      header: 'Shipment Unit Represented in Words',
+      header: 'Shipment Unit (Words)',
     },
     {
-        size: 50,
         accessorKey: 'currentquantity',
-        header: 'Current Quantity in Product Units',
+        header: 'Current Quantity (Product Units)',
     },
     {
-        size: 50,
         accessorKey: 'maxquantity',
-        header: 'Maximum Quantity in Product Units',
+        header: 'Maximum Quantity (Product Units)',
     },
     {
-        size: 50,
         accessorKey: 'recommendedreorder',
-        header: 'Reorder Quantity in Shipment Units',
+        header: 'Reorder Quantity (Shipment Units)',
     },
   ];
 
@@ -81,20 +61,44 @@ const InventoryCRUDTable = (props) => {
   <div>
     <MaterialReactTable 
     columns={columns} 
-    data={inventoryData} 
+    data={InventoryData}
     muiTableHeadCellProps={{
     //simple styling with the `sx` prop, works just like a style prop in this example
       sx: {
-        textDecoration: 'underline',
-        fontSize: '22px'
+        fontSize: '15px'
       }, 
     }}
     muiTableBodyCellProps={{
       sx: {
-        fontSize : '18px',
-        color : '#1A5276',
+        fontSize : '13px',
       }
     }}
+    muiTableProps={{sx :{tableLayout:'fixed'}}}
+    defaultColumn={{
+      minSize: 10,
+      maxSize: 100,
+      size: 50,
+    }}
+
+    displayColumnDefOptions={{
+        'mrt-row-actions':{
+            align:'center'
+        }
+    }}
+    renderRowActions={({row,table})=> (
+        <Box>
+            <Tooltip arrow placement="left" title="Edit">
+              <IconButton >
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip arrow placement="right" title="Delete">
+              <IconButton >
+                <Delete />
+              </IconButton>
+            </Tooltip>
+        </Box>
+    )} 
     />
     
   </div>

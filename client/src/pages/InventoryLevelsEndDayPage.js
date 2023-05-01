@@ -1,4 +1,4 @@
-import InventoryCRUDTable from '../componentsInventoryCRUDTable.js';
+import InventoryCRUDTable from '../components/InventoryCRUDTable.js';
 import PendingRestockTable from '../components/PendingRestockTable.js';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -14,7 +14,6 @@ const config = {
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
 };
-
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -83,34 +82,31 @@ function InventoryLevelsEndDayPage() {
             <MainAppBar>
             </MainAppBar>
         </Grid>
-
-        <Grid xs = {6}>
-            Inventory Item CRUD table to complete manual inventory or change recommended reorder quantity
-            PLACEHOLDER!!!!!!
+        <Grid xs = {8}>
+            Inventory Table
             <InventoryCRUDTable />
         </Grid>
-        <Grid xs = {3}>
-            <Item>
-                Table with all pending restock orders
-                <PendingRestockTable />
-            </Item>
-        </Grid>
-
-        <Grid xs = {3}>
-            <Item>
-                <Button variant = 'contained' onClick = {placeRestockOnclick}>Place Restock Order</Button>
-            </Item>
-            <Item>
-                Submit the id of the restock order:
-                <input ref = {inputRef} type = "text" id = "pendingRestockId" name = "pendingRestockId"/>
-                <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
-            </Item>
-            <Item>
-                <Button variant = 'contained' onClick = {endDayOnclick}>Update Recommended Restock Order Quantities</Button>
-            </Item>
+            <Grid xs = {2}>
+                <div>
+                    Table with all pending restock orders
+                    <PendingRestockTable />
+                </div>
             </Grid>
-
-    </Grid>
+            <Grid xs = {2}>
+                <Item>
+                    <Button variant = 'contained' onClick = {placeRestockOnclick}>Place Restock Order</Button>
+                </Item>
+                <Item>
+                    Submit the id of the restock order:
+                    <input ref = {inputRef} type = "text" id = "pendingRestockId" name = "pendingRestockId"/>
+                    <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
+                </Item>
+                <Item>
+                    <Button variant = 'contained' onClick = {endDayOnclick}>Update Recommended Restock Order Quantities</Button>
+                </Item>
+            </Grid>
+        </Grid>
+    
     </div>
     </ThemeProvider>
     );
