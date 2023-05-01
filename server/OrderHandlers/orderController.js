@@ -39,9 +39,16 @@ const storeOrder = async (request, response) => {
     response.status(200).json(order);
 }
 
+const cancelOrder = async (request, response) => {
+    console.log("Cancelling order and resetting any inventory item quantities.");
+    await order.cancelOrder();
+    response.status(200).json(order);
+}
+
 module.exports = {
     addItemToOrder,
     removeItemFromOrder,
     storeOrder,
-    getOrder
+    getOrder,
+    cancelOrder,
 }

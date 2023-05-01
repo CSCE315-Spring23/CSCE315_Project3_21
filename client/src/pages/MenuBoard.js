@@ -106,10 +106,11 @@ const MenuBoard = () => {
             </MenuBoardBar>
           </Grid >
           
-          <Grid xs={12}>
+          <Grid xs={2}>
             
             <ReactWeatherComponent>
             </ReactWeatherComponent>
+            
             </Grid>
           <Grid xs={12}>  
             <Row >

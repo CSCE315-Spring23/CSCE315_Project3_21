@@ -17,7 +17,11 @@ const SignIn = () => {
 
   useEffect(() => {
     if (user != null) {
-      navigate('/RestockReportPage');
+      if (String(user.email).endsWith('@tamu.edu')) {
+        navigate('/RestockReportPage');
+      } else {
+        navigate('/ServerPage');
+      }
       console.log("Successfully logged in");
     }
   }, [user]);

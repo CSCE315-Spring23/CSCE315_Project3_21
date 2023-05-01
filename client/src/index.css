@@ -12,6 +12,81 @@ code {
     monospace;
 }
 
+.landing-body {
+  background-image: url(media/chick-fil-a-2000x1333-edcdf7b3e3524b2cb34d1154c836b6e3.jpg), url(media/nuggetsmealheader.jpg);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0,100% 0;
+  font-family: 'Helvetica, sans-serif',
+}
+
+.CFA-logo {
+  border-radius: 40%;
+  background-image: url(media/CFALogo.png);
+  background-size: 95% 100%;
+  background-repeat: no-repeat;
+  text-align: center;
+  background-color: white;
+  height: 150px;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  padding: 25px;
+}
+
+.welcome-header {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  padding: 10px;
+  width: fit-content;
+  background-color: #E51636;
+  color: white;
+}
+
+.customer-button{
+  font-family:  'Georgia', serif;
+  font-size: 18px;
+  width: 180px;
+  height: 50px;
+  margin-left: 38%;
+  margin-bottom: 80px;
+  background-color: #E51636;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.customer-button:hover{
+  background-color: #A4070A;
+}
+
+.employee-button{
+  font-family:  'Georgia', serif;
+  font-size: 18px;
+  width: 180px;
+  height: 50px;
+  margin-left: 40px;
+  background-color: #E51636;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.employee-button:hover{
+  background-color: #A4070A;
+}
+
+
+#weather-component {
+  width: 50%;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .item-button button{
   margin-top: 20px;
   width: 150px;
@@ -54,9 +129,9 @@ code {
   border-style: solid;
   border-radius: 20px;
   border-width: 3px;
-  color: white;
-  border-color: #0B0C0C ;
-  background-color:#E51636;
+  color: #1D7BDE;
+  border-color: #1D7BDE;
+  background-color: white;
   display: block;
 }
 
@@ -78,13 +153,32 @@ code {
   border-radius: 5px;
   width: 330px;
   padding: 15px;
-  background-color: #1ABC9C;
+  background-color: #28B463;
   border-radius: 5px;
   border-style: solid;
   color: white;
   font-size: 18px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.1s;
 }
 
-.checkout-button:hover {background-color : #148F77}
+.checkout-button:hover {background-color : #239B56}
+
+.cancelOrder-button{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1%;
+  display: block;
+  border-radius: 5px;
+  width: 330px;
+  padding: 15px;
+  background-color: #E74C3C;
+  border-radius: 5px;
+  border-style: solid;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.cancelOrder-button:hover {background-color : #B03A2E}
