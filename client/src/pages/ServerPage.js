@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect} from "react";
 import Grid from '@mui/material/Unstable_Grid2';
-import MainAppBar from '../components/MainAppBar.js';
+import MenuBoardBar from '../components/MenuBoardBar.js';
 import MenuItemTable from '../components/MenuItemTable.js';
 import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
@@ -138,8 +138,8 @@ const ServerPage = () => {
     <div className="serverPage">
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <MainAppBar>     
-          </MainAppBar>
+          <MenuBoardBar>     
+          </MenuBoardBar>
         </Grid>
         <Grid xs = {12}>
           <Tabs 
