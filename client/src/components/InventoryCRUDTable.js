@@ -2,8 +2,18 @@ import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
 import {Delete, Edit} from '@mui/icons-material';
-import { IconButton, Tooltip } from '@mui/material';
-import Box from '@mui/material/Box'
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    Stack,
+    TextField,
+    Tooltip,
+} from '@mui/material';
 
 const config = {
   headers: {
@@ -14,6 +24,20 @@ const config = {
 
 const InventoryCRUDTable = (props) => {
   const [InventoryData, setInventoryData] = useState([]);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+
+  const handleCreateNewRow = (values) => {
+    let queryStr = 'http://localhost:3001/createOrUpdateInventoryItem';
+        axios.post(queryStr,values,config)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    InventoryData.push(values);
+    setInventoryData([...InventoryData]);
+  };
 
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         //update the db table
@@ -31,7 +55,7 @@ const InventoryCRUDTable = (props) => {
         setInventoryData([...InventoryData]);//send/receive api updates here, then refetch or update local table data for re-render
         exitEditingMode(); //required to exit editing mode and close modal
     };
-
+    
   useEffect(() => {
     getAllInventory()
   },[])
@@ -112,10 +136,68 @@ const InventoryCRUDTable = (props) => {
           </Tooltip>
         </Box>
       )}
+      renderTopToolbarCustomActions={() => (
+        <Button
+          onClick={() => setCreateModalOpen(true)}
+          variant="contained"
+        >
+          Create New Inventory Item
+        </Button>
+      )}
     />
-    
+    <CreateNewRowModal
+        columns={columns}
+        open={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+        onSubmit={handleCreateNewRow}
+      />
+
   </div>
   );
 };
+
+export const CreateNewRowModal = ({ open, columns, onClose, onSubmit }) => {
+    const [values, setValues] = useState(() =>
+      columns.reduce((item, column) => {
+        item[column.accessorKey ?? ''] = '';
+        return item;
+      }, {}),
+    );
+
+    const handleSubmit = () => {
+      //put your validation logic here
+      onSubmit(values);
+      onClose();
+    };
+
+    return (
+      <Dialog open={open}>
+        <DialogTitle textAlign="center">Create New Inventory Item</DialogTitle>
+        <DialogContent>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <Stack>
+              {columns.map((column) => (
+                <TextField
+                  key={column.accessorKey}
+                  label={column.header}
+                  name={column.accessorKey}
+                  onChange={(e) =>
+                    setValues({ ...values, [e.target.name]: e.target.value })
+                  }
+                />
+              ))}
+            </Stack>
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={handleSubmit} variant="contained">
+            Create New Inventory Item
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+};
+
 
 export default InventoryCRUDTable;
