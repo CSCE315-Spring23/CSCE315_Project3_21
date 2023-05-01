@@ -21,7 +21,7 @@ import GoogleTranslateButton from './components/GoogleTranslateButton';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: <LandingPage />,
     errorElement: <ErrorPage />
   },
   {
