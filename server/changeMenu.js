@@ -12,13 +12,13 @@ async function createMenuToInventoryRelationships(itemName, listRelationships) {
             let query_inspt = "SELECT id FROM relationship_menutoinventory_unitquantities ORDER BY id DESC LIMIT 1;"
             let result_inspt = await pool.query(query_inspt);
             if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: add the ability to insert into an empty table */
-                console.log("Cannot insert in to menutoinventory unit quantity table; it is empty");
+                //console.log("Cannot insert in to menutoinventory unit quantity table; it is empty");
                 throw Error("error in creating menu-to-inventory unit quantity relationships.");
             }
             h = 1 + result_inspt.rows[0].id;
         }
         catch (err) {
-            console.log(err.message);
+            //console.log(err.message);
             throw Error("error in creating menu-to-inventory unit quantity relationships.");
         }
     // parse tokens
@@ -26,16 +26,16 @@ async function createMenuToInventoryRelationships(itemName, listRelationships) {
     // make insertions
         for (let i in tokenArray){
             try{
-                console.log(tokenArray[i]);
-                console.log(tokenArray[i].split(":")[0]);
-                console.log(tokenArray[i].split(":")[1]);
+                //console.log(tokenArray[i]);
+                //console.log(tokenArray[i].split(":")[0]);
+                //console.log(tokenArray[i].split(":")[1]);
                 let query_ins = "INSERT INTO relationship_menutoinventory_unitquantities (id,menuitemkey,inventoryitemkey,unitquantity) VALUES("
                 +"'"+ (h + i) + "', "
                 +"'"+itemName+"', "
                 +"'"+tokenArray[i].split(":")[0]+"', "
                 +"'"+tokenArray[i].split(":")[1]+"'"
                 +");";
-                console.log(query_ins);
+                //console.log(query_ins);
                 let result_ins = await pool.query(query_ins);
                 i++;
 
@@ -56,7 +56,7 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
             let query_inspt = "SELECT id FROM relationship_menutodietaryrestriction ORDER BY id DESC LIMIT 1;"
             let result_inspt = await pool.query(query_inspt);
             if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: test the case where table is empty */
-                console.log("Cannot insert into menu-to-dietary-restrictions table; it is empty.");
+                //console.log("Cannot insert into menu-to-dietary-restrictions table; it is empty.");
                 throw Error("error in creating menu-to-dietary-restrictions relationships.");
             }
             h = 1 + result_inspt.rows[0].id;
@@ -75,8 +75,8 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
                 +"'"+itemName+"', "
                 +"'"+tokenArray[i]+"'"
                 +");";
-                console.log(query_ins);
-                console.log(typeof listRelationships)
+                //console.log(query_ins);
+                //console.log(typeof listRelationships)
                 let result_ins = await pool.query(query_ins);
                 /* TODO: alert user when insertion fails */
                 // console.log(result_ins.command);
@@ -102,7 +102,7 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
 */
 async function readMenuItem(request, response){
     try {
-        console.log("The route is not broken.");
+        //console.log("The route is not broken.");
         // get parameters
             const itemname = request.query.name;
         // queries
@@ -348,12 +348,12 @@ const readDietaryRestrictionNames =(request, response) => {
 */
 async function createOrUpdateMenuItem(request, response){   
     try{
-        console.log("The route is not broken.");
+        //console.log("The route is not broken.");
         const {itemname, price, category, imagelink, menutoinventory, menutodietaryrestriction} = request.body;
         let priceStr = String(price);
         priceStr = priceStr.substring(1,price.length-3) + priceStr.substring(price.length-2);
         if (itemname==="" ){
-            console.log('Please specify menu item name.');
+            //console.log('Please specify menu item name.');
             throw Error('Please specify menu item name.');
         }
         // build first query
@@ -367,10 +367,10 @@ async function createOrUpdateMenuItem(request, response){
                 menutoinventory===""  ||
                 menutodietaryrestriction==="" 
                 ){
-                console.log("Cannot create a new menu item with empty fields.");
+                //console.log("Cannot create a new menu item with empty fields.");
                 throw Error("Cannot create a new menu item with empty fields.");
             }
-            console.log(""+itemname+" does not exist. It will be created.");
+            //console.log(""+itemname+" does not exist. It will be created.");
             // create an entry in menu_item
                 let query1 = "INSERT INTO menu_item (itemname, price, category, imagelink) VALUES ("
                 +"'"+itemname+"',"
@@ -388,7 +388,7 @@ async function createOrUpdateMenuItem(request, response){
                 response.status(200).json({message: "Successfully added "+ itemname});
         }
         else if (result.rows[0].count == '1'){
-            console.log(""+itemname+" exists. Nonempty fields will be updated.");
+            //console.log(""+itemname+" exists. Nonempty fields will be updated.");
 
             // update the entry in menu_item if applicable
                 if ((!(price==="")) ||
@@ -429,7 +429,7 @@ async function createOrUpdateMenuItem(request, response){
                 response.status(200).json({message: "updated "+itemname});
         }
         else{
-            console.log('COUNT sql command returned unexpected result');
+            //console.log('COUNT sql command returned unexpected result');
             throw Error('COUNT sql command returned unexpected result');
         }
     }

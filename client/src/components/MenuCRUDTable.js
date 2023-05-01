@@ -79,13 +79,17 @@ const MenuCRUDTable = (props) => {
         accessorKey: 'category',
     },
     {
-        header: 'Invenotry Items',
+        header: 'Inventory Items',
         accessorKey: 'menutoinventory',
     },
     {
         header: 'Dietary Restrictions',
         accessorKey: 'menutodietaryrestriction',
     },
+    {
+      header: 'Image Link',
+      accessorKey: 'imagelink',
+  },
   ];
 
   const getAllMenu = async() => {
