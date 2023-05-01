@@ -129,11 +129,6 @@ const InventoryCRUDTable = (props) => {
               <Edit />
             </IconButton>
           </Tooltip>
-          <Tooltip arrow placement="right" title="Delete">
-            <IconButton color="error" >
-              <Delete />
-            </IconButton>
-          </Tooltip>
         </Box>
       )}
       renderTopToolbarCustomActions={() => (
