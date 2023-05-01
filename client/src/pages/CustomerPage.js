@@ -6,6 +6,7 @@ import MainAppBar from '../components/MainAppBar.js';
 import CustomerMenu from '../components/CustomerMenu.js'
 import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
+import MenuBoardBar from '../components/MenuBoardBar.js';
 
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
@@ -139,8 +140,8 @@ const CustomerPage = () => {
     <div className="serverPage">
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <MainAppBar>     
-          </MainAppBar>
+          <MenuBoardBar>     
+          </MenuBoardBar>
         </Grid>
         <Grid xs = {12}>
           <Tabs 
