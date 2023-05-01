@@ -17,7 +17,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (user != null) {
-      navigate('/RestockReportPage');
+      navigate('/');
       console.log("Successfully logged in");
     }
   }, [user]);

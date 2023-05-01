@@ -12,6 +12,81 @@ code {
     monospace;
 }
 
+.landing-body {
+  background-image: url(media/chick-fil-a-2000x1333-edcdf7b3e3524b2cb34d1154c836b6e3.jpg), url(media/nuggetsmealheader.jpg);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0,100% 0;
+  font-family: 'Helvetica, sans-serif',
+}
+
+.CFA-logo {
+  border-radius: 40%;
+  background-image: url(media/CFALogo.png);
+  background-size: 95% 100%;
+  background-repeat: no-repeat;
+  text-align: center;
+  background-color: white;
+  height: 150px;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  padding: 25px;
+}
+
+.welcome-header {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  padding: 10px;
+  width: fit-content;
+  background-color: #E51636;
+  color: white;
+}
+
+.customer-button{
+  font-family:  'Georgia', serif;
+  font-size: 18px;
+  width: 180px;
+  height: 50px;
+  margin-left: 38%;
+  margin-bottom: 80px;
+  background-color: #E51636;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.customer-button:hover{
+  background-color: #A4070A;
+}
+
+.employee-button{
+  font-family:  'Georgia', serif;
+  font-size: 18px;
+  width: 180px;
+  height: 50px;
+  margin-left: 40px;
+  background-color: #E51636;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.employee-button:hover{
+  background-color: #A4070A;
+}
+
+
+#weather-component {
+  width: 50%;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .item-button button{
   margin-top: 20px;
   width: 150px;
