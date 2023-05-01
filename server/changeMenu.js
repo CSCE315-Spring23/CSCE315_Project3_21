@@ -8,7 +8,6 @@ async function createMenuToInventoryRelationships(itemName, listRelationships) {
             if (listRelationships==="" ){
                 return;
             }
-
             let query_inspt = "SELECT id FROM relationship_menutoinventory_unitquantities ORDER BY id DESC LIMIT 1;"
             let result_inspt = await pool.query(query_inspt);
             if (parseInt(result_inspt.rows[0].id) == NaN || parseInt(result_inspt.rows[0].id) < 0){ /* TODO: add the ability to insert into an empty table */
@@ -22,18 +21,18 @@ async function createMenuToInventoryRelationships(itemName, listRelationships) {
             throw Error("error in creating menu-to-inventory unit quantity relationships.");
         }
     // parse tokens
-        tokenArray = listRelationships.split(",");
+        tokenArray = listRelationships.split(" , ");
     // make insertions
         for (let i in tokenArray){
             try{
                 //console.log(tokenArray[i]);
-                //console.log(tokenArray[i].split(":")[0]);
-                //console.log(tokenArray[i].split(":")[1]);
+                //console.log(tokenArray[i].split(" : ")[0]);
+                //console.log(tokenArray[i].split(" : ")[1]);
                 let query_ins = "INSERT INTO relationship_menutoinventory_unitquantities (id,menuitemkey,inventoryitemkey,unitquantity) VALUES("
                 +"'"+ (h + i) + "', "
                 +"'"+itemName+"', "
-                +"'"+tokenArray[i].split(":")[0]+"', "
-                +"'"+tokenArray[i].split(":")[1]+"'"
+                +"'"+tokenArray[i].split(" : ")[0]+"', "
+                +"'"+tokenArray[i].split(" : ")[1]+"'"
                 +");";
                 //console.log(query_ins);
                 let result_ins = await pool.query(query_ins);
@@ -66,7 +65,7 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
             throw Error("error in creating menu-to-dietary-restrictions relationships.");
         }
     // parse tokens
-        tokenArray = listRelationships.split(",");
+        tokenArray = listRelationships.split(" , ");
     // make insertions
         for (let i in tokenArray){
             try{
@@ -129,7 +128,7 @@ async function readMenuItem(request, response){
             let result3 = await pool.query(query3);
             let menutodietaryrestriction = "";
             for (let i = 0; i < result3.rowCount - 1; i++){
-                menutodietaryrestriction += result3.rows[i].dietaryrestrictionkey + " , ";
+                menutodietaryrestriction += result3.rows[i].dietaryrestrictionkey + ", ";
             }
             if (result3.rowCount > 0){
                 menutodietaryrestriction += result3.rows[result3.rowCount-1].dietaryrestrictionkey;
@@ -200,146 +199,7 @@ const readDietaryRestrictionNames =(request, response) => {
     EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
         - create/update menu item with empty string name field (should return error)
             http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-                {
-                    price: $4.99
-                }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        - create menu item with name field specified but other fields are empty strings (should return error)
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-                {
-                    itemname: Side Salad
-                }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -create new menu item:
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-                {
-                    itemname: Side Salad,
-                    price: $4.99,
-                    category: sides,
-                    imagelink: https://www.chewboom.com/wp-content/uploads/2023/04/Chick-fil-A-Reverses-Course-Decides-To-Keep-Side-Salad-On-Menu-678x381.jpg,
-                    menutoinventory: Lettuce: 20, Tomato: 6
-                    menutodietaryrestriction: vegan, vegetarian, gluten-free, dairy-free, nut-free
-                }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        - update menu item with name field specified but other fields are empty strings
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-                {
-                    itemname: Side Salad
-                }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        - update menu item (only select field - price)
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $99.99,
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        - update menu item (only select field - price, category)
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $4.99,
-                category: desserts
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        - update menu item (only select field - menutoinventory)
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-                request body (make sure to select "x-www-form-urlencoded"):
-                {
-                    menutoinventory: Lettuce: 21, Tomato: 6
-                }
-            - check:
-                    http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $2.25,
-                category: dessert,
-                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
-                menutoinventory: ""
-                menutodietaryrestriction: ""
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $100.00
-                category: ""
-                imagelink: ""
-                menutoinventory: ""
-                menutodietaryrestriction: ""
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: ""
-                category: ""
-                imagelink: ""
-                menutoinventory: ""
-                menutodietaryrestriction: ""
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $2.25,
-                category: dessert,
-                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
-                menutoinventory: "Lettuce: 20"
-                menutodietaryrestriction: "vegan"
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $2.25,
-                category: dessert,
-                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
-                menutoinventory: "Lettuce: 20, Tomato: 6, typo: 0, Chocolate Fudge Brownie: 0"
-                menutodietaryrestriction: "vegan"
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
-        -update menu item
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-            request body (make sure to select "x-www-form-urlencoded"):
-            {
-                itemname: Side Salad,
-                price: $2.25,
-                category: dessert,
-                imagelink: "https://www.cfacdn.com/img/order/COM/Menu_Refresh/Treats/Treats%20PDP/031717_FudgeChunkBrownie_PDP.png",
-                menutoinventory: "Lettuce: 20, Tomato: 6, Chocolate Fudge Brownie: 0"
-                menutodietaryrestriction: "typo"
-            }
-        - check:
-                http://localhost:3000/changeMenu/readMenuItem (request body : {itemname=Side Salad}
+        
         -erase new menu item through command-line (undo the effects of the test):
             DELETE FROM menu_item WHERE itemname='Side Salad';
             DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = 'Side Salad';
@@ -383,7 +243,7 @@ async function createOrUpdateMenuItem(request, response){
             // create entries in relationship_menutoinventory_unitquantities
                 await createMenuToInventoryRelationships(itemname, menutoinventory);
             // create entries in relationship_menutodietaryrestriction
-                 await createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
+                await createMenuToRestrictionsRelationships(itemname, menutodietaryrestriction);
             // return status
                 response.status(200).json({message: "Successfully added "+ itemname});
         }
