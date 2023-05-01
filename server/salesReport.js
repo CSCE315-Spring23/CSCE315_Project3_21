@@ -2,14 +2,9 @@ const pool = require("./DB");
 
 
 /**
- * The request body should be an object with the following properties:
+ * 
  *
- * {
- *  start: int, // 0-23
- *  end: int, // 0-23
- *  salesWith: "menu_item_id" , //optional (default null)
- *  limit: int //optional number of results to return (default 100)
- * }
+ * getSalesReport is used to query our database for the sales report with the dates specified
  */
 
 const getsalesReport = (request, response) => {
@@ -34,7 +29,11 @@ const getsalesReport = (request, response) => {
 
   
 
-
+  /**
+ * 
+ *
+ * pool.query is used here to format the data into rows and columns. 
+ */
   pool.query(query, (error, results) => {
     if (error) {
       throw error;
