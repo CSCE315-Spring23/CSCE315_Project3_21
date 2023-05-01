@@ -66,7 +66,7 @@ Else, create a new entry.
 
 EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
 - create/update menu item with empty string name field (should return error)
-http://localhost:3000/inventory/createOrUpdateInventoryItem
+http://localhost:3000/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
         }
@@ -148,8 +148,7 @@ async function createOrUpdateInventoryItem(request, response){
                     shipmentunitstring===""  ||
                     currentquantity===""  ||
                     maxquantity===""  ||
-                    recommendedreorder==="" 
-                ){
+                    recommendedreorder==="" ){
                     throw Error("Cannot create a new menu item with empty fields.");
                 }
             console.log(""+itemname+" does not exist. It will be created.");
