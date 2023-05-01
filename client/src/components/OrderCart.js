@@ -47,6 +47,7 @@ const OrderCart = (props) => {
         columns={columns}
         data = {props.OrderItems}
         enableEditing
+        enableRowVirtualization
         renderRowActions={({ row, table }) => (
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Tooltip arrow placement="right" title="Remove Item">

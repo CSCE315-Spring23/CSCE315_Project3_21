@@ -45,7 +45,7 @@ export default function AppBarMenuButton() {
         }}
       >      
         <MenuItem onClick={()=> navigate("/Customer")}>
-          Customer Page
+          Create An Order
         </MenuItem>
         <MenuItem onClick={() => navigate("/MenuBoard")}>
           Menu Board
