@@ -46,43 +46,40 @@ code {
   color: white;
 }
 
+.login-buttons {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 38%;
+}
+
 .customer-button{
   font-family:  'Georgia', serif;
   font-size: 18px;
   width: 180px;
   height: 50px;
-  margin-left: 38%;
-  margin-bottom: 80px;
+  margin-top: 66px;
   background-color: #E51636;
   color: white;
   border-radius: 10px;
   cursor: pointer;
 }
 
-.customer-button:hover{
-  background-color: #A4070A;
-}
-
-.employee-button{
-  font-family:  'Georgia', serif;
-  font-size: 18px;
-  width: 180px;
-  height: 50px;
+.emp-signin {
   margin-left: 40px;
-  background-color: #E51636;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
 }
 
-.employee-button:hover{
-  background-color: #A4070A;
+.empHeader-signin{
+  font-family:  'Georgia', serif;
+  width: fit-content;
+  border-radius: 5px;
 }
-
 
 #weather-component {
   width: 50%;
-  padding: 5px;
+  padding: 10px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -182,3 +179,4 @@ code {
 }
 
 .cancelOrder-button:hover {background-color : #B03A2E}
+
