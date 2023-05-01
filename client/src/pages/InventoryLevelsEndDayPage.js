@@ -1,4 +1,4 @@
-
+import InventoryCRUDTable from '../componentsInventoryCRUDTable.js';
 import PendingRestockTable from '../components/PendingRestockTable.js';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -87,7 +87,7 @@ function InventoryLevelsEndDayPage() {
         <Grid xs = {6}>
             Inventory Item CRUD table to complete manual inventory or change recommended reorder quantity
             PLACEHOLDER!!!!!!
-            <PendingRestockTable />
+            <InventoryCRUDTable />
         </Grid>
         <Grid xs = {3}>
             <Item>
