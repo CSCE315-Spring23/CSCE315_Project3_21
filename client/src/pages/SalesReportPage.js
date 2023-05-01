@@ -12,7 +12,16 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import SalesReportTable from '../components/SalesReportTable.js';
-
+/**
+ * The request body should be an object with the following properties:
+ *
+ * {
+ *  start: int, // 0-23
+ *  end: int, // 0-23
+ *  salesWith: "menu_item_id" , //optional (default null)
+ *  limit: int //optional number of results to return (default 100)
+ * }
+ */
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
@@ -20,7 +29,11 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
-
+/**
+ * 
+ * Title
+ * 
+ */
 const Title = styled(Paper)(({ theme }) => ({
   ...theme.typography.heading,
   padding: theme.spacing(1),
