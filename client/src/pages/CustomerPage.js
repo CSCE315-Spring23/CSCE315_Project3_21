@@ -104,6 +104,24 @@ const CustomerPage = () => {
     }); 
   }
 
+  function cancelOrderHandler() {
+    axios.get(`http://localhost:3001/cancelOrder`, config)
+    .then(res => {
+      alert("Cancelling order and removing items.")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
+
   const [orderItems, setOrderItems] = React.useState([]);
   const [ordertotal, setOrderTotal] = React.useState("$0");
 
@@ -129,6 +147,7 @@ const CustomerPage = () => {
         OrderTotal = {ordertotal} 
         RemoveItem = {removeItemHandler}
         SendOrder = {sendOrderHandler}
+        CancelOrder = {cancelOrderHandler}
         >
         
       </OrderCart>

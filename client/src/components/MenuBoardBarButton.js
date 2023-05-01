@@ -43,21 +43,13 @@ export default function AppBarMenuButton() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
-      >
-       
+      >      
         <MenuItem onClick={()=> navigate("/Customer")}>
-          Customer Page
+          Create An Order
         </MenuItem>
         <MenuItem onClick={() => navigate("/MenuBoard")}>
           Menu Board
-          </MenuItem>
-          <MenuItem onClick={() => navigate("/ServerPage")}>
-          Server Page
-          </MenuItem>
-          
-
-        
-        
+        </MenuItem> 
       </Menu>
     </div>
   );

@@ -50,11 +50,12 @@ app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventor
 app.get('/ZReport',dbInventoryLevels.getZReport);
 
 /*    -ORDER FUNCTIONALITY-     */
-const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder} = require('./OrderHandlers/orderController');
+const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder, cancelOrder} = require('./OrderHandlers/orderController');
 app.get('/addItem', addItemToOrder);
 app.get('/removeItem', removeItemFromOrder);
 app.get('/storeOrder', storeOrder);
 app.get('/getOrder',getOrder);
+app.get('/cancelOrder',cancelOrder);
 
 /*    -X REPORT-     */
 const getXreport = require('./Xreport');
