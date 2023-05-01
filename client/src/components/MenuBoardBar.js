@@ -9,6 +9,7 @@ import AppBarMenuButton from './AppBarMenuButton';
 import { UserAuth } from '../login/AuthContext';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
+import MenuBoardBarButton from './MenuBoardBarButton';
 
 const cfa_theme = createTheme({
   palette: {
@@ -45,8 +46,9 @@ export default function MenuBoardBar() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color='primary'>
           <Toolbar>
-            <Typography variant= "h4" padding = "10px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-              Chick-fil-A POS
+            <MenuBoardBarButton/>
+            <Typography id='bar-description' variant= "h4" padding = "10px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+              CFA Customer Kiosk
             </Typography>
             <Button onClick={handleSignOut} color="inherit">Logout</Button>
           </Toolbar>

@@ -1,10 +1,8 @@
-
+import InventoryCRUDTable from '../components/InventoryCRUDTable.js';
 import PendingRestockTable from '../components/PendingRestockTable.js';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+import { styled, ThemeProvider, createTheme, Paper, Button, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import MainAppBar from '../components/MainAppBar.js';
-import Button from '@mui/material/Button';
 import axios from 'axios';
 import {useRef} from 'react';
 
@@ -14,7 +12,6 @@ const config = {
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
 };
-
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#fff',
@@ -83,34 +80,41 @@ function InventoryLevelsEndDayPage() {
             <MainAppBar>
             </MainAppBar>
         </Grid>
-
-        <Grid xs = {6}>
-            Inventory Item CRUD table to complete manual inventory or change recommended reorder quantity
-            PLACEHOLDER!!!!!!
-            <PendingRestockTable />
+        <Grid xs = {8}>
+            <Item>
+                <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                    Inventory Table 
+                </Typography>
+            </Item>
+            <InventoryCRUDTable />
         </Grid>
-        <Grid xs = {3}>
-            <Item>
-                Table with all pending restock orders
-                <PendingRestockTable />
-            </Item>
-        </Grid>
-
-        <Grid xs = {3}>
-            <Item>
-                <Button variant = 'contained' onClick = {placeRestockOnclick}>Place Restock Order</Button>
-            </Item>
-            <Item>
-                Submit the id of the restock order:
-                <input ref = {inputRef} type = "text" id = "pendingRestockId" name = "pendingRestockId"/>
-                <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
-            </Item>
-            <Item>
-                <Button variant = 'contained' onClick = {endDayOnclick}>Update Recommended Restock Order Quantities</Button>
-            </Item>
+            <Grid xs = {2}>
+                <div>
+                    <Item>
+                        <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                            Table with all pending restock orders
+                        </Typography>
+                    </Item>
+                    <PendingRestockTable />
+                </div>
             </Grid>
-
-    </Grid>
+            <Grid xs = {2}>
+                <Item>
+                    <Button variant = 'contained' onClick = {placeRestockOnclick}>Place Restock Order</Button>
+                </Item>
+                <Item>
+                    <Typography variant="h6" component="div" >
+                        Enter the restock order id:
+                    </Typography>
+                    <input ref = {inputRef} type = "text" id = "pendingRestockId" name = "pendingRestockId"/>
+                    <Button variant = 'contained' onClick = {recordArrivalOnclick}>Record Arrival</Button>
+                </Item>
+                <Item>
+                    <Button variant = 'contained' onClick = {endDayOnclick}>Update Recommended Restock Order Quantities</Button>
+                </Item>
+            </Grid>
+        </Grid>
+    
     </div>
     </ThemeProvider>
     );

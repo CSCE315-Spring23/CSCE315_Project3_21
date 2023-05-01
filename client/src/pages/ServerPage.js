@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect} from "react";
 import Grid from '@mui/material/Unstable_Grid2';
-import MainAppBar from '../components/MainAppBar.js';
+import MenuBoardBar from '../components/MenuBoardBar.js';
 import MenuItemTable from '../components/MenuItemTable.js';
 import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
@@ -34,7 +34,6 @@ const theme = createTheme({
   }
 })
 
-// The grid max xs = 12
 const ServerPage = () => {
 
   function addItemHandler(ItemName) {
@@ -102,11 +101,29 @@ const ServerPage = () => {
     }); 
   }
 
+  function cancelOrderHandler() {
+    axios.get(`http://localhost:3001/cancelOrder`, config)
+    .then(res => {
+      alert("Cancelling order and removing items.")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
   const [orderItems, setOrderItems] = React.useState([]);
   const [ordertotal, setOrderTotal] = React.useState("$0");
 
   useEffect(() => {
     getCurrentOrder();
+    document.getElementById('bar-description').innerText = "CFA Employee";
   },[])
 
   const items = [
@@ -127,6 +144,7 @@ const ServerPage = () => {
         OrderTotal = {ordertotal} 
         RemoveItem = {removeItemHandler}
         SendOrder = {sendOrderHandler}
+        CancelOrder = {cancelOrderHandler}
         >
         
       </OrderCart>
@@ -138,8 +156,8 @@ const ServerPage = () => {
     <div className="serverPage">
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <MainAppBar>     
-          </MainAppBar>
+          <MenuBoardBar>     
+          </MenuBoardBar>
         </Grid>
         <Grid xs = {12}>
           <Tabs 
