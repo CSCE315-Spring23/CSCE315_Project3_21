@@ -94,9 +94,9 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
 /*
     Submit name of menu item you would like to view in the table; get all columns for that row.
     EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-        http://localhost:3000/changeMenu/readMenuItem/Chicken Tortilla Soup
-        http://localhost:3000/changeMenu/readMenuItem/Waffle Potato Chips
-        http://localhost:3000/changeMenu/readMenuItem/Not a Menu Item
+        https://localhost:3000/changeMenu/readMenuItem/Chicken Tortilla Soup
+        https://localhost:3000/changeMenu/readMenuItem/Waffle Potato Chips
+        https://localhost:3000/changeMenu/readMenuItem/Not a Menu Item
         (no request body)
 */
 async function readMenuItem(request, response){
@@ -150,7 +150,7 @@ async function readMenuItem(request, response){
 };
 /* Get the entire menu_item table.
     EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
-    http://localhost:3000/changeMenu/readMenuItems // TODO: replace changeMenu part of all routes with the menu page name "menu"
+    https://localhost:3000/changeMenu/readMenuItems // TODO: replace changeMenu part of all routes with the menu page name "menu"
     (no request body)  
 */
 const readMenuItems =(request, response) => {
@@ -172,7 +172,7 @@ const readMenuItems =(request, response) => {
 
 /* Get the restrictionname column of the dietary_restriction table.
     EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-    http://localhost:3000/changeMenu/readDietaryRestrictionNames
+    https://localhost:3000/changeMenu/readDietaryRestrictionNames
     (no request body)  
 */
 const readDietaryRestrictionNames =(request, response) => {
@@ -198,7 +198,7 @@ const readDietaryRestrictionNames =(request, response) => {
 
     EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
         - create/update menu item with empty string name field (should return error)
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
+            https://localhost:3000/changeMenu/createOrUpdateMenuItem
         
         -erase new menu item through command-line (undo the effects of the test):
             DELETE FROM menu_item WHERE itemname='Side Salad';

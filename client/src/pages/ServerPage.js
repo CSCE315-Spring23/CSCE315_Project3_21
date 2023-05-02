@@ -46,7 +46,7 @@ const ServerPage = () => {
    * @param {*} ItemName 
    */
   function addItemHandler(ItemName) {
-    axios.get(`http://pern-project-3.onrender.com/addItem?menuitem=` + ItemName, config)
+    axios.get(`https://pern-project-3.onrender.com/addItem?menuitem=` + ItemName, config)
       .then(res => {
         const orderData = res.data.itemsOrdered;
         const OrderTot = res.data.totalprice;
@@ -67,7 +67,7 @@ const ServerPage = () => {
    * @param {*} ItemName 
    */  
   function removeItemHandler(ItemName) {
-    axios.get(`http://pern-project-3.onrender.com/removeItem?menuitem=` + ItemName, config)
+    axios.get(`https://pern-project-3.onrender.com/removeItem?menuitem=` + ItemName, config)
       .then(res => {
         const orderData = res.data.itemsOrdered;
         const OrderTot = res.data.totalprice;
@@ -88,7 +88,7 @@ const ServerPage = () => {
    * @param {*} ItemName 
    */
   function getCurrentOrder() {
-    axios.get(`http://pern-project-3.onrender.com/getOrder`, config)
+    axios.get(`https://pern-project-3.onrender.com/getOrder`, config)
     .then(res => {
       const orderData = res.data.itemsOrdered;
       const OrderTot = res.data.totalprice;
@@ -109,7 +109,7 @@ const ServerPage = () => {
    * @param {*} ItemName 
    */
   function sendOrderHandler() {
-    axios.get(`http://pern-project-3.onrender.com/storeOrder`, config)
+    axios.get(`https://pern-project-3.onrender.com/storeOrder`, config)
     .then(res => {
       alert("Your order will now be sent and made!")
       const orderData = res.data.itemsOrdered;
@@ -131,7 +131,7 @@ const ServerPage = () => {
    * @param {*} ItemName 
    */
   function cancelOrderHandler() {
-    axios.get(`http://pern-project-3.onrender.com/cancelOrder`, config)
+    axios.get(`https://pern-project-3.onrender.com/cancelOrder`, config)
     .then(res => {
       alert("Cancelling order and removing items.")
       const orderData = res.data.itemsOrdered;

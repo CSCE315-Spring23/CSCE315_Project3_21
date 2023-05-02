@@ -34,7 +34,7 @@ export default class XReportTable extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://pern-project-3.onrender.com/XReport`, config)
+        axios.get(`https://pern-project-3.onrender.com/XReport`, config)
         .then(res => {
           const reportData  = res.data;
             this.setState({ data: reportData});

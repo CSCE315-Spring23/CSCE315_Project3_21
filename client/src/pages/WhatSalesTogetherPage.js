@@ -54,7 +54,7 @@ const SearchUI = ({ search }) => {
   //populate options
   useEffect(() => {
     axios
-      .get("http://pern-project-3.onrender.com/menuCustomerView")
+      .get("https://pern-project-3.onrender.com/menuCustomerView")
       .then((res) => {
         setOptions(res.data);
       })
@@ -159,7 +159,7 @@ function WhatSalesTogetherPage() {
     setData([]);
     axios
       .get(
-        `http://pern-project-3.onrender.com/WhatSalesTogether?start=${start}&end=${end}&salesWith=${salesWith}`
+        `https://pern-project-3.onrender.com/WhatSalesTogether?start=${start}&end=${end}&salesWith=${salesWith}`
       )
       .then((res) => {
         setSearching(false);

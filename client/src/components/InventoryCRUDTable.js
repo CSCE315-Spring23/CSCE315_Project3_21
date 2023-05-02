@@ -32,7 +32,7 @@ const InventoryCRUDTable = (props) => {
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const handleCreateNewRow = (values) => {
-    let queryStr = 'http://pern-project-3.onrender.com/createOrUpdateInventoryItem';
+    let queryStr = 'https://pern-project-3.onrender.com/createOrUpdateInventoryItem';
         axios.post(queryStr,values,config)
         .then(res => {
             console.log(res.data);
@@ -46,7 +46,7 @@ const InventoryCRUDTable = (props) => {
 
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         //update the db table
-        let queryStr = 'http://pern-project-3.onrender.com/createOrUpdateInventoryItem';
+        let queryStr = 'https://pern-project-3.onrender.com/createOrUpdateInventoryItem';
         axios.post(queryStr,values,config)
         .then(res => {
             console.log(res.data);
@@ -93,7 +93,7 @@ const InventoryCRUDTable = (props) => {
   ];
 
   const getAllInventory = async() => {
-    axios.get(`http://pern-project-3.onrender.com/readInventoryItems`, config)
+    axios.get(`https://pern-project-3.onrender.com/readInventoryItems`, config)
     .then(res => {
       const inventoryData = res.data;
       setInventoryData(inventoryData);

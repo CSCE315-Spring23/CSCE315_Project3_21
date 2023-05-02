@@ -6,8 +6,8 @@ const pool = require("./DB");
 /*
     Submit name of inventory item you would like to view in the table; get all columns for that row.
     EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-        http://localhost:3000/readInventoryItem?name=Regular Chicken Patty
-        http://localhost:3000/readInventoryItem?name= 
+        https://localhost:3000/readInventoryItem?name=Regular Chicken Patty
+        https://localhost:3000/readInventoryItem?name= 
         (no name specified)
 */
 async function readInventoryItem(request, response){
@@ -40,7 +40,7 @@ async function readInventoryItem(request, response){
 
 /* Get the entire inventory_item table.
     EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
-    http://pern-project-3.onrender.com/readInventoryItems
+    https://pern-project-3.onrender.com/readInventoryItems
 */
 const readInventoryItems =(request, response) => {
     // build query
@@ -66,22 +66,22 @@ Else, create a new entry.
 
 EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
 - create/update menu item with empty string name field (should return error)
-http://localhost:3000/createOrUpdateInventoryItem
+https://localhost:3000/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
         }
 - check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+        https://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - create inventory item with name field specified but other fields are empty strings (should return error)
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    https://localhost:3000/inventory/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
         }
 - check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+        https://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - create new inventory item
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    https://localhost:3000/inventory/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
@@ -92,17 +92,17 @@ http://localhost:3000/createOrUpdateInventoryItem
             recommendedreorder: 0
         }
 - check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+        https://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - update menu item with name field specified but other fields are empty strings
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    https://localhost:3000/inventory/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
         }
 - check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+        https://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - update menu item (only select fields)
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    https://localhost:3000/inventory/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
@@ -110,9 +110,9 @@ http://localhost:3000/createOrUpdateInventoryItem
             shipmentunitstring: 1 box of 100 packets
         }
 - check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+        https://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - update menu item (all fields)
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    https://localhost:3000/inventory/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
@@ -123,7 +123,7 @@ http://localhost:3000/createOrUpdateInventoryItem
             recommendedreorder: 0
         }
 - check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+        https://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - erase new inventory item through command-line (undo the effects of the test)
         DELETE FROM inventory_item WHERE itemname='Soup Cracker Packet';
 */
