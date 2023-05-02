@@ -6,7 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
-import {Row, Col, Button, Card} from 'antd';
+import {Row, Col} from 'antd';
 import ItemCard from "../components/MenuBoardCards.js";
 import ReactWeatherComponent from "../components/ReactWeatherComponent.js";
 
@@ -82,8 +82,7 @@ const MenuBoard = () => {
           </Grid>
           <Grid xs={12}>
             
-            <ReactWeatherComponent>
-            </ReactWeatherComponent>
+            <ReactWeatherComponent />
             
             </Grid>
         </Grid>

@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Card } from "antd";
+import { Card } from "antd";
+import { blueGrey } from "@mui/material/colors";
+
 /**
  * 
  * MenuBoardItemCard function is used to generate the item cards used in the menu board.
@@ -12,28 +14,21 @@ const MenuBoardItemCard = ({item}) => {
         <div >
             <Card
                 hoverable
-                style ={{width:250,marginBottom: 20, marginLeft: 20, fontSize: '8px', background: '#F2F4F4'}}
+                style ={{background: '#F2F4F4', height:210, lineHeight:1}}
                 cover={
                 <img 
+                    style ={{width:130, marginLeft:'60px'}}
                     alt={item.itemname} 
                     src={item.imageLink} 
                     />
                 }
             >
-                <Meta title={item.itemname}
-                description = {
-                    <div className="item-description">
-                        <p>
-                            {item.itemname}
-                        </p>
-                        <p className="price">
-                            {"$" + item.price}
-                        </p>
-                    </div>
-                    
-                } />
-                
-
+                <div style ={{fontSize:'16px'}}>
+                    {item.itemname}
+                </div>
+                <div className="price" style ={{fontSize:'13px', color: '#FF0000'}} >
+                    {"$" + item.price}
+                </div>
             </Card>
         </div>
     )
