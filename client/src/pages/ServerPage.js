@@ -40,11 +40,6 @@ const theme = createTheme({
  */
 const ServerPage = () => {
 
-  /**
-   * Adds a menu item to the order through an XMLHttpRequest to the server and updates the component's state data
-   * 
-   * @param {*} ItemName 
-   */
   function addItemHandler(ItemName) {
     axios.get(`https://pern-project-3.onrender.com/addItem?menuitem=` + ItemName, config)
       .then(res => {
@@ -61,11 +56,6 @@ const ServerPage = () => {
       });
   }
 
-  /**
-   * Removes a menu item from the order through an XMLHttpRequest to the server and updates the component's state data.
-   * 
-   * @param {*} ItemName 
-   */  
   function removeItemHandler(ItemName) {
     axios.get(`https://pern-project-3.onrender.com/removeItem?menuitem=` + ItemName, config)
       .then(res => {
@@ -82,11 +72,6 @@ const ServerPage = () => {
       })
   }
 
-  /**
-   * Gets the current order through an XMLHttpRequest to the server and updates the component's state data.
-   * 
-   * @param {*} ItemName 
-   */
   function getCurrentOrder() {
     axios.get(`https://pern-project-3.onrender.com/getOrder`, config)
     .then(res => {
@@ -103,11 +88,6 @@ const ServerPage = () => {
     });  
   }
 
-  /**
-   * Creates an order through an XMLHttpRequest to the server and updates the component's state data.
-   * 
-   * @param {*} ItemName 
-   */
   function sendOrderHandler() {
     axios.get(`https://pern-project-3.onrender.com/storeOrder`, config)
     .then(res => {
@@ -125,11 +105,6 @@ const ServerPage = () => {
     }); 
   }
 
-  /**
-   * Deletes the current order through an XMLHttpRequest to the server and updates the component's state data.
-   * 
-   * @param {*} ItemName 
-   */
   function cancelOrderHandler() {
     axios.get(`https://pern-project-3.onrender.com/cancelOrder`, config)
     .then(res => {

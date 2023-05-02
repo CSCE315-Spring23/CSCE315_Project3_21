@@ -28,7 +28,6 @@ const MenuItemTable = (props) => {
 
   const columns = [
     {
-      //accessorFn: (row) => row.itemname, //accessorFn used to join multiple data into a single cell
       id: 'menuItem', //id is still required when using accessorFn instead of accessorKey
       header: 'Menu Item',
       accessorKey: 'itemname',
@@ -76,10 +75,6 @@ const MenuItemTable = (props) => {
   
   ];
 
-  /**
-   * Gets and displays all of the menu items through an XMLHttpRequest to the server and updates the component's state data.
-   * 
-   */
   const getAllMenu = async() => {
     axios.get(`https://pern-project-3.onrender.com/serverPage`, config)
     .then(res => {
@@ -92,10 +87,6 @@ const MenuItemTable = (props) => {
     });
   }
 
-  /**
-  * Gets and displays all of the Entree menu items through an XMLHttpRequest to the server and updates the component's state data.
-  * 
-  */  
   const getEntrees = async() => {
     axios.get(`https://pern-project-3.onrender.com/serverPage/getEntrees`, config)
     .then(res => {
@@ -107,11 +98,7 @@ const MenuItemTable = (props) => {
       console.error(err);
     });
   }
-
-  /**
-  * Gets and displays all of the Side menu items through an XMLHttpRequest to the server and updates the component's state data.
-  * 
-  */  
+  
   const getSides = async() => {
     axios.get(`https://pern-project-3.onrender.com/serverPage/getSides`, config)
     .then(res => {
@@ -124,10 +111,6 @@ const MenuItemTable = (props) => {
     });
   }
 
-  /**
-  * Gets and displays all of the Dessert menu items through an XMLHttpRequest to the server and updates the component's state data.
-  * 
-  */
   const getDesserts = async() => {
     axios.get(`https://pern-project-3.onrender.com/serverPage/getDesserts`, config)
     .then(res => {
