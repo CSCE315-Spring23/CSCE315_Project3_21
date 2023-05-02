@@ -5,11 +5,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 import CustomerMenu from '../components/CustomerMenu.js'
 import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
-
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import {Tabs} from 'antd';
-
+import MenuBoardBar from '../components/MenuBoardBar.js';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -198,8 +197,7 @@ const CustomerPage = () => {
       />
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <MainAppBar>     
-          </MainAppBar>
+          <MenuBoardBar></MenuBoardBar>
         </Grid>
         <Grid xs = {12}>
           <Tabs 
