@@ -16,6 +16,9 @@ import {
 import { width } from "@mui/system";
 import axios from "axios";
 
+/**
+ * Styled item for theme
+ */
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
   ...theme.typography.body2,
@@ -24,16 +27,55 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+/**
+ * Search UI component. Handles user interactions with the search input.
+ * It has two number input field, one dropdown and a search button.
+ * Handles inter states of the input fields and dropdown, filter outs wrong value.
+ * Calls the supplied search function with 3 input parameter
+ * 
+ * @param {Function} search- An Async function that takes three parameter
+ *   
+ */
 const SearchUI = ({ search }) => {
+
+  /**
+   * Maintains the value of the 3 search UI components
+   */
   const [startHour, setStartHour] = React.useState(null);
   const [endHour, setEndHour] = React.useState(null);
   const [selected, setSelected] = React.useState("");
+  
+  /**
+   * Array of menu items to populate the select
+   */
   const [options, setOptions] = React.useState([]);
 
+
+  /**
+   * This state will hold the error message if the first input field (startHour)
+   * is invalid.
+   */
   const [error1, setError1] = React.useState(null);
+  
+  
+  /**
+   * This state will hold the error message if the second input field (EndHour)
+   * is invalid.
+   */
   const [error2, setError2] = React.useState(null);
+  
+  /**
+   * This state will hold the error message to show to the user when
+   * user presses 'search' with invalid inputs
+   */
   const [error3, setError3] = React.useState(null);
 
+
+  /**
+   * 
+   * Handles click on the search button.
+   * validates the input before calling search
+   */
   const handleSearch = () => {
     let salesWith = selected;
     if(selected == "Any Items")
@@ -51,10 +93,12 @@ const SearchUI = ({ search }) => {
     }
   };
 
-  //populate options
+  /**
+   * get the list of the menu items to populate the <select>
+   */
   useEffect(() => {
     axios
-      .get("https://pern-project-3.onrender.com/menuCustomerView")
+      .get("http://localhost:3001/menuCustomerView")
       .then((res) => {
         setOptions(res.data);
       })
@@ -68,6 +112,7 @@ const SearchUI = ({ search }) => {
       style={{ width: "50%", padding: "20px", maxWidth: "700px" }}
       variant="elevation"
     >
+      {/* Starting hour input field */}
       <Grid container>
         <Grid xs={6}>
           <Item>
@@ -89,7 +134,8 @@ const SearchUI = ({ search }) => {
             />
           </Item>
         </Grid>
-
+        
+        {/* Ending hour input field */}
         <Grid xs={6}>
           <Item>
             <TextField
@@ -113,6 +159,7 @@ const SearchUI = ({ search }) => {
           </Item>
         </Grid>
 
+        {/* Dropdown */}
         <Grid xs={12}>
           <Item>
             <InputLabel>Items that sales with</InputLabel>
@@ -136,6 +183,7 @@ const SearchUI = ({ search }) => {
         </Grid>
       </Grid>
 
+      {/* Search button */}
       <center>
         <Button
           style={{ padding: "10px", margin: "5px" }}
@@ -150,16 +198,47 @@ const SearchUI = ({ search }) => {
   );
 };
 
+
+
+/**
+ * React component:
+ * Holds an search component consisting of two input field and a dropdown.
+ * Shows A table consisting of pairs of menu items that sales together in a given timeframe.
+ * User can additionally select a menu item to see what sold with that specific menu item in that timeframe
+ * 
+ */
 function WhatSalesTogetherPage() {
+  
+  /**
+   * Holds the data to show in the table. The data is fetched from the server based
+   * on the search parameters
+   */
   const [data, setData] = React.useState([]);
+
+  /**
+   * State used to show user that search result is currently being fetched from
+   * server
+   */
   const [searching, setSearching] = React.useState(false);
 
+
+  /**
+   * Gets the search result from the server
+   * the result is an array of objects, each object has three properties:
+   * item1, item2, and count
+   * 
+   * @param {Number} start - starting hour of the timeframe (0-23) 
+   * @param {Number} end - ending hour of the timeframe (0-23)
+   * @param {String} salesWith - empty string if we want to get all pairs of menu items that 
+   *                            are sold in that time frame OR a menu item name if we want to
+   *                            get all pairs of menu items that are sold with that specific menu item
+   */
   const search = (start, end, salesWith) => {
     setSearching(true);
     setData([]);
     axios
       .get(
-        `https://pern-project-3.onrender.com/WhatSalesTogether?start=${start}&end=${end}&salesWith=${salesWith}`
+        `http://localhost:3001/WhatSalesTogether?start=${start}&end=${end}&salesWith=${salesWith}`
       )
       .then((res) => {
         setSearching(false);
@@ -178,6 +257,7 @@ function WhatSalesTogetherPage() {
           <MainAppBar></MainAppBar>
         </Grid>
 
+      {/* Set the Search UI*/}
         <Grid xs={12}>
           <center>
             <SearchUI search={search} />
@@ -197,6 +277,7 @@ function WhatSalesTogetherPage() {
           {searching || data.length == 0 ? null : (
             <center>
               <Item style={{ width: "50%", maxWidth: "500px" }}>
+                {/* Show the search result in a table */}
                 <table border={"black"} style={{ width: "100%" }}>
                   <tr>
                     <th>Pairs</th>
