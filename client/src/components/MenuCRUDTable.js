@@ -32,7 +32,7 @@ const MenuCRUDTable = (props) => {
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const handleCreateNewRow = (values) => {
-    let queryStr = 'http://localhost:3001/createOrUpdateMenuItem';
+    let queryStr = 'http://https://pern-project-3.onrender.com/createOrUpdateMenuItem';
         axios.post(queryStr,values,config)
         .then(res => {
             console.log(res.data);
@@ -46,7 +46,7 @@ const MenuCRUDTable = (props) => {
 
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         //update the db table
-        let queryStr = 'http://localhost:3001/createOrUpdateMenuItem';
+        let queryStr = 'http://https://pern-project-3.onrender.com/createOrUpdateMenuItem';
         axios.post(queryStr,values,config)
         .then(res => {
             console.log(res.data);
@@ -93,12 +93,12 @@ const MenuCRUDTable = (props) => {
   ];
 
   const getAllMenu = async() => {
-    axios.get(`http://localhost:3001/readMenuItems`, config)
+    axios.get(`http://https://pern-project-3.onrender.com/readMenuItems`, config)
     .then(res => {
         const allItemNames = res.data;
         for(let i = 0; i<allItemNames.length;i++){
             const currItem = allItemNames[i].itemname;
-            const itemStr = 'http://localhost:3001/readMenuItem?name='+currItem;
+            const itemStr = 'http://https://pern-project-3.onrender.com/readMenuItem?name='+currItem;
             axios.get(itemStr, config)
             .then(results => {
                 console.log(results.data);

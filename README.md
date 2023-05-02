@@ -21,7 +21,7 @@ Running
 NOTE: This is like the same as before but the directory structure has changed to 
 hold the react frontend. The server must be started before the frontend
 
-ANOTHER IMPORTANT NOTE: The frontend is on localhost:3000 and the backend is on localhost:3001
+ANOTHER IMPORTANT NOTE: The frontend is on localhost:3000 and the backend is on https://pern-project-3.onrender.com
 
 --------------------------------------------------
 Frontend Notes
