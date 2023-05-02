@@ -1,3 +1,6 @@
+/*
+UI for Create, Read, Update, and Delete operations on inventory-item database table
+*/
 import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
