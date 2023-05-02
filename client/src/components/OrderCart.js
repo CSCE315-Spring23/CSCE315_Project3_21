@@ -21,21 +21,27 @@ const columns = [
     },
 ];
 
+/**
+ * 
+ * @param {*} props - Functions/data to use from the parent component (ServerPage.js or CustomerPage.js)
+ * @returns Order cart component which displays the current order information to the user and provides 
+ * functionalities for removing items, cancelling the order, and creating an order.
+ */
 const OrderCart = (props) => {
 
     
     return (
       <div>
         <div className='order-info'>
-        <div className = 'shopping-cart'>
-          <div id = 'num-items'>
-            {props.OrderItems.length}
+          <div className = 'shopping-cart'>
+            <div id = 'num-items'>
+              {props.OrderItems.length}
+            </div>
+            <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
           </div>
-          <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
-        </div>
-        <h2 id = "total" >
-          Order Total: {props.OrderTotal}
-        </h2>
+          <h2 id = "total" >
+            Order Total: {props.OrderTotal}
+          </h2>
         </div>
         <button className='checkout-button' onClick={props.SendOrder}>
           Send Order

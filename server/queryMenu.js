@@ -1,5 +1,11 @@
 const pool = require("./DB")
 
+/**
+ * Queries all of the menu items from the database and stores their information in an array.
+ * The array is sent as a json response.
+ * @param {*} request 
+ * @param {*} response 
+ */
 const getMenu = async (request, response) => {
     let query = `SELECT * FROM menu_item`
     let results = await pool.query(query);
@@ -20,6 +26,12 @@ const getMenu = async (request, response) => {
     response.status(200).json(res);
 }
 
+/**
+ * Queries all of the menu items classified as entrees from the database and stores their information in an array.
+ * The array is sent as a json response.
+ * @param {*} request 
+ * @param {*} response 
+ */
 const getEntrees = async(request, response) => {
     let query = `SELECT * FROM menu_item WHERE category = 'entree'`
     let results = await pool.query(query);
@@ -38,6 +50,12 @@ const getEntrees = async(request, response) => {
     response.status(200).json(res);
 }
 
+/**
+ * Queries all of the menu items classified as sides from the database and stores their information in an array.
+ * The array is sent as a json response.
+ * @param {*} request 
+ * @param {*} response 
+ */
 const getSides = async(request, response) => {
     let query = `SELECT * FROM menu_item WHERE category = 'side'`
     let results = await pool.query(query);
@@ -56,6 +74,12 @@ const getSides = async(request, response) => {
     response.status(200).json(res);
 }
 
+/**
+ * Queries all of the menu items classified as desserts from the database and stores their information in an array.
+ * The array is sent as a json response.
+ * @param {*} request 
+ * @param {*} response 
+ */
 const getDesserts = async(request, response) => {
     let query = `SELECT * FROM menu_item WHERE category = 'dessert'`
     let results = await pool.query(query);
@@ -74,6 +98,12 @@ const getDesserts = async(request, response) => {
     response.status(200).json(res);
 }
 
+/**
+ * Queries 12 random menu items from the database and stores their information in an array.
+ * The array is sent as a json response.
+ * @param {*} request 
+ * @param {*} response 
+ */
 const getSomeMenuItems = async(request, response) => {
     let query = "SELECT * FROM menu_item WHERE category IN('entree', 'dessert') order by random() LIMIT 12"
     let results = await pool.query(query);

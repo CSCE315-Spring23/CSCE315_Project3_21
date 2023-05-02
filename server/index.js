@@ -61,7 +61,7 @@ app.get('/cancelOrder',cancelOrder);
 const getXreport = require('./Xreport');
 app.get('/Xreport', getXreport);
 
-/*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
+/*    -QUERY MENU ITEMS FOR EMPLOYEE AND CUSTOMER PAGES-     */
 const {getMenu, getEntrees, getSides, getDesserts, getSomeMenuItems} = require('./queryMenu');
 app.get('/ServerPage', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);

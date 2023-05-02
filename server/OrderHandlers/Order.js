@@ -1,11 +1,19 @@
 const pool = require("../DB");
 
+/**
+ * Represents an order of menu items
+ */
 class Order {
     constructor() {
         this.itemsOrdered = [];
         this.totalprice = 0;
     }
 
+    /**
+     * Adds a menu item to the order and updates inventory quantities
+     * @param {string} menuItemKey - name of the menu item
+     * @returns None
+     */
     async addMenuItem(menuItemKey) {
         console.log(menuItemKey);
         let abletoMake = true;
@@ -49,6 +57,11 @@ class Order {
         } 
     }
 
+    /**
+     * Removes a menu item from the order and updates inventory quantities
+     * @param {string} menuItemKey - name of the menu item 
+     * @returns None
+     */
     async removeItem(menuItemKey) {
         console.log("Item to be removed ", menuItemKey);
 
@@ -80,6 +93,11 @@ class Order {
         this.totalprice -= priceResult.rows[0].price;
     }
 
+    /**
+     * Creates an order from the current items in the order, updates the database data,
+     * and initializes a new order.
+     * @returns 
+     */
     async createOrder() {
         if (this.itemsOrdered.length < 1) {
             return;
@@ -119,6 +137,10 @@ class Order {
         this.totalprice = 0;
     }
 
+    /**
+     * Removes all of the items in the current order and resets the inventory quantities.
+     * @returns None
+     */
     async cancelOrder() {
         if (this.itemsOrdered.length < 1) {
             return;

@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect} from "react";
 import Grid from '@mui/material/Unstable_Grid2';
-import MainAppBar from '../components/MainAppBar.js';
 import CustomerMenu from '../components/CustomerMenu.js'
 import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
@@ -36,9 +35,17 @@ const theme = createTheme({
   }
 })
 
-// The grid max xs = 12
+/**
+ * Front end implementation of Chick-Fil-A customer kiosk interface
+ * @returns Component with all the functionalities needed for a self-serve Kiosk
+ */
 const CustomerPage = () => {
 
+  /**
+   * Adds a menu item to the order through an XMLHttpRequest to the server and updates the component's state data
+   * 
+   * @param {*} ItemName 
+   */
   function addItemHandler(ItemName) {
     axios.get(`http://localhost:3001/addItem?menuitem=` + ItemName, config)
       .then(res => {
@@ -55,6 +62,11 @@ const CustomerPage = () => {
       });
   }
 
+  /**
+   * Removes a menu item from the order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
   function removeItemHandler(ItemName) {
     axios.get(`http://localhost:3001/removeItem?menuitem=` + ItemName, config)
       .then(res => {
@@ -71,6 +83,11 @@ const CustomerPage = () => {
       })
   }
 
+    /**
+   * Gets the current order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
   function getCurrentOrder() {
     axios.get(`http://localhost:3001/getOrder`, config)
     .then(res => {
@@ -87,6 +104,11 @@ const CustomerPage = () => {
     });  
   }
 
+  /**
+   * Creates an order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
   function sendOrderHandler() {
     axios.get(`http://localhost:3001/storeOrder`, config)
     .then(res => {
@@ -104,6 +126,11 @@ const CustomerPage = () => {
     }); 
   }
 
+  /**
+   * Deletes the current order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
   function cancelOrderHandler() {
     axios.get(`http://localhost:3001/cancelOrder`, config)
     .then(res => {
@@ -120,7 +147,6 @@ const CustomerPage = () => {
       console.error(err);
     }); 
   }
-
 
   const [orderItems, setOrderItems] = React.useState([]);
   const [ordertotal, setOrderTotal] = React.useState("$0");

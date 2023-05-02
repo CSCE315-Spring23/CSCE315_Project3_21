@@ -24,6 +24,12 @@ const Item = styled(Paper)(({ theme }) => ({
     }
   };
 
+  /**
+   * 
+   * @param {*} props - Functions/data to use from the parent component (CustomerPage.js)
+   * @returns Component which displays the menu for the Customer Page, and has buttons to
+   * query different menu categories.
+   */
 const CustomerMenu = (props) => {
     const [itemsData,setItemsData] = useState([])
 
@@ -31,6 +37,10 @@ const CustomerMenu = (props) => {
         getAllMenu()
     },[])
 
+  /**
+   * Gets and displays all of the menu items through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   */
     const getAllMenu = async() => {
       axios.get(`http://localhost:3001/serverPage`, config)
       .then(res => {
@@ -44,6 +54,10 @@ const CustomerMenu = (props) => {
       });
     }
 
+    /**
+     * Gets and displays all of the Entree menu items through an XMLHttpRequest to the server and updates the component's state data.
+     * 
+     */
     const getEntrees = async() => {
       axios.get(`http://localhost:3001/serverPage/getEntrees`, config)
       .then(res => {
@@ -57,6 +71,10 @@ const CustomerMenu = (props) => {
       });
     }
 
+    /**
+    * Gets and displays all of the Side menu items through an XMLHttpRequest to the server and updates the component's state data.
+    * 
+    */
     const getSides = async() => {
       axios.get(`http://localhost:3001/serverPage/getSides`, config)
       .then(res => {
@@ -70,6 +88,10 @@ const CustomerMenu = (props) => {
       });
     }
 
+    /**
+    * Gets and displays all of the Dessert menu items through an XMLHttpRequest to the server and updates the component's state data.
+    * 
+    */
     const getDesserts = async() => {
       axios.get(`http://localhost:3001/serverPage/getDesserts`, config)
       .then(res => {

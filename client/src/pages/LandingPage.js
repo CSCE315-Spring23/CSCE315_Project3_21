@@ -4,6 +4,10 @@ import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import SignIn from '../components/SignIn';
 
+/**
+ * Frontend implementation of the Landing Page for all users.
+ * @returns Landing page component.
+ */
 export default function LandingPage() {
     const navigate = useNavigate();
     return (

@@ -1,5 +1,11 @@
 const pool = require("./DB");
 
+/**
+ * Generates the X Report information by making DB queries. Stores the 
+ * information in an array and sends it as a json response.
+ * @param {*} request 
+ * @param {*} response 
+ */
 const getXreport = async (request, response) => {
     let t = Date.now();
     let totSales = 0;
