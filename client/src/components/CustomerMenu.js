@@ -43,7 +43,7 @@ const CustomerMenu = (props) => {
    * 
    */
     const getAllMenu = async() => {
-      axios.get(`http://https://pern-project-3.onrender.com/serverPage`, config)
+      axios.get(`http://pern-project-3.onrender.com/serverPage`, config)
       .then(res => {
         const menuData = res.data;
         setItemsData(menuData);
@@ -60,7 +60,7 @@ const CustomerMenu = (props) => {
      * 
      */
     const getEntrees = async() => {
-      axios.get(`http://https://pern-project-3.onrender.com/serverPage/getEntrees`, config)
+      axios.get(`http://pern-project-3.onrender.com/serverPage/getEntrees`, config)
       .then(res => {
         const menuData = res.data;
         setItemsData(menuData);
@@ -77,7 +77,7 @@ const CustomerMenu = (props) => {
     * 
     */
     const getSides = async() => {
-      axios.get(`http://https://pern-project-3.onrender.com/serverPage/getSides`, config)
+      axios.get(`http://pern-project-3.onrender.com/serverPage/getSides`, config)
       .then(res => {
         const menuData = res.data;
         setItemsData(menuData);
@@ -94,7 +94,7 @@ const CustomerMenu = (props) => {
     * 
     */
     const getDesserts = async() => {
-      axios.get(`http://https://pern-project-3.onrender.com/serverPage/getDesserts`, config)
+      axios.get(`http://pern-project-3.onrender.com/serverPage/getDesserts`, config)
       .then(res => {
         const menuData = res.data;
         setItemsData(menuData);

@@ -34,7 +34,7 @@ export default class ExcessReportTable extends React.Component {
     componentDidMount() {
         var t = new Date(this.state.start);
         var format = moment(t).format("YYYY-MM-DD hh:mm:ss"); 
-        var str = `http://https://pern-project-3.onrender.com/ExcessReport?start= `+format;
+        var str = `http://pern-project-3.onrender.com/ExcessReport?start= `+format;
         axios.get(str, config)
             .then(res => {
                 const reportData = res.data;

@@ -81,7 +81,7 @@ export default class SalesReportTable extends React.Component {
         var t2 = new Date(this.state.end);
         var format = moment(t).format("YYYY-MM-DD hh:mm:ss"); 
         var format2 = moment(t2).format("YYYY-MM-DD hh:mm:ss");
-        var str = `http://https://pern-project-3.onrender.com/getSalesReport?start=`+format+`&amp;end=`+format2;
+        var str = `http://pern-project-3.onrender.com/getSalesReport?start=`+format+`&amp;end=`+format2;
         axios.get(str, config)
             .then(res => {
                 const reportData = res.data;

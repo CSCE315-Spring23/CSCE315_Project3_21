@@ -35,7 +35,7 @@ export default class ZReportTable extends React.Component {
 
     componentDidMount() {
       if(this.state.createNew){
-        axios.get(`http://https://pern-project-3.onrender.com/inventoryLevelsEndDayCompleteDaySummary`, config)
+        axios.get(`http://pern-project-3.onrender.com/inventoryLevelsEndDayCompleteDaySummary`, config)
         .then(res => {
         alert('The day summary/ Z report was created');
         })
@@ -43,7 +43,7 @@ export default class ZReportTable extends React.Component {
           alert(err);
       });
       }
-        axios.get(`http://https://pern-project-3.onrender.com/Zreport`, config)
+        axios.get(`http://pern-project-3.onrender.com/Zreport`, config)
         .then(res => {
             const reportData = res.data;
             this.setState({ data: reportData });

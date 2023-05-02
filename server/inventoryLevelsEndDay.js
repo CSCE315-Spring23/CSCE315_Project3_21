@@ -12,7 +12,7 @@ const padInt = (num) => {
 
 /*
     The following updates the recommended reorder quantities for all inventory items
-    Example query: https://pern-project-3.onrender.com/inventoryLevelsEndDay
+    Example query: pern-project-3.onrender.com/inventoryLevelsEndDay
 */
 const getInventoryLevelsEndDayRecommended = (request, response) => {
     pool.query('SELECT * FROM inventory_item;', (error, results) => {
@@ -56,7 +56,7 @@ const getInventoryLevelsEndDayPendingRestock = (request, response) => {
 
 /*
     process arrival of restock order by incrementing the current quantity, setting the arrival date in the restock_order table
-    Example: https://pern-project-3.onrender.com/inventoryLevelsEndDayArrive?id=75
+    Example: pern-project-3.onrender.com/inventoryLevelsEndDayArrive?id=75
 */
 const getInventoryLevelsEndDayRecordArrival = (request, response) => {
     const restockOrderIdUsrInput = request.query.id;
@@ -118,7 +118,7 @@ const getInventoryLevelsEndDayRecordArrival = (request, response) => {
 
 /*
     create a new restock order 
-    Example: https://pern-project-3.onrender.com/inventoryLevelsEndDayCompletePlaceRestock
+    Example: pern-project-3.onrender.com/inventoryLevelsEndDayCompletePlaceRestock
 */
 const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
     //see placeRestockOrderButton from project 2 for reference 
@@ -194,7 +194,7 @@ const getInventoryLevelsEndDayCompletePlaceRestock = (request, response) => {
 
 /*
     Generate Z report/ day summary and add it to the day_summary table
-    Example: https://pern-project-3.onrender.com/inventoryLevelsEndDayCompleteDaySummary
+    Example: pern-project-3.onrender.com/inventoryLevelsEndDayCompleteDaySummary
 */
 const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
     //get and format todays date
@@ -234,7 +234,7 @@ const getInventoryLevelsEndDayCompleteDaySummary = (request, response) => {
 
 /*
     Query the day summary table to get the most recent Z report
-    Example: https://pern-project-3.onrender.com/ZReport
+    Example: pern-project-3.onrender.com/ZReport
 */
 const getZReport = (request, response) => {
     pool.query('SELECT * from day_summary where daysumm_timestamp = (SELECT max(daysumm_timestamp) from day_summary)', (error, results) => {

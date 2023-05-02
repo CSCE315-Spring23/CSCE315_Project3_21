@@ -40,7 +40,7 @@ async function readInventoryItem(request, response){
 
 /* Get the entire inventory_item table.
     EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
-    http://https://pern-project-3.onrender.com/readInventoryItems
+    http://pern-project-3.onrender.com/readInventoryItems
 */
 const readInventoryItems =(request, response) => {
     // build query
