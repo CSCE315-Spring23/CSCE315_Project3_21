@@ -1,13 +1,11 @@
+/* Functions for inventory-item CRUD table */
+
 const pool = require("./DB");
 
-/* helper methods */
-
-/* DB interaction methods */
-/*
-    Submit name of inventory item you would like to view in the table; get all columns for that row.
-    EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-        http://localhost:3000/readInventoryItem?name=Regular Chicken Patty
-        http://localhost:3000/readInventoryItem?name= 
+/* Submit name of inventory item you would like to view in the table; get all columns for that row.
+    TEST IN POSTMAN (ensure that "GET" method is selected):
+        http://localhost:3001/readInventoryItem?name=Regular Chicken Patty
+        http://localhost:3001/readInventoryItem?name=Not a Menu Item 
         (no name specified)
 */
 async function readInventoryItem(request, response){
@@ -39,7 +37,7 @@ async function readInventoryItem(request, response){
 }
 
 /* Get the entire inventory_item table.
-    EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
+    TEST IN POSTMAN (ensure that GET method is selected):
     http://localhost:3001/readInventoryItems
 */
 const readInventoryItems =(request, response) => {
@@ -59,29 +57,24 @@ const readInventoryItems =(request, response) => {
         }
 };
 
-/*
-Pseudocode for the function below
-If itemname is in menu item table, then update the entry.
-Else, create a new entry.
+/* Create an entry or update an entry in the inventory_item table.
 
-EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
+TESTS IN POSTMAN (ensure that POST method is selected):
 - create/update menu item with empty string name field (should return error)
-http://localhost:3000/createOrUpdateInventoryItem
+http://localhost:3001/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
         }
-- check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+- http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - create inventory item with name field specified but other fields are empty strings (should return error)
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    http://localhost:3001/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
         }
-- check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+- http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - create new inventory item
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    http://localhost:3001/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
@@ -91,28 +84,25 @@ http://localhost:3000/createOrUpdateInventoryItem
             maxquantity: 2
             recommendedreorder: 0
         }
-- check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+- http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - update menu item with name field specified but other fields are empty strings
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    http://localhost:3001/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
         }
-- check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+- http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - update menu item (only select fields)
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    http://localhost:3001/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
             shipmentunit: 100
             shipmentunitstring: 1 box of 100 packets
         }
-- check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
+- http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 - update menu item (all fields)
-    http://localhost:3000/inventory/createOrUpdateInventoryItem
+    http://localhost:3001/createOrUpdateInventoryItem
     request body (make sure to select "x-www-form-urlencoded"):
         {
             itemname: Soup Cracker Packet
@@ -122,10 +112,7 @@ http://localhost:3000/createOrUpdateInventoryItem
             maxquantity: 2
             recommendedreorder: 0
         }
-- check:
-        http://localhost:3000/inventory/readInventoryItem (request body : {itemname=Soup Cracker Packet}
-- erase new inventory item through command-line (undo the effects of the test)
-        DELETE FROM inventory_item WHERE itemname='Soup Cracker Packet';
+- http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 */
 async function createOrUpdateInventoryItem(request, response){
     try{

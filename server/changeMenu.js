@@ -1,7 +1,8 @@
+/* Functions for menu-item CRUD table */
 const pool = require("./DB");
 
 /* helper methods */
-
+/* creates entries in the table relationship_menutoinventory_unitquantities */
 async function createMenuToInventoryRelationships(itemName, listRelationships) {
     // find insertion point as an index
         try{
@@ -44,7 +45,7 @@ async function createMenuToInventoryRelationships(itemName, listRelationships) {
             }
         }
 };
-
+/* creates entries in the table relationship_menutodietaryrestriction */
 async function createMenuToRestrictionsRelationships(itemName, listRelationships){
     // find insertion point as an index
         try{
@@ -91,12 +92,10 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
 };
 
 /* DB interaction methods */
-/*
-    Submit name of menu item you would like to view in the table; get all columns for that row.
-    EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-        http://localhost:3000/changeMenu/readMenuItem/Chicken Tortilla Soup
-        http://localhost:3000/changeMenu/readMenuItem/Waffle Potato Chips
-        http://localhost:3000/changeMenu/readMenuItem/Not a Menu Item
+/* Submit name of menu item you would like to view in the table; get all columns for that row.
+    TEST IN POSTMAN (ensure that "GET" method is selected):
+        http://localhost:3001/readMenuItem?name=Chicken Tortilla Soup
+        http://localhost:3001/readMenuItem?name=Not a Menu Item
         (no request body)
 */
 async function readMenuItem(request, response){
@@ -149,8 +148,8 @@ async function readMenuItem(request, response){
     }
 };
 /* Get the entire menu_item table.
-    EXAMPLE QUERY IN POSTMAN (ensure that GET method is selected):
-    http://localhost:3000/changeMenu/readMenuItems // TODO: replace changeMenu part of all routes with the menu page name "menu"
+    TEST IN POSTMAN (ensure that GET method is selected):
+    http://localhost:3001/readMenuItems
     (no request body)  
 */
 const readMenuItems =(request, response) => {
@@ -171,8 +170,8 @@ const readMenuItems =(request, response) => {
 };
 
 /* Get the restrictionname column of the dietary_restriction table.
-    EXAMPLE QUERY IN POSTMAN (ensure that "GET" method is selected):
-    http://localhost:3000/changeMenu/readDietaryRestrictionNames
+    TEST IN POSTMAN (ensure that "GET" method is selected):
+    http://localhost:3001/readDietaryRestrictionNames
     (no request body)  
 */
 const readDietaryRestrictionNames =(request, response) => {
@@ -192,19 +191,10 @@ const readDietaryRestrictionNames =(request, response) => {
     }
 };
 
-/*
-    If itemname is in menu item table, then update the entry.
-    Else, create a new entry.
-
-    EXAMPLE QUERIES IN POSTMAN (ensure that POST method is selected):
+/* If itemname is in menu item table, then update the entry. Else, create a new entry.
+    TEST IN POSTMAN (ensure that POST method is selected):
         - create/update menu item with empty string name field (should return error)
-            http://localhost:3000/changeMenu/createOrUpdateMenuItem
-        
-        -erase new menu item through command-line (undo the effects of the test):
-            DELETE FROM menu_item WHERE itemname='Side Salad';
-            DELETE FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = 'Side Salad';
-            DELETE FROM relationship_menutodietaryrestriction WHERE menuitemkey = 'Side Salad';
-
+            http://localhost:3001/createOrUpdateMenuItem
 */
 async function createOrUpdateMenuItem(request, response){   
     try{
