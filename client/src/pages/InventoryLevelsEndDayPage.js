@@ -34,7 +34,7 @@ const cfa_theme = createTheme({
 
 
 function placeRestockOnclick(){
-    axios.get(`http://localhost:3001/inventoryLevelsEndDayCompletePlaceRestock`, config)
+    axios.get(`http://https://pern-project-3.onrender.com/inventoryLevelsEndDayCompletePlaceRestock`, config)
         .then(res => {
         alert('The restock order was placed. Check the console for more details');
         window.location.reload();
@@ -45,7 +45,7 @@ function placeRestockOnclick(){
 }
 
 function endDayOnclick(){
-    axios.get(`http://localhost:3001/inventoryLevelsEndDay`, config)
+    axios.get(`http://https://pern-project-3.onrender.com/inventoryLevelsEndDay`, config)
         .then(res => {
         alert('The reccommended reorder quantities were updated')
         })
@@ -59,7 +59,7 @@ function InventoryLevelsEndDayPage() {
     const inputRef = useRef(null);
     function recordArrivalOnclick(){
         let idVal = inputRef.current.value;
-        let str = `http://localhost:3001/inventoryLevelsEndDayArrive?id=`+idVal;
+        let str = `http://https://pern-project-3.onrender.com/inventoryLevelsEndDayArrive?id=`+idVal;
         axios.get(str, config)
         .then(res => {
             let str2 = idVal +' was processed as arrived';

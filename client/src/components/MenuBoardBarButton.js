@@ -23,12 +23,7 @@ export default function AppBarMenuButton() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-/**
- * 
- * returns the nav bar with proper navigation to the customer page, menu board, and server page.
- * 
- * 
- */
+
   return (
     <div>
       <IconButton

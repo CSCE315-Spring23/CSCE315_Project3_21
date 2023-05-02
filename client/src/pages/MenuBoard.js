@@ -42,7 +42,7 @@ const MenuBoard = () => {
  */
     useEffect(() => {
         const getSomeMenuItems = async() => {
-            axios.get(`http://localhost:3001/GetSomeMenuItems`, config)
+            axios.get(`http://https://pern-project-3.onrender.com/GetSomeMenuItems`, config)
             .then(res => {
               const menuData = res.data;
               setItemsData(menuData);

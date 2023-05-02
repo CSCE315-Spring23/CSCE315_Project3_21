@@ -34,7 +34,7 @@ export default class RestockReportTable extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:3001/RestockReport`, config)
+    axios.get(`http://https://pern-project-3.onrender.com/RestockReport`, config)
       .then(res => {
         const reportData = res.data;
         this.setState({ data: reportData });
