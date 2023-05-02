@@ -3,10 +3,16 @@ const pool = require("./DB");
 /* full SQL command for inventory items (excludes calculation for multiple quantities per order)
     SELECT * from inventory_item where itemname in 
     (select inventoryitemkey from relationship_menutoinventory_unitquantities where menuitemkey in 
-    (SELECT menuitem_key from relationship_ordertomenu where order_key in 
+        (SELECT menuitem_key from relationship_ordertomenu where order_key in 
         (SELECT id from order_table where ordertimestamp >= '2023-02-28 22:50:00')));
-    */
+*/
 
+/*
+* Backend DB query for finding which items used less than 10% of their inventory since the given timestamp aka excess report
+* Stores the information in an array and sends it as a json response.
+* @param {*} request 
+* @param {*} response 
+*/
 const getExcessReport = (request,response) => {
     const start = request.query.start;
     if(!start){
