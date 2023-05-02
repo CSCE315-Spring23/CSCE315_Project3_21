@@ -1,5 +1,5 @@
 /*
-UI for Create, Read, Update, and Delete operations on menu-item database table
+* UI for Create, Read, and Update operations on menu-item database table
 */
 import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
@@ -34,6 +34,9 @@ const MenuCRUDTable = (props) => {
   const [MenuData, setMenuData] = useState([]);
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
+  /*
+  * connect to axios, create a new row in the table, push the values to the Menu CRU table, and refresh the data in the table
+  */
   const handleCreateNewRow = (values) => {
     let queryStr = 'https://pern-project-3.onrender.com/createOrUpdateMenuItem';
         axios.post(queryStr,values,config)
@@ -46,7 +49,10 @@ const MenuCRUDTable = (props) => {
     MenuData.push(values);
     setMenuData([...MenuData]);
   };
-
+    /*
+    * connect to axios, update values of the current menuData row, and refresh the data in the table
+    * @async
+    */
     const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
         //update the db table
         let queryStr = 'https://pern-project-3.onrender.com/createOrUpdateMenuItem';
@@ -94,7 +100,14 @@ const MenuCRUDTable = (props) => {
       accessorKey: 'imagelink',
   },
   ];
-
+  
+  /*
+  * connect to axios
+  * get all the menu item names then loop through all menu item names and query for the full information for each item
+  * push to table
+  * refresh the data in the table
+  * @async
+  */
   const getAllMenu = async() => {
     axios.get(`https://pern-project-3.onrender.com/readMenuItems`, config)
     .then(res => {
@@ -168,6 +181,9 @@ const MenuCRUDTable = (props) => {
   );
 };
 
+/*
+* Create the form for the new row/ edit
+*/
 export const CreateNewRowModal = ({ open, columns, onClose, onSubmit }) => {
     const [values, setValues] = useState(() =>
       columns.reduce((item, column) => {
@@ -175,7 +191,7 @@ export const CreateNewRowModal = ({ open, columns, onClose, onSubmit }) => {
         return item;
       }, {}),
     );
-
+    
     const handleSubmit = () => {
       //put your validation logic here
       onSubmit(values);

@@ -32,7 +32,9 @@ const cfa_theme = createTheme({
     },
 });
 
-
+/*
+* functionality for when the place restock button is clicked with axios query and refreshing the page
+*/
 function placeRestockOnclick(){
     axios.get(`https://pern-project-3.onrender.com/inventoryLevelsEndDayCompletePlaceRestock`, config)
         .then(res => {
@@ -44,6 +46,9 @@ function placeRestockOnclick(){
     });
 }
 
+/*
+* functionality for the recommended reorder when button is clicked with axios query
+*/
 function endDayOnclick(){
     axios.get(`https://pern-project-3.onrender.com/inventoryLevelsEndDay`, config)
         .then(res => {
@@ -54,9 +59,15 @@ function endDayOnclick(){
     });
 }
 
-// The grid max xs = 12
+/*
+* UI for Inventory page 
+*/
 function InventoryLevelsEndDayPage() {
     const inputRef = useRef(null);
+
+/*
+* add functionality when clicking the record arrival button to connect the text input to the axios query and mark the order arrived
+*/
     function recordArrivalOnclick(){
         let idVal = inputRef.current.value;
         let str = `https://pern-project-3.onrender.com/inventoryLevelsEndDayArrive?id=`+idVal;

@@ -41,12 +41,6 @@ function RestockReportPage() {
             </Item>
           </Grid>
 
-          <Grid xs={6}>
-            <Item>Placeholder 1 w/ xs=6</Item>
-          </Grid>
-          <Grid xs={6}>
-            <Item>Placeholder 2 w/ xs=6</Item>
-          </Grid>
         </Grid>
     </div>
   );

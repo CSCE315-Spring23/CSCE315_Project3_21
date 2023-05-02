@@ -113,7 +113,7 @@ const getInventoryLevelsEndDayRecordArrival = (request, response) => {
     });
     console.log('Order',restockOrderIdUsrInput,'was marked arrived at', formatted);//'YYYY-MM-DD hh:mm:ss'
     console.log('The order arrival process is complete for order',restockOrderIdUsrInput);
-    response.status(200).send('Restock Order Process Completed Successfully, see console for more details');
+    response.status(200).send('Restock Order Process Completed Successfully');
 };
 
 /*

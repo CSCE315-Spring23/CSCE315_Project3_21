@@ -38,6 +38,9 @@ const cfa_theme = createTheme({
   },
 });
 
+/*
+* UI for excess report page to allow the user to specify the timestamp with a date picker and display the table once a timestamp is given
+*/
 export default function ExcessReportPage(){
   const [start, setStart] = useState('');
   const [submit, setSubmit]= useState(false);
