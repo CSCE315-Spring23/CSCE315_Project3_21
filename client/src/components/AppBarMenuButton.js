@@ -1,10 +1,9 @@
-import * as React from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate } from 'react-router-dom';
-
+import * as React from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 
 export default function AppBarMenuButton() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,6 +34,7 @@ export default function AppBarMenuButton() {
         <MenuIcon />
       </IconButton>
       <Menu
+        aria-haspopup={true}
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -46,27 +46,23 @@ export default function AppBarMenuButton() {
         <MenuItem onClick={() => navigate("/RestockReportPage")}>
           Restock Report
         </MenuItem>
-        <MenuItem onClick={() => navigate("/serverPage")}>
-          Server Page
-        </MenuItem>
-        <MenuItem onClick={()=> navigate("/WhatSalesTogetherPage")}>
+        <MenuItem onClick={() => navigate("/serverPage")}>Server Page</MenuItem>
+        <MenuItem onClick={() => navigate("/WhatSalesTogetherPage")}>
           What Sells Together
         </MenuItem>
-        <MenuItem onClick={()=> navigate("/ExcessReportPage")}>
+        <MenuItem onClick={() => navigate("/ExcessReportPage")}>
           Excess Report
         </MenuItem>
-        <MenuItem onClick={()=> navigate("/InventoryLevelsEndDayPage")}>
+        <MenuItem onClick={() => navigate("/InventoryLevelsEndDayPage")}>
           Inventory
         </MenuItem>
-        <MenuItem onClick={()=> navigate("/Customer")}>
-          Customer Page
-        </MenuItem>
+        <MenuItem onClick={() => navigate("/Customer")}>Customer Page</MenuItem>
         <MenuItem onClick={() => navigate("/SalesReport")}>
           Sales Report
-          </MenuItem>
-        <MenuItem onClick = {() => navigate("/XZReportPage")}>
+        </MenuItem>
+        <MenuItem onClick={() => navigate("/XZReportPage")}>
           Z and X Reports
-          </MenuItem>
+        </MenuItem>
         <MenuItem>Menu Board</MenuItem>
       </Menu>
     </div>

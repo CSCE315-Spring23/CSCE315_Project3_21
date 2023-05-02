@@ -6,12 +6,13 @@ import MainAppBar from '../components/MainAppBar.js';
 import CustomerMenu from '../components/CustomerMenu.js'
 import OrderCart from '../components/OrderCart.js';
 import {ThemeProvider, createTheme } from '@mui/material';
-import MenuBoardBar from '../components/MenuBoardBar.js';
 
 import lottie from 'lottie-web';
 import { defineElement } from 'lord-icon-element';
 import {Tabs} from 'antd';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const config = {
   headers: {
@@ -137,11 +138,23 @@ const CustomerPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="serverPage">
+    <div className="serverPage" role="order page">
+    <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Grid container spacing={2}>
         <Grid xs={12}>
-          <MenuBoardBar>     
-          </MenuBoardBar>
+          <MainAppBar>     
+          </MainAppBar>
         </Grid>
         <Grid xs = {12}>
           <Tabs 
