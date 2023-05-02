@@ -18,7 +18,7 @@ app.use(
   })
 );
 const options = {
-  origin:['http://localhost:3000', 'https://pern-project-3.onrender.com/', 'https://pern-project-3-client.onrender.com/ServerPage'], 
+  origin:['http://localhost:3000', 'http://pern-project-3.onrender.com/', 'http://pern-project-3-client.onrender.com/ServerPage'], 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
