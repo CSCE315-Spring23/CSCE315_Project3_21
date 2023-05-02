@@ -44,6 +44,9 @@ const OrderCart = (props) => {
       <button className="checkout-button" onClick={props.SendOrder}>
         Send Order
       </button>
+      <button className="cancelOrder-button" onClick={props.CancelOrder}>
+        Cancel Order
+      </button>
       <MaterialReactTable
         columns={columns}
         data={props.OrderItems}

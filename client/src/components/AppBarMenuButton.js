@@ -43,6 +43,12 @@ export default function AppBarMenuButton() {
           "aria-labelledby": "basic-button",
         }}
       >
+        <MenuItem onClick={() => navigate("/InventoryLevelsEndDayPage")}>
+          Inventory
+        </MenuItem>
+        <MenuItem onClick={()=> navigate("/ChangeMenuPage")}>
+          Change Menu
+        </MenuItem>
         <MenuItem onClick={() => navigate("/RestockReportPage")}>
           Restock Report
         </MenuItem>
@@ -52,12 +58,6 @@ export default function AppBarMenuButton() {
         </MenuItem>
         <MenuItem onClick={() => navigate("/ExcessReportPage")}>
           Excess Report
-        </MenuItem>
-        <MenuItem onClick={() => navigate("/InventoryLevelsEndDayPage")}>
-          Inventory
-        </MenuItem>
-        <MenuItem onClick={()=> navigate("/ChangeMenuPage")}>
-          Change Menu
         </MenuItem>
         <MenuItem onClick={()=> navigate("/Customer")}>
           Customer Page

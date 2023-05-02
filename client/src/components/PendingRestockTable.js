@@ -32,7 +32,7 @@ export default class PendingRestockTable extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:3001/PendingRestock`, config)
+    axios.get(`https://pern-project-3.onrender.com/PendingRestock`, config)
       .then(res => {
         const reportData = res.data;
         this.setState({ data: reportData });

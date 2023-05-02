@@ -5,7 +5,7 @@ import { blueGrey } from "@mui/material/colors";
 /**
  * 
  * MenuBoardItemCard function is used to generate the item cards used in the menu board.
- * 
+ * @return A Card display component for an individual menu item, used for the menu board component. 
  * 
  */
 const MenuBoardItemCard = ({item}) => {
