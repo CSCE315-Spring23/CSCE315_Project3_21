@@ -27,7 +27,7 @@ export default function MainAppBar() {
 
   useEffect(() => {
     if (user == null) {
-       navigate('/LoginPage');
+      navigate('/');
       console.log("Successfully logged out")
     }
   }, [user]);

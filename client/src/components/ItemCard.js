@@ -3,6 +3,12 @@ import { Button, Card } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * 
+ * @param {*} props - Data of an individual menu item, containing the item name, price, image link, and category. 
+ * @returns A Card display component for an individual menu item, used for the Customer Menu component. 
+ * Has a button for adding the menu item to the order.
+ */
 const ItemCard = (props) => {
   const { Meta } = Card;
   return (
@@ -33,6 +39,9 @@ const ItemCard = (props) => {
           description={
             <div className="item-description">
               <p>{props.item.itemname}</p>
+                        <p className="category">
+                            {props.item.category}
+                        </p>
               <p className="price" aria-label={"Price: $" + props.item.price}>
                 {"$" + props.item.price}
               </p>

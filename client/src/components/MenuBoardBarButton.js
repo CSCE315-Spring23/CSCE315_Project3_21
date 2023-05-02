@@ -6,7 +6,12 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
-
+/**
+ * 
+ * AppBarMenuButton function is used to created the navigation between the server side web pages. 
+ * 
+ * 
+ */
 export default function AppBarMenuButton() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
@@ -18,7 +23,12 @@ export default function AppBarMenuButton() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+/**
+ * 
+ * returns the nav bar with proper navigation to the customer page, menu board, and server page.
+ * 
+ * 
+ */
   return (
     <div>
       <IconButton
@@ -43,21 +53,13 @@ export default function AppBarMenuButton() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
-      >
-       
+      >      
         <MenuItem onClick={()=> navigate("/Customer")}>
-          Customer Page
+          Create An Order
         </MenuItem>
         <MenuItem onClick={() => navigate("/MenuBoard")}>
           Menu Board
-          </MenuItem>
-          <MenuItem onClick={() => navigate("/ServerPage")}>
-          Server Page
-          </MenuItem>
-          
-
-        
-        
+        </MenuItem> 
       </Menu>
     </div>
   );

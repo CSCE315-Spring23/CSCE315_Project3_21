@@ -20,6 +20,12 @@ const columns = [
   },
 ];
 
+/**
+ * 
+ * @param {*} props - Functions/data to use from the parent component (ServerPage.js or CustomerPage.js)
+ * @returns Order cart component which displays the current order information to the user and provides 
+ * functionalities for removing items, cancelling the order, and creating an order.
+ */
 const OrderCart = (props) => {
   return (
     <div>
@@ -42,6 +48,7 @@ const OrderCart = (props) => {
         columns={columns}
         data={props.OrderItems}
         enableEditing
+        enableRowVirtualization
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
             <Tooltip

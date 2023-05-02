@@ -1,11 +1,19 @@
 const pool = require("../DB");
 
+/**
+ * Represents an order of menu items
+ */
 class Order {
     constructor() {
         this.itemsOrdered = [];
         this.totalprice = 0;
     }
 
+    /**
+     * Adds a menu item to the order and updates inventory quantities
+     * @param {string} menuItemKey - name of the menu item
+     * @returns None
+     */
     async addMenuItem(menuItemKey) {
         console.log(menuItemKey);
         let abletoMake = true;
@@ -49,6 +57,11 @@ class Order {
         } 
     }
 
+    /**
+     * Removes a menu item from the order and updates inventory quantities
+     * @param {string} menuItemKey - name of the menu item 
+     * @returns None
+     */
     async removeItem(menuItemKey) {
         console.log("Item to be removed ", menuItemKey);
 
@@ -71,7 +84,7 @@ class Order {
         let InvQrows = inventoryResults.rows;
 
         for (let i = 0; i < InvQrows.length; i++) {
-            let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+            let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
             await pool.query(inventoryUpdate);
         }
 
@@ -80,6 +93,11 @@ class Order {
         this.totalprice -= priceResult.rows[0].price;
     }
 
+    /**
+     * Creates an order from the current items in the order, updates the database data,
+     * and initializes a new order.
+     * @returns 
+     */
     async createOrder() {
         if (this.itemsOrdered.length < 1) {
             return;
@@ -117,6 +135,34 @@ class Order {
         // Empty the order array
         this.itemsOrdered = [];
         this.totalprice = 0;
+    }
+
+    /**
+     * Removes all of the items in the current order and resets the inventory quantities.
+     * @returns None
+     */
+    async cancelOrder() {
+        if (this.itemsOrdered.length < 1) {
+            return;
+        }
+
+        for (let i = 0; i < this.itemsOrdered.length; i++) {
+            let menuItemKey = this.itemsOrdered[i].itemname;
+
+            let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
+            let inventoryResults = await pool.query(inventoryquantity_Query);
+            let InvQrows = inventoryResults.rows;
+
+            for (let i = 0; i < InvQrows.length; i++) {
+                let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+                await pool.query(inventoryUpdate);
+            }
+
+            let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
+            let priceResult = await pool.query(priceQuery);
+            this.totalprice -= priceResult.rows[0].price;
+        }
+        this.itemsOrdered = [];
     }
 }
 

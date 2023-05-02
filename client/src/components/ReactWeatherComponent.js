@@ -46,6 +46,7 @@ const ReactWeatherComponent = () => {
             unitsLabels={{ temperature: 'F', windSpeed: 'mph' }}
             showForecast
             theme={customStyles}
+            height='250px'
         />
     );
 };

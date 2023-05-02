@@ -34,9 +34,17 @@ const theme = createTheme({
   }
 })
 
-// The grid max xs = 12
+/**
+ * Front end implementation of the Chick-Fil-A employee interface.
+ * @returns Component with all of the functionalities required to create a custom order.
+ */
 const ServerPage = () => {
 
+  /**
+   * Adds a menu item to the order through an XMLHttpRequest to the server and updates the component's state data
+   * 
+   * @param {*} ItemName 
+   */
   function addItemHandler(ItemName) {
     axios.get(`http://localhost:3001/addItem?menuitem=` + ItemName, config)
       .then(res => {
@@ -53,6 +61,11 @@ const ServerPage = () => {
       });
   }
 
+  /**
+   * Removes a menu item from the order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */  
   function removeItemHandler(ItemName) {
     axios.get(`http://localhost:3001/removeItem?menuitem=` + ItemName, config)
       .then(res => {
@@ -69,6 +82,11 @@ const ServerPage = () => {
       })
   }
 
+  /**
+   * Gets the current order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
   function getCurrentOrder() {
     axios.get(`http://localhost:3001/getOrder`, config)
     .then(res => {
@@ -85,10 +103,37 @@ const ServerPage = () => {
     });  
   }
 
+  /**
+   * Creates an order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
   function sendOrderHandler() {
     axios.get(`http://localhost:3001/storeOrder`, config)
     .then(res => {
       alert("Your order will now be sent and made!")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
+  /**
+   * Deletes the current order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
+  function cancelOrderHandler() {
+    axios.get(`http://localhost:3001/cancelOrder`, config)
+    .then(res => {
+      alert("Cancelling order and removing items.")
       const orderData = res.data.itemsOrdered;
       const OrderTot = res.data.totalprice;
       setOrderItems(orderData);
@@ -107,6 +152,7 @@ const ServerPage = () => {
 
   useEffect(() => {
     getCurrentOrder();
+    document.getElementById('bar-description').innerText = "CFA Employee";
   },[])
 
   const items = [
@@ -127,6 +173,7 @@ const ServerPage = () => {
         OrderTotal = {ordertotal} 
         RemoveItem = {removeItemHandler}
         SendOrder = {sendOrderHandler}
+        CancelOrder = {cancelOrderHandler}
         >
         
       </OrderCart>

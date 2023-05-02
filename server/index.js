@@ -50,17 +50,18 @@ app.get('/inventoryLevelsEndDayCompleteDaySummary',dbInventoryLevels.getInventor
 app.get('/ZReport',dbInventoryLevels.getZReport);
 
 /*    -ORDER FUNCTIONALITY-     */
-const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder} = require('./OrderHandlers/orderController');
+const {addItemToOrder, storeOrder, removeItemFromOrder, getOrder, cancelOrder} = require('./OrderHandlers/orderController');
 app.get('/addItem', addItemToOrder);
 app.get('/removeItem', removeItemFromOrder);
 app.get('/storeOrder', storeOrder);
 app.get('/getOrder',getOrder);
+app.get('/cancelOrder',cancelOrder);
 
 /*    -X REPORT-     */
 const getXreport = require('./Xreport');
 app.get('/Xreport', getXreport);
 
-/*    -QUERY MENU ITEMS FOR SERVER PAGE-     */
+/*    -QUERY MENU ITEMS FOR EMPLOYEE AND CUSTOMER PAGES-     */
 const {getMenu, getEntrees, getSides, getDesserts, getSomeMenuItems} = require('./queryMenu');
 app.get('/ServerPage', getMenu);
 app.get('/ServerPage/getEntrees', getEntrees);
