@@ -12,16 +12,7 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import SalesReportTable from '../components/SalesReportTable.js';
-/**
- * The request body should be an object with the following properties:
- *
- * {
- *  start: int, // 0-23
- *  end: int, // 0-23
- *  salesWith: "menu_item_id" , //optional (default null)
- *  limit: int //optional number of results to return (default 100)
- * }
- */
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
@@ -29,22 +20,14 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
-/**
- * 
- * Title created with specific configs
- * 
- */
+
 const Title = styled(Paper)(({ theme }) => ({
   ...theme.typography.heading,
   padding: theme.spacing(1),
   textAlign: 'center',
   color: 'black',
 }));
-/**
- * 
- * theme of the page created with cfa_theme
- * 
- */
+
 const cfa_theme = createTheme({
   palette: {
       primary: {
@@ -58,7 +41,8 @@ const cfa_theme = createTheme({
 /**
  * 
  * Sales Report Page function used to build the webpage 
- * Has setStart, setEnd, and setSubmit vars to help store values from the date timer
+ * Has setStart, setEnd, and setSubmit vars to help store values from the date time
+ * selection box 
  * 
  * 
  */

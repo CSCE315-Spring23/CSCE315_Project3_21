@@ -47,12 +47,7 @@ export default function MenuBoardBar() {
       console.log(error);
     }
   };
-/**
- * 
- * returns the menu board bar with all of the necessary features. 
- * 
- * 
- */
+
   return (
     <ThemeProvider theme={cfa_theme}>
       <Box sx={{ flexGrow: 1 }}>

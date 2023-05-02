@@ -3,11 +3,7 @@ import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
 import Moment from 'react-moment';
 import moment from 'moment/moment.js';
-/**
- * 
- *columns var set up to store the columns of the sales report table from the database
- * 
- */
+
     const columns = [
     {
         accessorKey: 'id',
@@ -47,7 +43,6 @@ export default class SalesReportTable extends React.Component {
             data : [],
         };
     }
-    /** This is a description of the foo function. */
     componentDidMount() {
         var t = new Date(this.state.start);
         var t2 = new Date(this.state.end);
@@ -63,7 +58,6 @@ export default class SalesReportTable extends React.Component {
                 console.error(err);
             });
     };
-    /** This is a description of the foo function. */
     render(){
         console.log(this.state.data.at(0));
         return <MaterialReactTable columns={columns} data={this.state.data} />;
