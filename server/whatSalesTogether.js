@@ -43,7 +43,8 @@ const getKey = (item1, item2) => {
  * @param {Object} response - response object
  */
 const getWhatSalesTogether = (request, response) => {
-  const body = request.body;
+  const body = request.query;
+  //console.log(body);
 
   /**
    * Check if the request body has the required properties
@@ -53,10 +54,11 @@ const getWhatSalesTogether = (request, response) => {
     return;
   }
 
-  const start = body.start;
-  const end = body.end;
+  const start = parseInt(body.start);
+  const end = parseInt(body.end);
   const salesWith = body.salesWith;
-  const limit = body.limit || 100;
+  let limit = body.limit || 100;
+  limit = parseInt(limit);
 
   /**
   * the query is a bit complicated because we need to find the pairs of items
@@ -210,6 +212,7 @@ const getWhatSalesTogether = (request, response) => {
     }
 
     let rows = results.rows;
+    //console.log({ln:rows.length, sd:rows.splice(0, 10),query});
 
     let pairs = {};
 
