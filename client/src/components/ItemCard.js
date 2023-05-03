@@ -51,7 +51,7 @@ const ItemCard = (props) => {
         <div className="item-button">
           <Button
             onClick={() => {
-              toast.success("Added" + props.item.itemname + " to order!", {
+              toast.success("Added " + props.item.itemname + " to order!", {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,

@@ -46,10 +46,11 @@ export default function MainAppBar() {
         <AppBar position="static" color='primary'>
           <Toolbar>
             <AppBarMenuButton />
-            <Typography variant= "h4" padding = "10px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-              Chick-fil-A POS
-            </Typography>
-            <Button onClick={handleSignOut} color="inherit">Logout</Button>
+            <div className='appbar-logo'></div>
+              <Typography id='bar-description' variant= "h5" padding = "0px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+                Manager
+              </Typography>
+              <Button onClick={handleSignOut} color="inherit">Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>

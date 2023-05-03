@@ -20,6 +20,17 @@ code {
   font-family: 'Helvetica, sans-serif',
 }
 
+.appbar-logo {
+  background-image: url(media/chick-fil-a4781.png);
+  width: 200px;
+  height: 75px;
+  border-radius: 20px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-left: 42%;
+}
+
+
 .CFA-logo {
   border-radius: 40%;
   background-image: url(media/CFALogo.png);

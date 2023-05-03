@@ -52,9 +52,11 @@ export default function MenuBoardBar() {
     <ThemeProvider theme={cfa_theme}>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color='primary'>
+          
           <Toolbar>
-            <Typography id='bar-description' variant= "h4" padding = "10px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-              CFA Customer Kiosk
+            <div className='appbar-logo'></div>
+            <Typography id='bar-description' variant= "h5" padding = "0px" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+              Customer Kiosk
             </Typography>
             <Button onClick={handleSignOut} color="inherit">Logout</Button>
           </Toolbar>

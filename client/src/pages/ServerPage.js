@@ -127,7 +127,7 @@ const ServerPage = () => {
 
   useEffect(() => {
     getCurrentOrder();
-    document.getElementById('bar-description').innerText = "CFA Employee";
+    document.getElementById('bar-description').innerText = "Employee";
   },[])
 
   const items = [
