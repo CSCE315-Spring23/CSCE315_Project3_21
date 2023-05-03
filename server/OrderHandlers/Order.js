@@ -24,7 +24,7 @@ class Order {
 
         // Check the current quantity of every inventory item to see if we can itemsOrdered the menu item
         for (let i = 0; i < InvQrows.length; i++) {
-            let currquantity_Query = "SELECT currentquantity FROM inventory_item_test WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+            let currquantity_Query = "SELECT currentquantity FROM inventory_item WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
             let currquantityResults = await pool.query(currquantity_Query);
             let currQuantity = currquantityResults.rows[0].currentquantity;
 
@@ -51,7 +51,7 @@ class Order {
             console.log(this.itemsOrdered);
 
             for (let i = 0; i < InvQrows.length; i++) {
-                let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+                let inventoryUpdate = "UPDATE inventory_item SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
                 await pool.query(inventoryUpdate);
             }
         } 
@@ -84,7 +84,7 @@ class Order {
         let InvQrows = inventoryResults.rows;
 
         for (let i = 0; i < InvQrows.length; i++) {
-            let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+            let inventoryUpdate = "UPDATE inventory_item SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
             await pool.query(inventoryUpdate);
         }
 
@@ -104,12 +104,12 @@ class Order {
         }
 
         // Create a new ordertable entry
-        let idQuery = "SELECT Id FROM ordertable_test WHERE id=(SELECT max(id) FROM ordertable_test)";
+        let idQuery = "SELECT Id FROM order_table WHERE id=(SELECT max(id) FROM order_table)";
         let idResult = await pool.query(idQuery);
         let orderID = idResult.rows[0].id + 1;
 
         const newOrderQuery = {
-            text: `INSERT INTO ordertable_test (id,ordertimestamp,totalprice) values ($1,(to_timestamp(${Date.now()} / 1000.0)), $2)`,
+            text: `INSERT INTO order_table (id,ordertimestamp,totalprice) values ($1,(to_timestamp(${Date.now()} / 1000.0)), $2)`,
             values: [orderID, this.totalprice],
         }
         await pool.query(newOrderQuery);
@@ -154,7 +154,7 @@ class Order {
             let InvQrows = inventoryResults.rows;
 
             for (let i = 0; i < InvQrows.length; i++) {
-                let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+                let inventoryUpdate = "UPDATE inventory_item SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
                 await pool.query(inventoryUpdate);
             }
 
