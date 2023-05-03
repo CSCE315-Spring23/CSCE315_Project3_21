@@ -7,7 +7,7 @@ let order = new Order();
  * body and calls the addMenuItem function on the Order. Sends Order object as a json response
  * @param {*} request 
  * @param {*} response 
- * @returns 
+ * @returns none
  */
 const addItemToOrder = async (request, response) => {
     const menuItem = request.query.menuitem;
@@ -28,7 +28,7 @@ const addItemToOrder = async (request, response) => {
  * body and calls the addMenuItem function on the Order. Sends Order object as a json response.
  * @param {*} request 
  * @param {*} response 
- * @returns 
+ * @returns none
  */
 const removeItemFromOrder = async(request, response) => {
     const menuItem = request.query.menuitem;
@@ -46,7 +46,7 @@ const removeItemFromOrder = async(request, response) => {
  * Functiom to get the current order information. Sends Order object as a json response.
  * @param {*} request 
  * @param {*} response 
- * @returns 
+ * @returns none
  */
 const getOrder = async(request, response) => {
     //console.log(order);

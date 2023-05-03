@@ -40,11 +40,8 @@ const cfa_theme = createTheme({
 });
 /**
  * 
- * Sales Report Page function used to build the webpage 
- * Has setStart, setEnd, and setSubmit vars to help store values from the date time
- * selection box 
- * 
- * 
+ * Sales Report Page function used to build the sales report page that holds the sales report table 
+ * and the date time pickers used to query for that table.
  */
 export default function SalesReportPage(){
   const [start, setStart] = useState('');

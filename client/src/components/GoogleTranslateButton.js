@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-
+/**
+ * The GoogleTranslateButton function creates the button at the top of each page that can translate the page that it is on.
+     */
 const GoogleTranslateButton = () => {
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(

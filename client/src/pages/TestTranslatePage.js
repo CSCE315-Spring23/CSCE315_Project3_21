@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-
+/**
+     * Sets up the google translate component for our project.
+     */
 const TestTranslatePage = () => {
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(

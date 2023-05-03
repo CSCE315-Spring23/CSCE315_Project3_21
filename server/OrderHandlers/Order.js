@@ -96,7 +96,7 @@ class Order {
     /**
      * Creates an order from the current items in the order, updates the database data,
      * and initializes a new order.
-     * @returns 
+     * @returns none
      */
     async createOrder() {
         if (this.itemsOrdered.length < 1) {

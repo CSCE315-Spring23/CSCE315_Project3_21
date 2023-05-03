@@ -18,6 +18,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 // The grid max xs = 12
+/**
+     * Function that builds the restock report page with grids and incorporates the table, app bar
+     */
 function RestockReportPage() {
   return (
     <div className="RestockReportPage">

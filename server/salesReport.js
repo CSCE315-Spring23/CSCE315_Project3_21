@@ -5,6 +5,9 @@ const pool = require("./DB");
  * 
  *
  * getSalesReport is used to query our database for the sales report with the dates specified
+ * @param {request}
+ * @param {response}
+ * @returns none
  */
 
 const getsalesReport = (request, response) => {
@@ -31,8 +34,10 @@ const getsalesReport = (request, response) => {
 
   /**
  * 
- *
- * pool.query is used here to format the data into rows and columns. 
+ * @param {query} 
+ * @param {results}
+ * pool.query is used here to format the data into rows and columns.
+ * @returns {response} 
  */
   pool.query(query, (error, results) => {
     if (error) {

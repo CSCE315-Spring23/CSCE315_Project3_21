@@ -27,11 +27,13 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import { Button, Card } from "antd";
+import { Card } from "antd";
+import { blueGrey } from "@mui/material/colors";
+
 /**
  * 
  * MenuBoardItemCard function is used to generate the item cards used in the menu board.
- * 
+ * @return A Card display component for an individual menu item, used for the menu board component. 
  * 
  */
 const MenuBoardItemCard = ({item}) => {
@@ -40,28 +42,21 @@ const MenuBoardItemCard = ({item}) => {
         &lt;div >
             &lt;Card
                 hoverable
-                style ={{width:250,marginBottom: 20, marginLeft: 20, fontSize: '8px', background: '#F2F4F4'}}
+                style ={{background: '#F2F4F4', height:210, lineHeight:1}}
                 cover={
                 &lt;img 
+                    style ={{width:130, marginLeft:'60px'}}
                     alt={item.itemname} 
                     src={item.imageLink} 
                     />
                 }
             >
-                &lt;Meta title={item.itemname}
-                description = {
-                    &lt;div className="item-description">
-                        &lt;p>
-                            {item.itemname}
-                        &lt;/p>
-                        &lt;p className="price">
-                            {"$" + item.price}
-                        &lt;/p>
-                    &lt;/div>
-                    
-                } />
-                
-
+                &lt;div style ={{fontSize:'16px'}}>
+                    {item.itemname}
+                &lt;/div>
+                &lt;div className="price" style ={{fontSize:'13px', color: '#FF0000'}} >
+                    {"$" + item.price}
+                &lt;/div>
             &lt;/Card>
         &lt;/div>
     )
@@ -77,13 +72,13 @@ export default MenuBoardItemCard;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Item">Item</a></li><li><a href="global.html#MenuBoard">MenuBoard</a></li><li><a href="global.html#MenuBoardItemCard">MenuBoardItemCard</a></li><li><a href="global.html#Title">Title</a></li><li><a href="global.html#cfa_theme">cfa_theme</a></li><li><a href="global.html#columns">columns</a></li><li><a href="global.html#componentDidMount">componentDidMount</a></li><li><a href="global.html#getWhatSalesTogether">getWhatSalesTogether</a></li><li><a href="global.html#getsalesReport">getsalesReport</a></li><li><a href="global.html#render">render</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Order.html">Order</a></li><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CustomerMenu">CustomerMenu</a></li><li><a href="global.html#CustomerPage">CustomerPage</a></li><li><a href="global.html#GoogleTranslateButton">GoogleTranslateButton</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#ItemCard">ItemCard</a></li><li><a href="global.html#MenuBoard">MenuBoard</a></li><li><a href="global.html#MenuBoardItemCard">MenuBoardItemCard</a></li><li><a href="global.html#MenuItemTable">MenuItemTable</a></li><li><a href="global.html#OrderCart">OrderCart</a></li><li><a href="global.html#ReactWeatherComponent">ReactWeatherComponent</a></li><li><a href="global.html#RestockReportPage">RestockReportPage</a></li><li><a href="global.html#SearchUI">SearchUI</a></li><li><a href="global.html#ServerPage">ServerPage</a></li><li><a href="global.html#SignIn">SignIn</a></li><li><a href="global.html#TestTranslatePage">TestTranslatePage</a></li><li><a href="global.html#WhatSalesTogetherPage">WhatSalesTogetherPage</a></li><li><a href="global.html#XZReportPage">XZReportPage</a></li><li><a href="global.html#addItemToOrder">addItemToOrder</a></li><li><a href="global.html#cancelOrder">cancelOrder</a></li><li><a href="global.html#cfa_theme">cfa_theme</a></li><li><a href="global.html#createMenuToInventoryRelationships">createMenuToInventoryRelationships</a></li><li><a href="global.html#createOrUpdateInventoryItem">createOrUpdateInventoryItem</a></li><li><a href="global.html#createOrUpdateMenuItem">createOrUpdateMenuItem</a></li><li><a href="global.html#getCustomerMenu">getCustomerMenu</a></li><li><a href="global.html#getDesserts">getDesserts</a></li><li><a href="global.html#getEmployeeByPin">getEmployeeByPin</a></li><li><a href="global.html#getEmployees">getEmployees</a></li><li><a href="global.html#getEntrees">getEntrees</a></li><li><a href="global.html#getInventoryItems">getInventoryItems</a></li><li><a href="global.html#getInventoryLevelsEndDayCompleteDaySummary">getInventoryLevelsEndDayCompleteDaySummary</a></li><li><a href="global.html#getInventoryLevelsEndDayCompletePlaceRestock">getInventoryLevelsEndDayCompletePlaceRestock</a></li><li><a href="global.html#getInventoryLevelsEndDayPendingRestock">getInventoryLevelsEndDayPendingRestock</a></li><li><a href="global.html#getInventoryLevelsEndDayRecommended">getInventoryLevelsEndDayRecommended</a></li><li><a href="global.html#getInventoryLevelsEndDayRecordArrival">getInventoryLevelsEndDayRecordArrival</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getOrder">getOrder</a></li><li><a href="global.html#getRestockReport">getRestockReport</a></li><li><a href="global.html#getSides">getSides</a></li><li><a href="global.html#getSomeMenuItems">getSomeMenuItems</a></li><li><a href="global.html#getWhatSalesTogether">getWhatSalesTogether</a></li><li><a href="global.html#getXreport">getXreport</a></li><li><a href="global.html#getZReport">getZReport</a></li><li><a href="global.html#getsalesReport">getsalesReport</a></li><li><a href="global.html#padInt">padInt</a></li><li><a href="global.html#readDietaryRestrictionNames">readDietaryRestrictionNames</a></li><li><a href="global.html#readInventoryItem">readInventoryItem</a></li><li><a href="global.html#readInventoryItems">readInventoryItems</a></li><li><a href="global.html#readMenuItem">readMenuItem</a></li><li><a href="global.html#readMenuItems">readMenuItems</a></li><li><a href="global.html#removeItemFromOrder">removeItemFromOrder</a></li><li><a href="global.html#storeOrder">storeOrder</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 01 2023 12:40:59 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 21:03:36 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

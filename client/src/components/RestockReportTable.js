@@ -23,7 +23,9 @@ const config = {
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
   }
 };
-
+/**
+     * The Restock Report Table function builds the table used in the restock report and queries the database for the report.
+     */
 export default class RestockReportTable extends React.Component {
   constructor(props) {
     super(props);

@@ -1,5 +1,7 @@
 import ReactWeather, { useVisualCrossing } from 'react-open-weather';
-
+/**
+     * The react weather component function incorporates the weather api into our project that can be used on necessary pages.
+     */
 const ReactWeatherComponent = () => {
     /*
     const { data, isLoading, errorMessage } = useWeatherBit({

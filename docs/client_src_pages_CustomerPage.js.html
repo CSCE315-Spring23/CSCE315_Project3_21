@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/pages/CustomerPage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/pages/CustomerPage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import axios from 'axios';
+import { useEffect} from "react";
+import Grid from '@mui/material/Unstable_Grid2';
+import CustomerMenu from '../components/CustomerMenu.js'
+import OrderCart from '../components/OrderCart.js';
+import {ThemeProvider, createTheme } from '@mui/material';
+import lottie from 'lottie-web';
+import { defineElement } from 'lord-icon-element';
+import {Tabs} from 'antd';
+import MenuBoardBar from '../components/MenuBoardBar.js';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const config = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  }
+};
+
+// For the button icons
+document.querySelectorAll('lord-icon').forEach((element) => {
+  element.addEventListener('ready', () => {
+    element.classList.add('ready');
+  });
+});
+defineElement(lottie.loadAnimation);
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main : '#E51636',
+    }
+  }
+})
+
+/**
+ * Front end implementation of Chick-Fil-A customer kiosk interface
+ * @returns Component with all the functionalities needed for a self-serve Kiosk
+ */
+const CustomerPage = () => {
+
+  /**
+   * Adds a menu item to the order through an XMLHttpRequest to the server and updates the component's state data
+   * 
+   * @param {*} ItemName 
+   */
+  function addItemHandler(ItemName) {
+    axios.get(`https://pern-project-3.onrender.com/addItem?menuitem=` + ItemName, config)
+      .then(res => {
+        const orderData = res.data.itemsOrdered;
+        const OrderTot = res.data.totalprice;
+        setOrderItems(orderData);
+        setOrderTotal("$"+ OrderTot/100);
+  
+        document.getElementById('num-items').innerText = orderItems.length;
+        document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  /**
+   * Removes a menu item from the order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
+  function removeItemHandler(ItemName) {
+    axios.get(`https://pern-project-3.onrender.com/removeItem?menuitem=` + ItemName, config)
+      .then(res => {
+        const orderData = res.data.itemsOrdered;
+        const OrderTot = res.data.totalprice;
+        setOrderItems(orderData);
+        setOrderTotal("$"+ OrderTot/100);
+  
+        document.getElementById('num-items').innerText = orderItems.length;
+        document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+    /**
+   * Gets the current order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
+  function getCurrentOrder() {
+    axios.get(`https://pern-project-3.onrender.com/getOrder`, config)
+    .then(res => {
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    });  
+  }
+
+  /**
+   * Creates an order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
+  function sendOrderHandler() {
+    axios.get(`https://pern-project-3.onrender.com/storeOrder`, config)
+    .then(res => {
+      alert("Your order will now be sent and made!")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
+  /**
+   * Deletes the current order through an XMLHttpRequest to the server and updates the component's state data.
+   * 
+   * @param {*} ItemName 
+   */
+  function cancelOrderHandler() {
+    axios.get(`https://pern-project-3.onrender.com/cancelOrder`, config)
+    .then(res => {
+      alert("Cancelling order and removing items.")
+      const orderData = res.data.itemsOrdered;
+      const OrderTot = res.data.totalprice;
+      setOrderItems(orderData);
+      setOrderTotal("$"+ OrderTot/100);
+
+      document.getElementById('num-items').innerText = orderItems.length;
+      document.getElementById('total').innerText = "Total price: $" + OrderTot/100;
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
+  }
+
+  const [orderItems, setOrderItems] = React.useState([]);
+  const [ordertotal, setOrderTotal] = React.useState("$0");
+
+  useEffect(() => {
+    getCurrentOrder();
+  },[])
+
+  const items = [
+    {
+      label: 'Menu',
+      key: '1',
+      children: &lt;CustomerMenu 
+        OrderItems = {orderItems}
+        OrderTotal = {ordertotal} 
+        AddItem = {addItemHandler}> 
+      &lt;/CustomerMenu>
+    },
+    {
+      label: 'View Order',
+      key: '2',
+      children: &lt;OrderCart 
+        OrderItems = {orderItems} 
+        OrderTotal = {ordertotal} 
+        RemoveItem = {removeItemHandler}
+        SendOrder = {sendOrderHandler}
+        CancelOrder = {cancelOrderHandler}
+        >
+        
+      &lt;/OrderCart>
+    }
+  ]
+
+  return (
+    &lt;ThemeProvider theme={theme}>
+    &lt;div className="serverPage" role="order page">
+    &lt;ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      &lt;Grid container spacing={2}>
+        &lt;Grid xs={12}>
+          &lt;MenuBoardBar>&lt;/MenuBoardBar>
+        &lt;/Grid>
+        &lt;Grid xs = {12}>
+          &lt;Tabs 
+          tabPosition='left'
+          defaultActiveKey='1'
+          items = {items}
+          >  
+          &lt;/Tabs>
+        &lt;/Grid>
+      &lt;/Grid>
+
+    &lt;/div>
+    &lt;/ThemeProvider>
+    );
+  
+}
+
+export default CustomerPage;
+
+  
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Order.html">Order</a></li><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CustomerMenu">CustomerMenu</a></li><li><a href="global.html#CustomerPage">CustomerPage</a></li><li><a href="global.html#GoogleTranslateButton">GoogleTranslateButton</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#ItemCard">ItemCard</a></li><li><a href="global.html#MenuBoard">MenuBoard</a></li><li><a href="global.html#MenuBoardItemCard">MenuBoardItemCard</a></li><li><a href="global.html#MenuItemTable">MenuItemTable</a></li><li><a href="global.html#OrderCart">OrderCart</a></li><li><a href="global.html#ReactWeatherComponent">ReactWeatherComponent</a></li><li><a href="global.html#RestockReportPage">RestockReportPage</a></li><li><a href="global.html#SearchUI">SearchUI</a></li><li><a href="global.html#ServerPage">ServerPage</a></li><li><a href="global.html#SignIn">SignIn</a></li><li><a href="global.html#TestTranslatePage">TestTranslatePage</a></li><li><a href="global.html#WhatSalesTogetherPage">WhatSalesTogetherPage</a></li><li><a href="global.html#XZReportPage">XZReportPage</a></li><li><a href="global.html#addItemToOrder">addItemToOrder</a></li><li><a href="global.html#cancelOrder">cancelOrder</a></li><li><a href="global.html#cfa_theme">cfa_theme</a></li><li><a href="global.html#createMenuToInventoryRelationships">createMenuToInventoryRelationships</a></li><li><a href="global.html#createOrUpdateInventoryItem">createOrUpdateInventoryItem</a></li><li><a href="global.html#createOrUpdateMenuItem">createOrUpdateMenuItem</a></li><li><a href="global.html#getCustomerMenu">getCustomerMenu</a></li><li><a href="global.html#getDesserts">getDesserts</a></li><li><a href="global.html#getEmployeeByPin">getEmployeeByPin</a></li><li><a href="global.html#getEmployees">getEmployees</a></li><li><a href="global.html#getEntrees">getEntrees</a></li><li><a href="global.html#getInventoryItems">getInventoryItems</a></li><li><a href="global.html#getInventoryLevelsEndDayCompleteDaySummary">getInventoryLevelsEndDayCompleteDaySummary</a></li><li><a href="global.html#getInventoryLevelsEndDayCompletePlaceRestock">getInventoryLevelsEndDayCompletePlaceRestock</a></li><li><a href="global.html#getInventoryLevelsEndDayPendingRestock">getInventoryLevelsEndDayPendingRestock</a></li><li><a href="global.html#getInventoryLevelsEndDayRecommended">getInventoryLevelsEndDayRecommended</a></li><li><a href="global.html#getInventoryLevelsEndDayRecordArrival">getInventoryLevelsEndDayRecordArrival</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getOrder">getOrder</a></li><li><a href="global.html#getRestockReport">getRestockReport</a></li><li><a href="global.html#getSides">getSides</a></li><li><a href="global.html#getSomeMenuItems">getSomeMenuItems</a></li><li><a href="global.html#getWhatSalesTogether">getWhatSalesTogether</a></li><li><a href="global.html#getXreport">getXreport</a></li><li><a href="global.html#getZReport">getZReport</a></li><li><a href="global.html#getsalesReport">getsalesReport</a></li><li><a href="global.html#padInt">padInt</a></li><li><a href="global.html#readDietaryRestrictionNames">readDietaryRestrictionNames</a></li><li><a href="global.html#readInventoryItem">readInventoryItem</a></li><li><a href="global.html#readInventoryItems">readInventoryItems</a></li><li><a href="global.html#readMenuItem">readMenuItem</a></li><li><a href="global.html#readMenuItems">readMenuItems</a></li><li><a href="global.html#removeItemFromOrder">removeItemFromOrder</a></li><li><a href="global.html#storeOrder">storeOrder</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 21:03:36 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

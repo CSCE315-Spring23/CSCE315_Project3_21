@@ -4,7 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
-
+/**
+ * The App bar menu button function creates the app bar nav button and incorporates the other pages into the nav bar. 
+     */
 export default function AppBarMenuButton() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();

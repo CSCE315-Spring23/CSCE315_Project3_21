@@ -1,5 +1,10 @@
 const pool = require("./DB");
-
+/**
+     * Queries the database to generate a restock report
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const getRestockReport = (request, response) => {
     pool.query('SELECT * FROM inventory_item', (error, results) => {
         if (error) {

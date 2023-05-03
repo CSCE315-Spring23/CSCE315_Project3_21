@@ -1,6 +1,8 @@
 import { useRouteError } from "react-router-dom";
 import React from 'react';
-
+/**
+     * The Error Page function builds the error page that shows up when there is an issue with the javascript
+     */
 export default function ErrorPage() {
   const error = useRouteError();
   console.error(error);

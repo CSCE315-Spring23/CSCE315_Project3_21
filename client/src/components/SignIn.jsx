@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { GoogleButton } from 'react-google-button';
 import { UserAuth } from '../login/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
+/**
+     * The sign in function creates the sign in functionalities and manages them
+     */
 const SignIn = () => {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();

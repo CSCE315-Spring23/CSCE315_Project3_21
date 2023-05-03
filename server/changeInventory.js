@@ -8,6 +8,12 @@ const pool = require("./DB");
         http://localhost:3001/readInventoryItem?name=Not a Menu Item 
         (no name specified)
 */
+/**
+     * Queries the inventory table for a specific inventory item
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 async function readInventoryItem(request, response){
     try{
         console.log("The route is not broken.");
@@ -36,10 +42,12 @@ async function readInventoryItem(request, response){
     }
 }
 
-/* Get the entire inventory_item table.
-    TEST IN POSTMAN (ensure that GET method is selected):
-    http://localhost:3001/readInventoryItems
-*/
+/**
+     * Queries the Inventory Item Table
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const readInventoryItems =(request, response) => {
     // build query
         let query = "SELECT * FROM inventory_item;";
@@ -114,6 +122,14 @@ http://localhost:3001/createOrUpdateInventoryItem
         }
 - http://localhost:3001/readInventoryItem (request body : {itemname=Soup Cracker Packet}
 */
+
+/**
+     * Creates a new inventory item if the one requested does not exist 
+     * if it does exist the current one is altered accordingly
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 async function createOrUpdateInventoryItem(request, response){
     try{
         console.log("The route is not broken");

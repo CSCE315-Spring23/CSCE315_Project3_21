@@ -3,6 +3,13 @@ const pool = require("./DB");
 
 /* helper methods */
 /* creates entries in the table relationship_menutoinventory_unitquantities */
+/**
+     * Queries relationship table from the menu table to the inventory table for an item
+     * and adds that item if it is not in the tables
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 async function createMenuToInventoryRelationships(itemName, listRelationships) {
     // find insertion point as an index
         try{
@@ -98,6 +105,12 @@ async function createMenuToRestrictionsRelationships(itemName, listRelationships
         http://localhost:3001/readMenuItem?name=Not a Menu Item
         (no request body)
 */
+/**
+     * Queries the Menu Table for a specific menu item
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 async function readMenuItem(request, response){
     try {
         //console.log("The route is not broken.");
@@ -152,6 +165,12 @@ async function readMenuItem(request, response){
     http://localhost:3001/readMenuItems
     (no request body)  
 */
+/**
+     * Queries the whole menu table
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const readMenuItems =(request, response) => {
     // build query
         let query = "SELECT * FROM menu_item;";
@@ -174,6 +193,12 @@ const readMenuItems =(request, response) => {
     http://localhost:3001/readDietaryRestrictionNames
     (no request body)  
 */
+/**
+     * Queries the restriction table for the restriction name column
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const readDietaryRestrictionNames =(request, response) => {
     // build query
         let query = "SELECT restrictionname FROM dietary_restriction;";
@@ -196,6 +221,12 @@ const readDietaryRestrictionNames =(request, response) => {
         - create/update menu item with empty string name field (should return error)
             http://localhost:3001/createOrUpdateMenuItem
 */
+/**
+     * If itemname is in menu item table, then update the entry. Else, create a new entry.
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 async function createOrUpdateMenuItem(request, response){   
     try{
         //console.log("The route is not broken.");

@@ -30,7 +30,7 @@ const config = {
     }
 };
 /** 
- * SalesReportTable class sets up the table of the sales report page. 
+ * @class SalesReportTable class sets up the table of the sales report page. 
  * This class also queries the database with the values from the date time pickers on the web page.
  * It also displays the data.
  */

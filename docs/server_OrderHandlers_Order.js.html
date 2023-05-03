@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server/OrderHandlers/Order.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server/OrderHandlers/Order.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const pool = require("../DB");
+
+/**
+ * Represents an order of menu items
+ */
+class Order {
+    constructor() {
+        this.itemsOrdered = [];
+        this.totalprice = 0;
+    }
+
+    /**
+     * Adds a menu item to the order and updates inventory quantities
+     * @param {string} menuItemKey - name of the menu item
+     * @returns None
+     */
+    async addMenuItem(menuItemKey) {
+        console.log(menuItemKey);
+        let abletoMake = true;
+        // Query all of the inventory items used by the menu item ordered
+        let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
+        let inventoryResults = await pool.query(inventoryquantity_Query);
+        let InvQrows = inventoryResults.rows;
+
+        // Check the current quantity of every inventory item to see if we can itemsOrdered the menu item
+        for (let i = 0; i &lt; InvQrows.length; i++) {
+            let currquantity_Query = "SELECT currentquantity FROM inventory_item_test WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+            let currquantityResults = await pool.query(currquantity_Query);
+            let currQuantity = currquantityResults.rows[0].currentquantity;
+
+            if (currQuantity &lt; InvQrows[i].unitquantity) {
+                console.log("Menu item not available: ", menuItemKey);
+                console.log("Inventory item out of stock: ", InvQrows[i].inventoryitemkey);
+                abletoMake = false;
+                return;
+            }
+        }
+
+        // If we have all of the required inventory quantities add the menu item to itemsOrdered
+        if (abletoMake == true) {
+            console.log("Item added to order: ", menuItemKey);
+            // this.itemsOrdered.push(menuItemKey);
+
+            let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
+            let priceResult = await pool.query(priceQuery);
+            this.itemsOrdered.push({
+                itemname : menuItemKey,
+                price: priceResult.rows[0].price/100.0
+            })
+            this.totalprice += priceResult.rows[0].price;
+            console.log(this.itemsOrdered);
+
+            for (let i = 0; i &lt; InvQrows.length; i++) {
+                let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity - " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+                await pool.query(inventoryUpdate);
+            }
+        } 
+    }
+
+    /**
+     * Removes a menu item from the order and updates inventory quantities
+     * @param {string} menuItemKey - name of the menu item 
+     * @returns None
+     */
+    async removeItem(menuItemKey) {
+        console.log("Item to be removed ", menuItemKey);
+
+        let contains = false;
+        for (let i = 0; i &lt; this.itemsOrdered.length; i++) {
+            if (this.itemsOrdered[i].itemname === menuItemKey) {
+                console.log("Removed item: ", this.itemsOrdered[i]);
+                this.itemsOrdered.splice(i, 1);
+                contains = true;
+                break;
+            }
+        }
+        if (contains === false) {
+            console.log("Order does not contain ", menuItemKey);
+            return;
+        }
+
+        let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
+        let inventoryResults = await pool.query(inventoryquantity_Query);
+        let InvQrows = inventoryResults.rows;
+
+        for (let i = 0; i &lt; InvQrows.length; i++) {
+            let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+            await pool.query(inventoryUpdate);
+        }
+
+        let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
+        let priceResult = await pool.query(priceQuery);
+        this.totalprice -= priceResult.rows[0].price;
+    }
+
+    /**
+     * Creates an order from the current items in the order, updates the database data,
+     * and initializes a new order.
+     * @returns none
+     */
+    async createOrder() {
+        if (this.itemsOrdered.length &lt; 1) {
+            return;
+        }
+
+        // Create a new ordertable entry
+        let idQuery = "SELECT Id FROM ordertable_test WHERE id=(SELECT max(id) FROM ordertable_test)";
+        let idResult = await pool.query(idQuery);
+        let orderID = idResult.rows[0].id + 1;
+
+        const newOrderQuery = {
+            text: `INSERT INTO ordertable_test (id,ordertimestamp,totalprice) values ($1,(to_timestamp(${Date.now()} / 1000.0)), $2)`,
+            values: [orderID, this.totalprice],
+        }
+        await pool.query(newOrderQuery);
+
+        // Next create entries for every menu item ordered in order_to_menu table
+        let orderIDQuery = "SELECT order_key FROM order_to_menu WHERE order_key=(SELECT max(order_key) FROM order_to_menu)";
+        let orderIDResult = await pool.query(orderIDQuery);
+        let newOrderID = orderIDResult.rows[0].order_key + 1;
+
+        for (let i = 0; i &lt; this.itemsOrdered.length; i++) {
+            orderIDQuery = "SELECT id FROM order_to_menu WHERE id=(SELECT max(id) FROM order_to_menu)";
+            orderIDResult = await pool.query(orderIDQuery);
+            let newID = orderIDResult.rows[0].id + 1;
+
+            const itemToOrderEntry = {
+                text: 'INSERT INTO order_to_menu (id,order_key,menuitem_key,quantity) values ($1, $2, $3, $4)',
+                values: [newID, newOrderID, this.itemsOrdered[i], 1],
+            }
+
+            await pool.query(itemToOrderEntry);
+        }
+
+        // Empty the order array
+        this.itemsOrdered = [];
+        this.totalprice = 0;
+    }
+
+    /**
+     * Removes all of the items in the current order and resets the inventory quantities.
+     * @returns None
+     */
+    async cancelOrder() {
+        if (this.itemsOrdered.length &lt; 1) {
+            return;
+        }
+
+        for (let i = 0; i &lt; this.itemsOrdered.length; i++) {
+            let menuItemKey = this.itemsOrdered[i].itemname;
+
+            let inventoryquantity_Query = "SELECT inventoryitemkey,unitquantity FROM relationship_menutoinventory_unitquantities WHERE menuitemkey = '" + menuItemKey + "';";
+            let inventoryResults = await pool.query(inventoryquantity_Query);
+            let InvQrows = inventoryResults.rows;
+
+            for (let i = 0; i &lt; InvQrows.length; i++) {
+                let inventoryUpdate = "UPDATE inventory_item_test SET currentquantity = currentquantity + " + InvQrows[i].unitquantity + " WHERE itemname = '" + InvQrows[i].inventoryitemkey +  "';";
+                await pool.query(inventoryUpdate);
+            }
+
+            let priceQuery = "SELECT price FROM menu_item WHERE itemname = '" + menuItemKey + "';"; 
+            let priceResult = await pool.query(priceQuery);
+            this.totalprice -= priceResult.rows[0].price;
+        }
+        this.itemsOrdered = [];
+    }
+}
+
+module.exports = Order;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Order.html">Order</a></li><li><a href="module.html#.exports">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CustomerMenu">CustomerMenu</a></li><li><a href="global.html#CustomerPage">CustomerPage</a></li><li><a href="global.html#GoogleTranslateButton">GoogleTranslateButton</a></li><li><a href="global.html#Item">Item</a></li><li><a href="global.html#ItemCard">ItemCard</a></li><li><a href="global.html#MenuBoard">MenuBoard</a></li><li><a href="global.html#MenuBoardItemCard">MenuBoardItemCard</a></li><li><a href="global.html#MenuItemTable">MenuItemTable</a></li><li><a href="global.html#OrderCart">OrderCart</a></li><li><a href="global.html#ReactWeatherComponent">ReactWeatherComponent</a></li><li><a href="global.html#RestockReportPage">RestockReportPage</a></li><li><a href="global.html#SearchUI">SearchUI</a></li><li><a href="global.html#ServerPage">ServerPage</a></li><li><a href="global.html#SignIn">SignIn</a></li><li><a href="global.html#TestTranslatePage">TestTranslatePage</a></li><li><a href="global.html#WhatSalesTogetherPage">WhatSalesTogetherPage</a></li><li><a href="global.html#XZReportPage">XZReportPage</a></li><li><a href="global.html#addItemToOrder">addItemToOrder</a></li><li><a href="global.html#cancelOrder">cancelOrder</a></li><li><a href="global.html#cfa_theme">cfa_theme</a></li><li><a href="global.html#createMenuToInventoryRelationships">createMenuToInventoryRelationships</a></li><li><a href="global.html#createOrUpdateInventoryItem">createOrUpdateInventoryItem</a></li><li><a href="global.html#createOrUpdateMenuItem">createOrUpdateMenuItem</a></li><li><a href="global.html#getCustomerMenu">getCustomerMenu</a></li><li><a href="global.html#getDesserts">getDesserts</a></li><li><a href="global.html#getEmployeeByPin">getEmployeeByPin</a></li><li><a href="global.html#getEmployees">getEmployees</a></li><li><a href="global.html#getEntrees">getEntrees</a></li><li><a href="global.html#getInventoryItems">getInventoryItems</a></li><li><a href="global.html#getInventoryLevelsEndDayCompleteDaySummary">getInventoryLevelsEndDayCompleteDaySummary</a></li><li><a href="global.html#getInventoryLevelsEndDayCompletePlaceRestock">getInventoryLevelsEndDayCompletePlaceRestock</a></li><li><a href="global.html#getInventoryLevelsEndDayPendingRestock">getInventoryLevelsEndDayPendingRestock</a></li><li><a href="global.html#getInventoryLevelsEndDayRecommended">getInventoryLevelsEndDayRecommended</a></li><li><a href="global.html#getInventoryLevelsEndDayRecordArrival">getInventoryLevelsEndDayRecordArrival</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getOrder">getOrder</a></li><li><a href="global.html#getRestockReport">getRestockReport</a></li><li><a href="global.html#getSides">getSides</a></li><li><a href="global.html#getSomeMenuItems">getSomeMenuItems</a></li><li><a href="global.html#getWhatSalesTogether">getWhatSalesTogether</a></li><li><a href="global.html#getXreport">getXreport</a></li><li><a href="global.html#getZReport">getZReport</a></li><li><a href="global.html#getsalesReport">getsalesReport</a></li><li><a href="global.html#padInt">padInt</a></li><li><a href="global.html#readDietaryRestrictionNames">readDietaryRestrictionNames</a></li><li><a href="global.html#readInventoryItem">readInventoryItem</a></li><li><a href="global.html#readInventoryItems">readInventoryItems</a></li><li><a href="global.html#readMenuItem">readMenuItem</a></li><li><a href="global.html#readMenuItems">readMenuItems</a></li><li><a href="global.html#removeItemFromOrder">removeItemFromOrder</a></li><li><a href="global.html#storeOrder">storeOrder</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue May 02 2023 21:03:36 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

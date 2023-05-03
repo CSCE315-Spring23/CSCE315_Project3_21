@@ -1,5 +1,10 @@
 const pool = require('./DB');
-
+ /**
+     * Queries the Employee table
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const getEmployees = (request, response) => {
   pool.query('SELECT * FROM employee', (error, results) => {
     if (error) {
@@ -8,7 +13,12 @@ const getEmployees = (request, response) => {
     response.status(200).json(results.rows);
   });
 };
-
+/**
+     * Queries the Employee table by pin
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const getEmployeeByPin = (request, response) => {
   const pin = request.query.pin;
 
@@ -62,7 +72,12 @@ const deleteUser = (request, response) => {
   });
 };
 */
-
+/**
+     * Queries the Inventory table
+     * @param {request} 
+     * @param {response}
+     * @returns results
+     */
 const getInventoryItems = (request, response) => {
   pool.query('SELECT * FROM inventory_item LIMIT 20', (error, results) => {
     if (error) {
