@@ -13,7 +13,6 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { width } from "@mui/system";
 import axios from "axios";
 
 /**
@@ -32,54 +31,49 @@ const Item = styled(Paper)(({ theme }) => ({
  * It has two number input field, one dropdown and a search button.
  * Handles inter states of the input fields and dropdown, filter outs wrong value.
  * Calls the supplied search function with 3 input parameter
- * 
+ *
  * @param {Function} search- An Async function that takes three parameter
- *   
+ *
  */
 const SearchUI = ({ search }) => {
-
   /**
    * Maintains the value of the 3 search UI components
    */
   const [startHour, setStartHour] = React.useState(null);
   const [endHour, setEndHour] = React.useState(null);
   const [selected, setSelected] = React.useState("");
-  
+
   /**
    * Array of menu items to populate the select
    */
   const [options, setOptions] = React.useState([]);
-
 
   /**
    * This state will hold the error message if the first input field (startHour)
    * is invalid.
    */
   const [error1, setError1] = React.useState(null);
-  
-  
+
   /**
    * This state will hold the error message if the second input field (EndHour)
    * is invalid.
    */
   const [error2, setError2] = React.useState(null);
-  
+
   /**
    * This state will hold the error message to show to the user when
    * user presses 'search' with invalid inputs
    */
   const [error3, setError3] = React.useState(null);
 
-
   /**
-   * 
+   *
    * Handles click on the search button.
    * validates the input before calling search
    */
   const handleSearch = () => {
     let salesWith = selected;
-    if(selected == "Any Items")
-        salesWith = "";
+    if (selected == "Any Items") salesWith = "";
 
     if (!error1 && !error2) {
       if (startHour == null || endHour == null) {
@@ -98,7 +92,7 @@ const SearchUI = ({ search }) => {
    */
   useEffect(() => {
     axios
-      .get("http://localhost:3001/menuCustomerView")
+      .get("https://pern-project-3.onrender.com/menuCustomerView")
       .then((res) => {
         setOptions(res.data);
       })
@@ -134,7 +128,7 @@ const SearchUI = ({ search }) => {
             />
           </Item>
         </Grid>
-        
+
         {/* Ending hour input field */}
         <Grid xs={6}>
           <Item>
@@ -198,17 +192,14 @@ const SearchUI = ({ search }) => {
   );
 };
 
-
-
 /**
  * React component:
  * Holds an search component consisting of two input field and a dropdown.
  * Shows A table consisting of pairs of menu items that sales together in a given timeframe.
  * User can additionally select a menu item to see what sold with that specific menu item in that timeframe
- * 
+ *
  */
 function WhatSalesTogetherPage() {
-  
   /**
    * Holds the data to show in the table. The data is fetched from the server based
    * on the search parameters
@@ -221,15 +212,14 @@ function WhatSalesTogetherPage() {
    */
   const [searching, setSearching] = React.useState(false);
 
-
   /**
    * Gets the search result from the server
    * the result is an array of objects, each object has three properties:
    * item1, item2, and count
-   * 
-   * @param {Number} start - starting hour of the timeframe (0-23) 
+   *
+   * @param {Number} start - starting hour of the timeframe (0-23)
    * @param {Number} end - ending hour of the timeframe (0-23)
-   * @param {String} salesWith - empty string if we want to get all pairs of menu items that 
+   * @param {String} salesWith - empty string if we want to get all pairs of menu items that
    *                            are sold in that time frame OR a menu item name if we want to
    *                            get all pairs of menu items that are sold with that specific menu item
    */
@@ -238,7 +228,7 @@ function WhatSalesTogetherPage() {
     setData([]);
     axios
       .get(
-        `http://localhost:3001/WhatSalesTogether?start=${start}&end=${end}&salesWith=${salesWith}`
+        `https://pern-project-3.onrender.com/whatSalesTogether?start=${start}&end=${end}&salesWith=${salesWith}`
       )
       .then((res) => {
         setSearching(false);
@@ -257,7 +247,7 @@ function WhatSalesTogetherPage() {
           <MainAppBar></MainAppBar>
         </Grid>
 
-      {/* Set the Search UI*/}
+        {/* Set the Search UI*/}
         <Grid xs={12}>
           <center>
             <SearchUI search={search} />
