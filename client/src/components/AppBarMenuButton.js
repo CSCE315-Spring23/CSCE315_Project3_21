@@ -51,25 +51,27 @@ export default function AppBarMenuButton() {
         <MenuItem onClick={()=> navigate("/ChangeMenuPage")}>
           Change Menu
         </MenuItem>
-        <MenuItem onClick={() => navigate("/RestockReportPage")}>
-          Restock Report
-        </MenuItem>
-        <MenuItem onClick={() => navigate("/serverPage")}>Server Page</MenuItem>
-        <MenuItem onClick={() => navigate("/WhatSalesTogetherPage")}>
-          What Sells Together
+        <MenuItem onClick={() => navigate("/XZReportPage")}>
+          Z and X Reports
         </MenuItem>
         <MenuItem onClick={() => navigate("/ExcessReportPage")}>
           Excess Report
         </MenuItem>
-        <MenuItem onClick={()=> navigate("/Customer")}>
-          Customer Page
+        <MenuItem onClick={() => navigate("/RestockReportPage")}>
+          Restock Report
+        </MenuItem>
+        <MenuItem onClick={() => navigate("/WhatSalesTogetherPage")}>
+          What Sells Together
         </MenuItem>
         <MenuItem onClick={() => navigate("/SalesReport")}>
           Sales Report
         </MenuItem>
-        <MenuItem onClick={() => navigate("/XZReportPage")}>
-          Z and X Reports
-          </MenuItem>
+        <MenuItem onClick={() => navigate("/serverPage")}>
+          Server Page
+        </MenuItem>
+        <MenuItem onClick={()=> navigate("/Customer")}>
+          Customer Page
+        </MenuItem>
         <MenuItem onClick = {() => navigate("/MenuBoard")}>
           Menu Board
         </MenuItem>
