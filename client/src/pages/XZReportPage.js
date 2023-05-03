@@ -28,8 +28,9 @@ const cfa_theme = createTheme({
     },
 });
 
-
-// The grid max xs = 12
+/**
+ * UI for the X and Z report page using boolean logic to display either a button to create a new X/Z report or the current X/Z report
+ */
 function XZReportPage() {
   const [createdX, setCreatedX]= useState(false);
   const [createdZ, setCreatedZ]= useState(false);

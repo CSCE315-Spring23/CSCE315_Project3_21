@@ -24,6 +24,9 @@ const config = {
   }
 };
 
+/*
+* UI for material react table with Z report to show history of transactions based on total day sales and orders aka day summary
+*/
 export default class ZReportTable extends React.Component {
     constructor(props) {
         super(props);

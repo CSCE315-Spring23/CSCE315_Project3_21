@@ -24,6 +24,9 @@ const config = {
   }
 };
 
+/*
+* UI for material react table with X report to show history of transactions after the last Z report 
+*/
 export default class XReportTable extends React.Component {
     constructor(props) {
         super(props);

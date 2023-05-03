@@ -24,7 +24,9 @@ const cfa_theme = createTheme({
     },
 });
 
-// The grid max xs = 12
+/*
+* UI for full page including title and the Menu create, read, and update table 
+*/
 function ChangeMenuPage() {
   return (
     <ThemeProvider theme={cfa_theme}>

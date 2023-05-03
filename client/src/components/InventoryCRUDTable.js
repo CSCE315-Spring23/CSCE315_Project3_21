@@ -1,5 +1,5 @@
 /*
-UI for Create, Read, Update, and Delete operations on inventory-item database table
+UI for Create, Read, and Update operations on inventory-item database table
 */
 import React, { useState, useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
@@ -26,9 +26,10 @@ const config = {
 };
 
 /*
-primary reference for the following table https://www.material-react-table.com/docs/examples/editing-crud
-CRUD stands for Create, Read, Update, Delete 
-This example does not include delete given the scope of the assignment
+* primary reference for the following table https://www.material-react-table.com/docs/examples/editing-crud
+* CRUD stands for Create, Read, Update, Delete 
+* This example does not include delete given the scope of the assignment
+* For more comments reference MenuCRUDTable.js documentation
 */
 const InventoryCRUDTable = (props) => {
   const [InventoryData, setInventoryData] = useState([]);

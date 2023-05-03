@@ -21,7 +21,9 @@ const config = {
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
 };
-
+/*
+* UI for the material react table to view the items that used less than 10% of the inventory after the given time
+*/
 export default class ExcessReportTable extends React.Component {
     constructor(props){
         super(props);

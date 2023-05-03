@@ -22,6 +22,9 @@ const config = {
   }
 };
 
+/*
+* UI for a material react table populated with restock orders that have not been marked as arrived in the database
+*/
 export default class PendingRestockTable extends React.Component {
   constructor(props) {
     super(props);
